@@ -1,0 +1,257 @@
+# Copyright (C) 2025 Xylus Themes
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Easy Events Calendar 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easy-events-calendar\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-06-12T05:59:07+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Domain: easy-events-calendar\n"
+
+#. Plugin Name of the plugin
+#: includes/admin/class-easy-events-calendar-admin.php:64
+#: includes/admin/class-easy-events-calendar-admin.php:66
+msgid "Easy Events Calendar"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://xylusthemes.com/plugins/easy-events-calendar/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Display events from multiple sources in a unified calendar view. Easy Events Calendar supports events imported from Meetup, Eventbrite, Facebook, and WP Event Aggregator. Includes multiple calendar views, filtering, and responsive layouts."
+msgstr ""
+
+#. Author of the plugin
+msgid "Xylus Themes"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://xylusthemes.com"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-admin.php:67
+#: includes/admin/class-easy-events-calendar-admin.php:112
+msgid "Support & Help"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-admin.php:106
+msgid "General"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-admin.php:109
+#: includes/admin/class-easy-events-calendar-list-table.php:51
+msgid "Shortcode"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-admin.php:192
+msgid "Settings saved successfully."
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-admin.php:194
+msgid "No changes made or something went wrong."
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:39
+msgid "Dashboard"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:68
+msgid "Made with ♥ by the Xylus Themes"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:70
+msgid "Support"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:72
+#: easy-events-calendar.php:202
+msgid "Docs"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:74
+msgid "Free Plugins"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:114
+msgid "WP Bulk Delete"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:115
+#: templates/admin/easy-events-calendar-general.php:42
+msgid "Import Eventbrite Events"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:116
+msgid "Import Social Events"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:117
+#: templates/admin/easy-events-calendar-general.php:44
+msgid "Import Meetup Events"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:118
+#: templates/admin/easy-events-calendar-general.php:41
+msgid "WP Event Aggregator"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:119
+msgid "Event Schema / Structured Data"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:120
+msgid "WP Smart Import : Import any XML File to WordPress"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-common.php:121
+msgid "XT Feed for LinkedIn"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-list-table.php:49
+msgid "ID"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-list-table.php:50
+msgid "Title"
+msgstr ""
+
+#: includes/admin/class-easy-events-calendar-list-table.php:52
+msgid "Action"
+msgstr ""
+
+#: easy-events-calendar.php:91
+#: easy-events-calendar.php:100
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: easy-events-calendar.php:197
+msgid "Setting"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:26
+msgid "General Settings"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:36
+msgid "Select Event Source"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:40
+msgid "Choose..."
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:43
+msgid "Import Facebook Events"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:51
+msgid "Default Calendar View"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:66
+msgid "Events Per Page"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:74
+msgid "Load More Button Text"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:82
+msgid "View Details"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:90
+msgid "Week Starts On"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-general.php:125
+msgid "Save Settings"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:33
+#: templates/admin/easy-events-calendar-support.php:36
+msgid "Looking for Something?"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:37
+msgid "We have documentation of how to delete data in bulk."
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:38
+msgid "Plugin Documentation"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:44
+#: templates/admin/easy-events-calendar-support.php:47
+msgid "Need Any Assistance?"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:48
+msgid "Our EXPERT Support Team is always ready to help you out."
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:49
+msgid "Contact Support"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:55
+#: templates/admin/easy-events-calendar-support.php:58
+msgid "Found Any Bugs?"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:59
+msgid "Report any Bug that you Discovered, and get Instant Solutions."
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:60
+msgid "Report to GitHub"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:66
+#: templates/admin/easy-events-calendar-support.php:69
+msgid "Require Customization?"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:70
+msgid "We would love to hear your Integration and Customization Ideas."
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:71
+msgid "Connect Our Service"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:77
+#: templates/admin/easy-events-calendar-support.php:80
+msgid "Like The Plugin?"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:81
+msgid "Your Review is very important to us as it helps us to grow more."
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:82
+msgid "Review Us on WP.org"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:94
+msgid "Plugins you should try"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:145
+msgid "Status : "
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:154
+msgid "Install Free Plugin"
+msgstr ""
+
+#: templates/admin/easy-events-calendar-support.php:160
+msgid "Activate Plugin"
+msgstr ""

@@ -1,0 +1,749 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+/* Start Tab */
+.xtec-app .var-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 auto;
+    padding: 0 var(--tab-padding);
+    font-size: var(--tab-font-size);
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    box-shadow: none;
+}
+
+a.var-tab.var--box.var-tab--inactive:focus {
+    box-shadow: none;
+}
+
+.xtec-app .var-tab--active {
+    color: #005AE0;
+    border-bottom: 3px solid #005AE0;
+}
+
+.xtec-app .var-tab--inactive {
+    color: var(--tab-inactive-color)
+}
+
+.xtec-app .var-tabs {
+    border-radius: var(--tabs-radius);
+    background: var(--tabs-background);
+    overflow: hidden;
+    transition: background-color .25s
+}
+
+.xtec-app .var-tabs__tab-wrap {
+    position: relative;
+    display: flex;
+    height: 100%
+}
+
+.xtec-app .var-tabs--layout-horizontal {
+    flex-direction: row
+}
+
+.xtec-app .var-tabs--layout-horizontal-scrollable {
+    overflow-x: auto;
+    overflow-y: hidden
+}
+
+.xtec-app .var-tabs--layout-horizontal-scrollable::-webkit-scrollbar {
+    display: none
+}
+
+.xtec-app .var-tabs--layout-horizontal-padding {
+    padding: 0 var(--tabs-padding)
+}
+
+.xtec-app .var-tabs--layout-horizontal-indicator {
+    bottom: 0;
+    height: var(--tabs-indicator-size)
+}
+
+.xtec-app .var-tabs--layout-horizontal-indicator {
+    right: 0
+}
+
+.xtec-app .var-tabs--layout-horizontal-reverse-indicator {
+    top: 0;
+    height: var(--tabs-indicator-size)
+}
+
+.xtec-app .var-tabs--layout-horizontal-reverse-indicator {
+    right: 0
+}
+
+.xtec-app .var-tabs--layout-horizontal-indicator-inner {
+    width: var(--tabs-indicator-inner-size);
+    height: 100%
+}
+
+
+.xtec-app .var-tabs--item-horizontal {
+    height: var(--tabs-item-horizontal-height)
+}
+
+.xtec-app .xtec-tabs {
+    display: flex;
+    align-items: center;
+    --tabs-item-horizontal-height: 52px;
+    --tabs-radius: 2px;
+    --tabs-padding: 0;
+    --tabs-indicator-size: 2px;
+    --tabs-background: none;
+    --tabs-indicator-inner-size: 100%;
+    --tab-padding: 18px;
+    --tab-inactive-color: #141B38;
+    --tab-font-size: 14px;
+}
+
+.xtec-app .var-tabs {
+    margin-bottom: -2px
+}
+
+.xtec-app .var-tabs .var-tab {
+    font-weight: 600;
+    white-space: pre;
+    position: relative;
+    overflow: hidden;
+    text-decoration : none;
+}
+
+.xtec-app .xtec-tabs {
+    display: flex;
+    border-bottom: 2px solid #E8E8EB;
+    position: relative;
+    margin-bottom: var(--xtec-gutter)
+}
+
+.xtec-container {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1240px;
+}
+
+
+html:not([data-scroll="0"]) .xtec-header {
+    box-shadow: 0 2px 5px #0000000d;
+    transition: box-shadow .6s
+}
+/* End Tabs*/
+
+/* start header */
+.xtec-header {
+    z-index: 1051;
+    top: 32px;
+    right: 0;
+    left: 160px;
+    background-color: #fff;
+    height: var(--xtec-header-height, 72px);
+    color: #141b38
+}
+
+.xtec-header .xtec-header-content {
+    padding: 0;
+    display: flex;
+    height: 72px;
+    align-items: center;
+    gap: 4px
+}
+
+.xtec-header .xtec-header-content a:focus {
+    box-shadow: none
+}
+
+.xtec-header .xtec-header-content .spacer {
+    display: inline-flex;
+    width: 20px;
+    height: 2px;
+    background: #d0d1d7
+}
+
+.xtec-header .xtec-header-content .spacer {
+    transform: rotate(70deg)
+}
+
+.xtec-header .xtec-header-content .page-name {
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 400;
+    flex: 1 0 auto
+}
+
+.xtec-header .xtec-header-content .header-actions {
+    display: flex
+}
+
+.xtec-header .xtec-header-content .header-actions .round {
+    position: relative;
+    background-color: #f3f4f5;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color .2s ease
+}
+
+.xtec-header .xtec-header-content .header-actions .round {
+    margin-right: 10px
+}
+
+.xtec-header .xtec-header-content .header-actions .round svg {
+    width: 20px;
+    height: 20px
+}
+
+.xtec-header .xtec-header-content .header-actions .round:hover {
+    background-color: #e5e7e9
+}
+
+@keyframes bounce {
+
+    0%,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: translate(-50%)
+    }
+
+    40% {
+        transform: translate(-50%, -8px)
+    }
+
+    60% {
+        transform: translate(-50%, -4px)
+    }
+}
+
+.xtec-card {
+    position: relative;
+    color: #141b38;
+    background-color: #fff;
+    border: 1px solid #E8E8EB;
+    box-shadow: 0 2px 5px #0000000d;
+    margin: var(--xtec-gutter) 0
+}
+
+.xtec-card svg.xtec-circle-question-mark {
+    width: 17px;
+    height: 17px;
+    color: #8c8f9a;
+    transition: background-color .2s ease
+}
+
+.xtec-card svg.xtec-circle-question-mark:hover {
+    color: #5a5c66
+}
+
+.xtec-card>.header {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+    font-weight: 600;
+    font-size: 16px;
+    border-bottom: 1px solid #E8E8EB
+}
+
+.xtec-card>.header.toggles {
+    cursor: pointer
+}
+
+.xtec-card>.header .text {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center
+}
+
+.xtec-card>.header .text>* {
+    cursor: auto
+}
+
+.xtec-card>.header .text .header-icon {
+    display: flex
+}
+
+.xtec-card>.header .text .header-icon svg {
+    width: 24px;
+    height: 24px
+}
+
+.xtec-card>.header .text .header-icon svg {
+    margin-left: 16px
+}
+
+.xtec-card>.header .text .header-title {
+    display: flex;
+    align-items: center
+}
+
+.xtec-card>.header .text svg.xtec-circle-question-mark {
+    cursor: pointer;
+    width: 17px;
+    height: 17px
+}
+
+.xtec-header .wpdb-header-content {
+    padding: 0;
+    display: flex;
+    height: 72px;
+    align-items: center;
+    gap: 4px;
+}
+.xtec-header .wpdb-header-content .spacer {
+    transform: rotate(-70deg);
+}
+.xtec-header .wpdb-header-content .spacer {
+    display: inline-flex;
+    width: 20px;
+    height: 2px;
+    background: #d0d1d7;
+}
+
+.xtec-header .wpdb-header-content .page-name {
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 400;
+    flex: 1 0 auto;
+}
+.xtec-header .wpdb-header-content .header-actions {
+    display: flex;
+}
+
+.xtec-header .wpdb-header-content .header-actions .round {
+    margin-left: 10px;
+}
+.xtec-header .wpdb-header-content .header-actions .round {
+    position: relative;
+    background-color: #f3f4f5;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+/* end header*/
+
+/*support page start*/
+.xtec-about-us-plugins {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.xtec-row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    margin-left: -.5rem;
+    margin-right: -.5rem;
+}
+
+.xtec-about-us-plugins .xtec-plugin {
+    flex-direction: column;
+    font-size: 14px;
+    line-height: 24px;
+    width: 50%;
+}
+
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main {
+    display: flex;
+    flex-direction: row;
+    padding: 22px;
+    flex-grow: 1;
+}
+
+.xtec-about-us-plugins .xtec-plugin-footer {
+    background-color: #fff;
+    box-shadow: 0 2px 5px #0000000d;
+    border: 1px solid #E8E8EB;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main img {
+    margin: 0 30px 0 0;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main img {
+    width: 50px;
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main .xtec-main-name {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #141b38;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main,  .xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer {
+    background-color: #fff;
+    box-shadow: 0 2px 5px #0000000d;
+    border: 1px solid #E8E8EB;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer .xtec-footer-status {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer .xtec-footer-status div {
+    margin-right: 12px;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer .xtec-footer-status .xtec-footer-status-label {
+    color: #8c8f9a;
+}
+
+.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer .xtec-footer-status div {
+    display: inline-block;
+}
+
+.xtec-support-features-card,  .xtec-support-features-card2 {
+    display: flex;
+    flex-basis: 32%;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    box-sizing: border-box;
+    margin: .5rem;
+    background-color: #fff;
+}
+
+.xtec-support-features-card2 {
+    flex-basis: 48%;
+}
+
+.xtec-support-features-card:last-child, .xtec-support-features-card2:last-child {
+    max-width: 100%
+}
+
+@media (min-width: 661px) {
+    .xtec-support-features-card, .xtec-support-features-card2 {
+        margin-bottom: 1%
+    }
+}
+
+@media (max-width: 660px) {
+    .xtec-support-features-card, .xtec-support-features-card2 {
+        max-width: 100%;
+        margin-bottom: .5rem
+    }
+}
+
+@media (min-width: 481px) {
+    .xtec-support-features-card {
+        padding: 2rem
+    }
+}
+
+@media (max-width: 480px) {
+    .xtec-support-features-card {
+        padding: 1rem;
+    }
+    .xtec-support-features-card2{
+        padding: 0;
+    }
+    .xtec-about-us-plugins .xtec-plugin{
+        width: 100%;
+    }
+}
+
+.xtec-support-features-list {
+    list-style: initial;
+    margin-left: 1rem
+}
+
+.xtec-support-features-img {
+    width: 5.625rem;
+    margin-right: .5rem;
+    line-height: 1
+}
+
+@media (min-width: 961px) {
+    .xtec-support-features-img {
+        width: 6.5rem;
+        margin-right: 1.125rem
+    }
+}
+
+.xtec-support-features-icon {
+    display: block;
+    max-width: 80%;
+    margin-left: 0px;
+}
+
+@media (min-width: 481px) {
+    .xtec-support-features-icon {
+        max-width: 80%;
+        margin-left: 0px;
+    }
+}
+
+.xtec-support-features-text {
+    flex: 1
+}
+
+.xtec-support-features-title {
+    margin: 0
+}
+
+.xtec-support-features, .xtec-support-features2 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    margin-left: -.5rem;
+    margin-right: -.5rem
+}
+
+@media (max-width: 660px) {
+    .xtec-support-features, .xtec-support-features2  {
+        display: block
+    }
+}
+/*end new support page*/
+
+/* plugin common Css start */
+.xtec-card-single-row {
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+.xtec-card-single-row-content {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+.xtec-profile-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+.xtec-profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+.xtec-user-name {
+    font-weight: bold;
+}
+.xtec-user-email {
+    font-size: 14px;
+    color: #555;
+    opacity: 0.8;
+}
+.xtec-user-details{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.xtec-post-type-item{
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    justify-content: space-between;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.xtec_sp_keyword{
+    cursor: pointer;    
+}
+.xtec_sp_keyword:hover {
+    background: #005ae01f;
+}
+
+#wpcontent{
+    padding-left: 0;
+}
+
+#poststuff #post-body.columns-2 {
+    margin-right: 0;
+}
+
+.form-table{
+    margin : 20px 0;
+}
+    
+.xtec-inner-main-section{
+    display: flex;
+}
+.xtec-inner-section-1{
+    width : 20%;
+}
+.xtec-inner-section-2{
+    width : 80%;
+}
+
+.xtec-inner-section-2 .xtec-texonomy-section{
+    display: flex;
+    gap: 30px;
+}
+
+.xtec-wrap{
+    top: 10px;
+    position: relative;
+}
+
+.notice {
+    margin: 10px 0;
+    display: none !important;
+}
+
+.xtec-notice{
+    display: block !important;
+}
+
+.xtec-circle-question-mark {
+    cursor: pointer;
+    width: 17px;
+    height: 17px;
+    color: #000;
+    transition: background-color 0.2s ease;
+    margin: 5px 5px 0 5px;
+}
+
+.xtec-card .content {
+    font-size: 14px;
+    line-height: 22px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+/* plugin common css end */
+
+/* start footer section */
+.xtec-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 30px;
+    margin-top: 70px;
+}
+.xtec-footer div:first-of-type {
+    font-weight: 600;
+}
+.xtec-footer div {
+    margin-top: 10px;
+}
+.xtec-footer .xtec-links a {
+    color: #005ae0;
+}
+
+.xtec-footer .xtec-social-links a:focus {
+    box-shadow: none;
+}
+
+.xtec-footer .xtec-social-links a:hover {
+    color: #005AE0;
+}
+
+.xtec-footer div svg.xtec-facebook, .xtec-footer div svg.xtec-linkedin {
+    width: 16px;
+    height: 16px;
+}
+.xtec-footer div svg.xtec-twitter, .xtec-footer div svg.xtec-youtube {
+    width: 17px;
+    height: 16px;
+}
+.xtec-footer .xtec-social-links a{
+    text-decoration : none;
+    color: #787c82;
+}
+/* end footer section*/
+
+.xtec_button {
+    font-weight: 600 !important;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color .2s ease;
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: normal;
+    background-color: #005AE0;
+    border: 0;
+}
+.xtec_button:hover, .xtec_button:active, .xtec_button:focus {
+    background-color: #0049b3;
+    border: 0;
+    color: #fff;
+}
+
+/* setting css  start */
+.xtec-settings-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 5px;
+}
+
+.xtec-setting-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.xtec-inner-section-1 {
+    flex: 0 0 220px;
+    font-weight: 600;
+}
+
+.xtec-inner-section-2 {
+    flex: 1;
+}
+
+.xtec-inner-section-2 select,
+.xtec-inner-section-2 input[type="text"],
+.xtec-inner-section-2 input[type="number"] {
+    max-width: 100%;
+    width: 50%;
+    padding: 7px 10px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+}
+
+.xtec-inner-section-2 input[type="color"] {
+    max-width: 100%;
+    width: 50%;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 0;
+}
+/* setting css end */
