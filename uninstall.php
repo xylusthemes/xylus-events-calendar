@@ -15,7 +15,7 @@
  * @link       http://xylusthemes.com
  * @since      1.0.0
  *
- * @package    Easy_Events_Calendar
+ * @package    Xylus_Events_Calendar
  */
 
 // If uninstall not called from WordPress, then exit.

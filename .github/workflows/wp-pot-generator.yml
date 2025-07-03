@@ -12,7 +12,7 @@ jobs:
       uses: iamdharmesh/action-wordpress-pot-generator@main
       with:
         destination_path: './languages'
-        slug: 'easy-events-calendar'
-        text_domain: 'easy-events-calendar'
+        slug: 'xylus-events-calendar'
+        text_domain: 'xylus-events-calendar'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

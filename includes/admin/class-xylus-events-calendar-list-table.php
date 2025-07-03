@@ -1,12 +1,12 @@
 <?php
 /**
- * Common functions class for Easy Events Calendar
+ * Common functions class for Xylus Events Calendar
  *
  * @link       http://xylusthemes.com/
  * @since      1.0.0
  *
- * @package    Easy_Events_Calendar
- * @subpackage Easy_Events_Calendar/includes
+ * @package    Xylus_Events_Calendar
+ * @subpackage Xylus_Events_Calendar/includes
  * @author     Rajat Patel <prajat21@gmail.com>
  */
 
@@ -17,7 +17,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
-class XTEC_Shortcode_List_Table extends WP_List_Table {
+class XYLUSEC_Shortcode_List_Table extends WP_List_Table {
 
 	public function prepare_items() {
 
@@ -48,10 +48,10 @@ class XTEC_Shortcode_List_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'id'            => __( 'ID', 'easy-events-calendar' ),
-			'how_to_use'    => __( 'Title', 'easy-events-calendar' ),
-			'shortcode'     => __( 'Shortcode', 'easy-events-calendar' ),
-			'action'    	=> __( 'Action', 'easy-events-calendar' ),
+			'id'            => __( 'ID', 'xylus-events-calendar' ),
+			'how_to_use'    => __( 'Title', 'xylus-events-calendar' ),
+			'shortcode'     => __( 'Shortcode', 'xylus-events-calendar' ),
+			'action'    	=> __( 'Action', 'xylus-events-calendar' ),
 		);
 
 		return $columns;
@@ -77,8 +77,8 @@ class XTEC_Shortcode_List_Table extends WP_List_Table {
 		$data[] = array(
 					'id'            => 1,
 					'how_to_use'    => 'Explore upcoming events in various layouts, including a calendar, grid, list, and more',
-					'shortcode'     => '<p class="xtec_short_code">[easy_events_calendar]</p>',
-					'action'     	=> '<button class="xtec-btn-copy-shortcode button-primary"  data-value="[easy_events_calendar]">Copy</button>',
+					'shortcode'     => '<p class="xylusec_short_code">[xylus_events_calendar]</p>',
+					'action'     	=> '<button class="xylusec-btn-copy-shortcode button-primary"  data-value="[xylus_events_calendar]">Copy</button>',
 					);
 		return $data;
 	}

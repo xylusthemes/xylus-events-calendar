@@ -30,9 +30,9 @@
 	 */
 
 	jQuery(document).ready(function($) {
-		var calendarEl = document.getElementById('xtec-calendar');
-		const defaultView = xtec_ajax?.xtec_options?.xtec_default_view || 'month';
-		const weekStart = parseInt(xtec_ajax?.xtec_options?.xtec_week_start ?? 0);
+		var calendarEl = document.getElementById('xylusec-calendar');
+		const defaultView = xylusec_ajax?.xylusec_options?.xylusec_default_view || 'month';
+		const weekStart = parseInt(xylusec_ajax?.xylusec_options?.xylusec_week_start ?? 0);
 		const fullCalendarViews = { month: 'dayGridMonth', week: 'timeGridWeek', day: 'timeGridDay', list: 'listMonth', };
 
 		if (calendarEl) {
@@ -76,12 +76,12 @@
 					const startTimestamp = Math.floor(fetchInfo.start.getTime() / 1000);
 					const endTimestamp = Math.floor((fetchInfo.end.getTime() - 1) / 1000);
 					$.ajax({
-						url: xtec_ajax.ajaxurl,
+						url: xylusec_ajax.ajaxurl,
 						data: {
-							action: 'xtec_get_events',
+							action: 'xylusec_get_events',
 							start: startTimestamp,
 							end: endTimestamp,
-							nonce: xtec_ajax.nonce
+							nonce: xylusec_ajax.nonce
 						},
 						type: 'GET',
 						success: function(response) {
@@ -107,20 +107,20 @@
 
 					const tooltip = document.createElement('div');
 					const imageUrl = info.event.extendedProps.image ? info.event.extendedProps.image.replace(/^http:\/\//i, 'https://') : '';
-					tooltip.className = 'xtec-event-tooltip';
+					tooltip.className = 'xylusec-event-tooltip';
 					tooltip.style.display = 'none'; // Hide by default
 					tooltip.innerHTML = `
 						${imageUrl && info.event.url ? `<a href="${info.event.url}" target="_blank"><img src="${imageUrl}" alt="${info.event.title}"></a>` : (imageUrl ? `<img src="${imageUrl}" alt="${info.event.title}">` : '')}
-						<div class="xtec-event-date">${info.event.extendedProps.formattedDate || ''}</div>
+						<div class="xylusec-event-date">${info.event.extendedProps.formattedDate || ''}</div>
 						${info.event.url ? `<h4 class="tooltip-title-click"><a href="${info.event.url}" target="_blank">${info.event.title}</a></h4>` : `<h4 class="tooltip-title-click">${info.event.title}</h4>`}
 						<p>${(info.event.extendedProps.description || 'No additional details provided.').substring(0, 150)}${info.event.extendedProps.description?.length > 150 ? '…' : ''}</p>
 					`;
 					document.body.appendChild(tooltip);
 
 					const popupOverlay = document.createElement('div');
-					popupOverlay.className = 'xtec-event-popup-overlay';
+					popupOverlay.className = 'xylusec-event-popup-overlay';
 					popupOverlay.innerHTML = `
-						<div class="xtec-event-popup">
+						<div class="xylusec-event-popup">
 							<span class="close-popup">&times;</span>
 							${info.event.url ? `<h2><a href="${info.event.url}" target="_blank">${info.event.title}</a></h2>` : `<h2>${info.event.title}</h2>`}
 							${imageUrl && info.event.url ? `<a href="${info.event.url}" target="_blank"><img src="${imageUrl}" alt=""></a>` : (imageUrl ? `<img src="${imageUrl}" alt="">` : '')}
@@ -128,7 +128,7 @@
 						</div>
 					`;
 
-					const calendarContainer = document.getElementById('xtec-calendar');
+					const calendarContainer = document.getElementById('xylusec-calendar');
 					if (calendarContainer && calendarContainer.parentNode) {
 						calendarContainer.parentNode.insertBefore(popupOverlay, calendarContainer.nextSibling);
 					}
@@ -186,25 +186,25 @@
 			
 			calendar.render();
 			
-			document.getElementById('xtec-search-events').addEventListener('click', function () {
-				const searchTerm = document.getElementById('xtec-search').value.toLowerCase();
+			document.getElementById('xylusec-search-events').addEventListener('click', function () {
+				const searchTerm = document.getElementById('xylusec-search').value.toLowerCase();
 				const events = document.querySelectorAll('.fc-event');
 				events.forEach(event => {
-					const eventTitle = event.querySelector('.fc-xtec-event-title')?.textContent.toLowerCase() || '';
+					const eventTitle = event.querySelector('.fc-xylusec-event-title')?.textContent.toLowerCase() || '';
 					event.style.display = eventTitle.includes(searchTerm) ? '' : 'none';
 				});
 			});
 
-			document.getElementById('xtec-search').addEventListener('keypress', function (e) {
+			document.getElementById('xylusec-search').addEventListener('keypress', function (e) {
 				if (e.key === 'Enter') {
 					e.preventDefault();
-					document.getElementById('xtec-search-events').click();
+					document.getElementById('xylusec-search-events').click();
 				}
 			});
 		}
 
-		const buttonBgColor   = xtec_ajax?.xtec_options?.xtec_button_color || '#2c3e50';
-		const buttonTextColor = xtec_ajax?.xtec_options?.xtec_text_color || '#FFFFFF';
+		const buttonBgColor   = xylusec_ajax?.xylusec_options?.xylusec_button_color || '#2c3e50';
+		const buttonTextColor = xylusec_ajax?.xylusec_options?.xylusec_text_color || '#FFFFFF';
 
 		setTimeout(() => {
 			// 1. FullCalendar default buttons
@@ -220,7 +220,7 @@
 			});
 
 			// 2. Custom "Search" button
-			const searchBtn = document.querySelector('#xtec-search-events');
+			const searchBtn = document.querySelector('#xylusec-search-events');
 			if (searchBtn) {
 				searchBtn.style.backgroundColor = buttonBgColor;
 				searchBtn.style.color = buttonTextColor;
@@ -233,8 +233,8 @@
 				});
 			}
 
-			// 3. Custom View Buttons in .xtec-custom-buttons-container
-			document.querySelectorAll('.xtec-custom-buttons-container .fc-button').forEach(btn => {
+			// 3. Custom View Buttons in .xylusec-custom-buttons-container
+			document.querySelectorAll('.xylusec-custom-buttons-container .fc-button').forEach(btn => {
 				btn.style.backgroundColor = buttonBgColor;
 				btn.style.color = buttonTextColor;
 				btn.style.borderColor = buttonBgColor;
@@ -249,16 +249,16 @@
 			// 4. :focus box-shadow for consistent styling
 			const styleTag = document.createElement('style');
 			styleTag.textContent = `
-				#xtec-calendar-container .fc .fc-button-primary:not(:disabled).fc-button-active:focus,
-				#xtec-calendar-container .fc .fc-button-primary:not(:disabled):active:focus,
-				#xtec-calendar-container .xtec-custom-buttons-container .fc-button:focus {
+				#xylusec-calendar-container .fc .fc-button-primary:not(:disabled).fc-button-active:focus,
+				#xylusec-calendar-container .fc .fc-button-primary:not(:disabled):active:focus,
+				#xylusec-calendar-container .xylusec-custom-buttons-container .fc-button:focus {
 				box-shadow: 0 0 0 0.2rem ${buttonBgColor}80;
 				outline: none;
 				}
 			`;
 			document.head.appendChild(styleTag);
 
-			document.querySelectorAll('.xtec-load-spinner').forEach(spinner => {
+			document.querySelectorAll('.xylusec-load-spinner').forEach(spinner => {
 				spinner.style.setProperty('--_g', `no-repeat radial-gradient(farthest-side, ${buttonBgColor}80 90%, #0000)`);
 			});
 			document.documentElement.style.setProperty('--spinner-color', `${buttonBgColor}80`);
@@ -284,10 +284,10 @@
 	/** grid view js start */
 	jQuery(document).ready(function($) {
 		
-		const calendarWrapper = $('#xtec-calendar');
-		const gridWrapper = $('#xtec-grid-view-container');
-		const rowWrapper = $('#xtec-row-view-container');
-		const staggeredWrapper = $('#xtec-grid-staggered-view-container');
+		const calendarWrapper = $('#xylusec-calendar');
+		const gridWrapper = $('#xylusec-grid-view-container');
+		const rowWrapper = $('#xylusec-row-view-container');
+		const staggeredWrapper = $('#xylusec-grid-staggered-view-container');
 		
 		let rowPage = 1;
 		let rowKeyword = '';
@@ -298,23 +298,23 @@
 			
 			isLoading = true;
 			$('#load-more-events').hide();
-			$('.xtec-load-spinner').show();
+			$('.xylusec-load-spinner').show();
 
 			$.ajax({
-				url: xtec_ajax.ajaxurl,
+				url: xylusec_ajax.ajaxurl,
 				type: 'POST',
 				data: {
-					action: 'load_more_events',
+					action: 'xylusec_load_more_events',
 					paged: reset ? 1 : rowPage,
 					keyword: rowKeyword,
-					nonce: xtec_ajax.nonce
+					nonce: xylusec_ajax.nonce
 				},
 				success: function(response) {
 					if (reset) {
-						$('.xtec-event-grid-container').html(response);
+						$('.xylusec-event-grid-container').html(response);
 						rowPage = 2;
 					} else {
-						$('.xtec-event-grid-container').append(response);
+						$('.xylusec-event-grid-container').append(response);
 						rowPage++;
 					}
 
@@ -326,7 +326,7 @@
 				},
 				complete: function() {
 					isLoading = false;
-					$('.xtec-load-spinner').hide();
+					$('.xylusec-load-spinner').hide();
 					$('#load-more-events').prop('disabled', false).show();
 				}
 			});
@@ -342,8 +342,8 @@
 		});
 
 		// Search row events
-		$('#xtec-search-events').on('click', function() {
-			rowKeyword = $('#xtec-search').val().trim();
+		$('#xylusec-search-events').on('click', function() {
+			rowKeyword = $('#xylusec-search').val().trim();
 			fetchEvents(true);
 		});
 
@@ -369,10 +369,10 @@
 
 	/** row view js start */
 	jQuery(document).ready(function($) {
-		const calendarWrapper = $('#xtec-calendar');
-		const gridWrapper = $('#xtec-grid-view-container');
-		const rowWrapper = $('#xtec-row-view-container');
-		const staggeredWrapper = $('#xtec-grid-staggered-view-container');
+		const calendarWrapper = $('#xylusec-calendar');
+		const gridWrapper = $('#xylusec-grid-view-container');
+		const rowWrapper = $('#xylusec-row-view-container');
+		const staggeredWrapper = $('#xylusec-grid-staggered-view-container');
 		
 		let rowPage = 1;
 		let rowKeyword = '';
@@ -383,23 +383,23 @@
 			
 			isLoading = true;
 			$('#load-more-row-events').hide();
-			$('.xtec-load-spinner').show();
+			$('.xylusec-load-spinner').show();
 
 			$.ajax({
-				url: xtec_ajax.ajaxurl,
+				url: xylusec_ajax.ajaxurl,
 				type: 'POST',
 				data: {
-					action: 'load_more_row_events',
+					action: 'xylusec_load_more_row_events',
 					paged: reset ? 1 : rowPage,
 					keyword: rowKeyword,
-					nonce: xtec_ajax.nonce
+					nonce: xylusec_ajax.nonce
 				},
 				success: function(response) {
 					if (reset) {
-						$('.xtec-event-row-container').html(response);
+						$('.xylusec-event-row-container').html(response);
 						rowPage = 2; // Set to page 2 after reset
 					} else {
-						$('.xtec-event-row-container').append(response);
+						$('.xylusec-event-row-container').append(response);
 						rowPage++;
 					}
 
@@ -411,7 +411,7 @@
 				},
 				complete: function() {
 					isLoading = false;
-					$('.xtec-load-spinner').hide();
+					$('.xylusec-load-spinner').hide();
 					$('#load-more-row-events').prop('disabled', false).show();
 				}
 			});
@@ -423,8 +423,8 @@
 		});
 
 		// Search row events
-		$('#xtec-search-events').on('click', function() {
-			rowKeyword = $('#xtec-search').val().trim();
+		$('#xylusec-search-events').on('click', function() {
+			rowKeyword = $('#xylusec-search').val().trim();
 			fetchRowEvents(true);
 		});
 
@@ -449,10 +449,10 @@
 
 	/** staggered view start */
 	jQuery(document).ready(function($) {
-		const staggeredWrapper = $('#xtec-grid-staggered-view-container');
-		const calendarWrapper = $('#xtec-calendar');
-		const gridWrapper = $('#xtec-grid-view-container');
-		const rowWrapper = $('#xtec-row-view-container');
+		const staggeredWrapper = $('#xylusec-grid-staggered-view-container');
+		const calendarWrapper = $('#xylusec-calendar');
+		const gridWrapper = $('#xylusec-grid-view-container');
+		const rowWrapper = $('#xylusec-row-view-container');
 
 		let staggeredPage = 1;
 		let staggeredKeyword = '';
@@ -463,23 +463,23 @@
 
 			isLoadingStaggered = true;
 			$('#load-more-grid-staggered-events').hide();
-			$('.xtec-load-spinner').show();
+			$('.xylusec-load-spinner').show();
 
 			$.ajax({
-				url: xtec_ajax.ajaxurl,
+				url: xylusec_ajax.ajaxurl,
 				type: 'POST',
 				data: {
-					action: 'load_more_staggered_events',
+					action: 'xylusec_load_more_staggered_events',
 					paged: reset ? 1 : staggeredPage,
 					keyword: staggeredKeyword,
-					nonce: xtec_ajax.nonce
+					nonce: xylusec_ajax.nonce
 				},
 				success: function(response) {
 					if (reset) {
-						$('.xtec-event-grid-staggered-container').html(response);
+						$('.xylusec-event-grid-staggered-container').html(response);
 						staggeredPage = 2;
 					} else {
-						$('.xtec-event-grid-staggered-container').append(response);
+						$('.xylusec-event-grid-staggered-container').append(response);
 						staggeredPage++;
 					}
 
@@ -491,7 +491,7 @@
 				},
 				complete: function() {
 					isLoadingStaggered = false;
-					$('.xtec-load-spinner').hide();
+					$('.xylusec-load-spinner').hide();
 					$('#load-more-grid-staggered-events').prop('disabled', false).show();
 				}
 			});
@@ -503,8 +503,8 @@
 		});
 
 		// Search
-		$('#xtec-search-events').on('click', function() {
-			staggeredKeyword = $('#xtec-search').val().trim();
+		$('#xylusec-search-events').on('click', function() {
+			staggeredKeyword = $('#xylusec-search').val().trim();
 			fetchStaggeredEvents(true);
 		});
 
@@ -530,7 +530,7 @@
 	jQuery(document).ready(function($) {
 		$(document).on('click', '.fc-timeGridWeek-button', function () {
 			setTimeout(() => {
-				$('#xtec-calendar').css({
+				$('#xylusec-calendar').css({
 					display: 'block',
 					minHeight: '500px'
 				});
@@ -539,7 +539,7 @@
 		});
 	});
 
-	$('.xtec-c-button').on('click', function() {
+	$('.xylusec-c-button').on('click', function() {
         $('.fc-button').removeClass('fc-active');
         $(this).addClass('fc-active');
     });

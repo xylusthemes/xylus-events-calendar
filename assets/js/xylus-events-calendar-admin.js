@@ -30,9 +30,9 @@
 	 */
 
 	jQuery(document).ready(function($){
-		$(document).on("click", ".xtec-btn-copy-shortcode", function() { 
+		$(document).on("click", ".xylusec-btn-copy-shortcode", function() { 
 			var trigger = $(this);
-			$(".xtec-btn-copy-shortcode").removeClass("text-success");
+			$(".xylusec-btn-copy-shortcode").removeClass("text-success");
 			var $tempElement = $("<input>");
 			$("body").append($tempElement);
 			var copyType = $(this).data("value");

@@ -4,7 +4,7 @@
  */
 
 /* Start Tab */
-.xtec-app .var-tab {
+.xylusec-app .var-tab {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,74 +22,74 @@ a.var-tab.var--box.var-tab--inactive:focus {
     box-shadow: none;
 }
 
-.xtec-app .var-tab--active {
+.xylusec-app .var-tab--active {
     color: #005AE0;
     border-bottom: 3px solid #005AE0;
 }
 
-.xtec-app .var-tab--inactive {
+.xylusec-app .var-tab--inactive {
     color: var(--tab-inactive-color)
 }
 
-.xtec-app .var-tabs {
+.xylusec-app .var-tabs {
     border-radius: var(--tabs-radius);
     background: var(--tabs-background);
     overflow: hidden;
     transition: background-color .25s
 }
 
-.xtec-app .var-tabs__tab-wrap {
+.xylusec-app .var-tabs__tab-wrap {
     position: relative;
     display: flex;
     height: 100%
 }
 
-.xtec-app .var-tabs--layout-horizontal {
+.xylusec-app .var-tabs--layout-horizontal {
     flex-direction: row
 }
 
-.xtec-app .var-tabs--layout-horizontal-scrollable {
+.xylusec-app .var-tabs--layout-horizontal-scrollable {
     overflow-x: auto;
     overflow-y: hidden
 }
 
-.xtec-app .var-tabs--layout-horizontal-scrollable::-webkit-scrollbar {
+.xylusec-app .var-tabs--layout-horizontal-scrollable::-webkit-scrollbar {
     display: none
 }
 
-.xtec-app .var-tabs--layout-horizontal-padding {
+.xylusec-app .var-tabs--layout-horizontal-padding {
     padding: 0 var(--tabs-padding)
 }
 
-.xtec-app .var-tabs--layout-horizontal-indicator {
+.xylusec-app .var-tabs--layout-horizontal-indicator {
     bottom: 0;
     height: var(--tabs-indicator-size)
 }
 
-.xtec-app .var-tabs--layout-horizontal-indicator {
+.xylusec-app .var-tabs--layout-horizontal-indicator {
     right: 0
 }
 
-.xtec-app .var-tabs--layout-horizontal-reverse-indicator {
+.xylusec-app .var-tabs--layout-horizontal-reverse-indicator {
     top: 0;
     height: var(--tabs-indicator-size)
 }
 
-.xtec-app .var-tabs--layout-horizontal-reverse-indicator {
+.xylusec-app .var-tabs--layout-horizontal-reverse-indicator {
     right: 0
 }
 
-.xtec-app .var-tabs--layout-horizontal-indicator-inner {
+.xylusec-app .var-tabs--layout-horizontal-indicator-inner {
     width: var(--tabs-indicator-inner-size);
     height: 100%
 }
 
 
-.xtec-app .var-tabs--item-horizontal {
+.xylusec-app .var-tabs--item-horizontal {
     height: var(--tabs-item-horizontal-height)
 }
 
-.xtec-app .xtec-tabs {
+.xylusec-app .xylusec-tabs {
     display: flex;
     align-items: center;
     --tabs-item-horizontal-height: 52px;
@@ -103,11 +103,11 @@ a.var-tab.var--box.var-tab--inactive:focus {
     --tab-font-size: 14px;
 }
 
-.xtec-app .var-tabs {
+.xylusec-app .var-tabs {
     margin-bottom: -2px
 }
 
-.xtec-app .var-tabs .var-tab {
+.xylusec-app .var-tabs .var-tab {
     font-weight: 600;
     white-space: pre;
     position: relative;
@@ -115,38 +115,38 @@ a.var-tab.var--box.var-tab--inactive:focus {
     text-decoration : none;
 }
 
-.xtec-app .xtec-tabs {
+.xylusec-app .xylusec-tabs {
     display: flex;
     border-bottom: 2px solid #E8E8EB;
     position: relative;
-    margin-bottom: var(--xtec-gutter)
+    margin-bottom: var(--xylusec-gutter)
 }
 
-.xtec-container {
+.xylusec-container {
     margin-right: auto;
     margin-left: auto;
     max-width: 1240px;
 }
 
 
-html:not([data-scroll="0"]) .xtec-header {
+html:not([data-scroll="0"]) .xylusec-header {
     box-shadow: 0 2px 5px #0000000d;
     transition: box-shadow .6s
 }
 /* End Tabs*/
 
 /* start header */
-.xtec-header {
+.xylusec-header {
     z-index: 1051;
     top: 32px;
     right: 0;
     left: 160px;
     background-color: #fff;
-    height: var(--xtec-header-height, 72px);
+    height: var(--xylusec-header-height, 72px);
     color: #141b38
 }
 
-.xtec-header .xtec-header-content {
+.xylusec-header .xylusec-header-content {
     padding: 0;
     display: flex;
     height: 72px;
@@ -154,33 +154,33 @@ html:not([data-scroll="0"]) .xtec-header {
     gap: 4px
 }
 
-.xtec-header .xtec-header-content a:focus {
+.xylusec-header .xylusec-header-content a:focus {
     box-shadow: none
 }
 
-.xtec-header .xtec-header-content .spacer {
+.xylusec-header .xylusec-header-content .spacer {
     display: inline-flex;
     width: 20px;
     height: 2px;
     background: #d0d1d7
 }
 
-.xtec-header .xtec-header-content .spacer {
+.xylusec-header .xylusec-header-content .spacer {
     transform: rotate(70deg)
 }
 
-.xtec-header .xtec-header-content .page-name {
+.xylusec-header .xylusec-header-content .page-name {
     display: inline-flex;
     font-size: 16px;
     font-weight: 400;
     flex: 1 0 auto
 }
 
-.xtec-header .xtec-header-content .header-actions {
+.xylusec-header .xylusec-header-content .header-actions {
     display: flex
 }
 
-.xtec-header .xtec-header-content .header-actions .round {
+.xylusec-header .xylusec-header-content .header-actions .round {
     position: relative;
     background-color: #f3f4f5;
     border-radius: 50%;
@@ -193,16 +193,16 @@ html:not([data-scroll="0"]) .xtec-header {
     transition: background-color .2s ease
 }
 
-.xtec-header .xtec-header-content .header-actions .round {
+.xylusec-header .xylusec-header-content .header-actions .round {
     margin-right: 10px
 }
 
-.xtec-header .xtec-header-content .header-actions .round svg {
+.xylusec-header .xylusec-header-content .header-actions .round svg {
     width: 20px;
     height: 20px
 }
 
-.xtec-header .xtec-header-content .header-actions .round:hover {
+.xylusec-header .xylusec-header-content .header-actions .round:hover {
     background-color: #e5e7e9
 }
 
@@ -225,27 +225,27 @@ html:not([data-scroll="0"]) .xtec-header {
     }
 }
 
-.xtec-card {
+.xylusec-card {
     position: relative;
     color: #141b38;
     background-color: #fff;
     border: 1px solid #E8E8EB;
     box-shadow: 0 2px 5px #0000000d;
-    margin: var(--xtec-gutter) 0
+    margin: var(--xylusec-gutter) 0
 }
 
-.xtec-card svg.xtec-circle-question-mark {
+.xylusec-card svg.xylusec-circle-question-mark {
     width: 17px;
     height: 17px;
     color: #8c8f9a;
     transition: background-color .2s ease
 }
 
-.xtec-card svg.xtec-circle-question-mark:hover {
+.xylusec-card svg.xylusec-circle-question-mark:hover {
     color: #5a5c66
 }
 
-.xtec-card>.header {
+.xylusec-card>.header {
     display: flex;
     align-items: center;
     height: 60px;
@@ -255,75 +255,75 @@ html:not([data-scroll="0"]) .xtec-header {
     border-bottom: 1px solid #E8E8EB
 }
 
-.xtec-card>.header.toggles {
+.xylusec-card>.header.toggles {
     cursor: pointer
 }
 
-.xtec-card>.header .text {
+.xylusec-card>.header .text {
     flex: 1 1 auto;
     display: flex;
     align-items: center
 }
 
-.xtec-card>.header .text>* {
+.xylusec-card>.header .text>* {
     cursor: auto
 }
 
-.xtec-card>.header .text .header-icon {
+.xylusec-card>.header .text .header-icon {
     display: flex
 }
 
-.xtec-card>.header .text .header-icon svg {
+.xylusec-card>.header .text .header-icon svg {
     width: 24px;
     height: 24px
 }
 
-.xtec-card>.header .text .header-icon svg {
+.xylusec-card>.header .text .header-icon svg {
     margin-left: 16px
 }
 
-.xtec-card>.header .text .header-title {
+.xylusec-card>.header .text .header-title {
     display: flex;
     align-items: center
 }
 
-.xtec-card>.header .text svg.xtec-circle-question-mark {
+.xylusec-card>.header .text svg.xylusec-circle-question-mark {
     cursor: pointer;
     width: 17px;
     height: 17px
 }
 
-.xtec-header .wpdb-header-content {
+.xylusec-header .wpdb-header-content {
     padding: 0;
     display: flex;
     height: 72px;
     align-items: center;
     gap: 4px;
 }
-.xtec-header .wpdb-header-content .spacer {
+.xylusec-header .wpdb-header-content .spacer {
     transform: rotate(-70deg);
 }
-.xtec-header .wpdb-header-content .spacer {
+.xylusec-header .wpdb-header-content .spacer {
     display: inline-flex;
     width: 20px;
     height: 2px;
     background: #d0d1d7;
 }
 
-.xtec-header .wpdb-header-content .page-name {
+.xylusec-header .wpdb-header-content .page-name {
     display: inline-flex;
     font-size: 16px;
     font-weight: 400;
     flex: 1 0 auto;
 }
-.xtec-header .wpdb-header-content .header-actions {
+.xylusec-header .wpdb-header-content .header-actions {
     display: flex;
 }
 
-.xtec-header .wpdb-header-content .header-actions .round {
+.xylusec-header .wpdb-header-content .header-actions .round {
     margin-left: 10px;
 }
-.xtec-header .wpdb-header-content .header-actions .round {
+.xylusec-header .wpdb-header-content .header-actions .round {
     position: relative;
     background-color: #f3f4f5;
     border-radius: 50%;
@@ -338,12 +338,12 @@ html:not([data-scroll="0"]) .xtec-header {
 /* end header*/
 
 /*support page start*/
-.xtec-about-us-plugins {
+.xylusec-about-us-plugins {
     margin-top: 20px;
     width: 100%;
 }
 
-.xtec-row {
+.xylusec-row {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -354,7 +354,7 @@ html:not([data-scroll="0"]) .xtec-header {
     margin-right: -.5rem;
 }
 
-.xtec-about-us-plugins .xtec-plugin {
+.xylusec-about-us-plugins .xylusec-plugin {
     flex-direction: column;
     font-size: 14px;
     line-height: 24px;
@@ -362,68 +362,68 @@ html:not([data-scroll="0"]) .xtec-header {
 }
 
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-main {
     display: flex;
     flex-direction: row;
     padding: 22px;
     flex-grow: 1;
 }
 
-.xtec-about-us-plugins .xtec-plugin-footer {
+.xylusec-about-us-plugins .xylusec-plugin-footer {
     background-color: #fff;
     box-shadow: 0 2px 5px #0000000d;
     border: 1px solid #E8E8EB;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main img {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-main img {
     margin: 0 30px 0 0;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main img {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-main img {
     width: 50px;
     max-width: 50px;
     max-height: 50px;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main .xtec-main-name {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-main .xylusec-main-name {
     margin: 0 0 10px;
     font-size: 14px;
     font-weight: 700;
     color: #141b38;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-main,  .xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-main,  .xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-footer {
     background-color: #fff;
     box-shadow: 0 2px 5px #0000000d;
     border: 1px solid #E8E8EB;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer .xtec-footer-status {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-footer .xylusec-footer-status {
     font-size: 14px;
     line-height: 22px;
     font-weight: 700;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer .xtec-footer-status div {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-footer .xylusec-footer-status div {
     margin-right: 12px;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer .xtec-footer-status .xtec-footer-status-label {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-footer .xylusec-footer-status .xylusec-footer-status-label {
     color: #8c8f9a;
 }
 
-.xtec-about-us-plugins .xtec-plugin .xtec-plugin-footer .xtec-footer-status div {
+.xylusec-about-us-plugins .xylusec-plugin .xylusec-plugin-footer .xylusec-footer-status div {
     display: inline-block;
 }
 
-.xtec-support-features-card,  .xtec-support-features-card2 {
+.xylusec-support-features-card,  .xylusec-support-features-card2 {
     display: flex;
     flex-basis: 32%;
     flex-wrap: nowrap;
@@ -433,85 +433,85 @@ html:not([data-scroll="0"]) .xtec-header {
     background-color: #fff;
 }
 
-.xtec-support-features-card2 {
+.xylusec-support-features-card2 {
     flex-basis: 48%;
 }
 
-.xtec-support-features-card:last-child, .xtec-support-features-card2:last-child {
+.xylusec-support-features-card:last-child, .xylusec-support-features-card2:last-child {
     max-width: 100%
 }
 
 @media (min-width: 661px) {
-    .xtec-support-features-card, .xtec-support-features-card2 {
+    .xylusec-support-features-card, .xylusec-support-features-card2 {
         margin-bottom: 1%
     }
 }
 
 @media (max-width: 660px) {
-    .xtec-support-features-card, .xtec-support-features-card2 {
+    .xylusec-support-features-card, .xylusec-support-features-card2 {
         max-width: 100%;
         margin-bottom: .5rem
     }
 }
 
 @media (min-width: 481px) {
-    .xtec-support-features-card {
+    .xylusec-support-features-card {
         padding: 2rem
     }
 }
 
 @media (max-width: 480px) {
-    .xtec-support-features-card {
+    .xylusec-support-features-card {
         padding: 1rem;
     }
-    .xtec-support-features-card2{
+    .xylusec-support-features-card2{
         padding: 0;
     }
-    .xtec-about-us-plugins .xtec-plugin{
+    .xylusec-about-us-plugins .xylusec-plugin{
         width: 100%;
     }
 }
 
-.xtec-support-features-list {
+.xylusec-support-features-list {
     list-style: initial;
     margin-left: 1rem
 }
 
-.xtec-support-features-img {
+.xylusec-support-features-img {
     width: 5.625rem;
     margin-right: .5rem;
     line-height: 1
 }
 
 @media (min-width: 961px) {
-    .xtec-support-features-img {
+    .xylusec-support-features-img {
         width: 6.5rem;
         margin-right: 1.125rem
     }
 }
 
-.xtec-support-features-icon {
+.xylusec-support-features-icon {
     display: block;
     max-width: 80%;
     margin-left: 0px;
 }
 
 @media (min-width: 481px) {
-    .xtec-support-features-icon {
+    .xylusec-support-features-icon {
         max-width: 80%;
         margin-left: 0px;
     }
 }
 
-.xtec-support-features-text {
+.xylusec-support-features-text {
     flex: 1
 }
 
-.xtec-support-features-title {
+.xylusec-support-features-title {
     margin: 0
 }
 
-.xtec-support-features, .xtec-support-features2 {
+.xylusec-support-features, .xylusec-support-features2 {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -523,52 +523,52 @@ html:not([data-scroll="0"]) .xtec-header {
 }
 
 @media (max-width: 660px) {
-    .xtec-support-features, .xtec-support-features2  {
+    .xylusec-support-features, .xylusec-support-features2  {
         display: block
     }
 }
 /*end new support page*/
 
 /* plugin common Css start */
-.xtec-card-single-row {
+.xylusec-card-single-row {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
 }
-.xtec-card-single-row-content {
+.xylusec-card-single-row-content {
     display: flex;
     align-items: center;
     padding: 15px;
 }
-.xtec-profile-info {
+.xylusec-profile-info {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
     width: 100%;
 }
-.xtec-profile-pic {
+.xylusec-profile-pic {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;
 }
-.xtec-user-name {
+.xylusec-user-name {
     font-weight: bold;
 }
-.xtec-user-email {
+.xylusec-user-email {
     font-size: 14px;
     color: #555;
     opacity: 0.8;
 }
-.xtec-user-details{
+.xylusec-user-details{
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
 }
 
-.xtec-post-type-item{
+.xylusec-post-type-item{
     display: flex;
     align-items: center;
     background: #f8f9fa;
@@ -578,10 +578,10 @@ html:not([data-scroll="0"]) .xtec-header {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.xtec_sp_keyword{
+.xylusec_sp_keyword{
     cursor: pointer;    
 }
-.xtec_sp_keyword:hover {
+.xylusec_sp_keyword:hover {
     background: #005ae01f;
 }
 
@@ -597,22 +597,22 @@ html:not([data-scroll="0"]) .xtec-header {
     margin : 20px 0;
 }
     
-.xtec-inner-main-section{
+.xylusec-inner-main-section{
     display: flex;
 }
-.xtec-inner-section-1{
+.xylusec-inner-section-1{
     width : 20%;
 }
-.xtec-inner-section-2{
+.xylusec-inner-section-2{
     width : 80%;
 }
 
-.xtec-inner-section-2 .xtec-texonomy-section{
+.xylusec-inner-section-2 .xylusec-texonomy-section{
     display: flex;
     gap: 30px;
 }
 
-.xtec-wrap{
+.xylusec-wrap{
     top: 10px;
     position: relative;
 }
@@ -622,11 +622,11 @@ html:not([data-scroll="0"]) .xtec-header {
     display: none !important;
 }
 
-.xtec-notice{
+.xylusec-notice{
     display: block !important;
 }
 
-.xtec-circle-question-mark {
+.xylusec-circle-question-mark {
     cursor: pointer;
     width: 17px;
     height: 17px;
@@ -635,7 +635,7 @@ html:not([data-scroll="0"]) .xtec-header {
     margin: 5px 5px 0 5px;
 }
 
-.xtec-card .content {
+.xylusec-card .content {
     font-size: 14px;
     line-height: 22px;
     padding: 20px;
@@ -647,46 +647,46 @@ html:not([data-scroll="0"]) .xtec-header {
 /* plugin common css end */
 
 /* start footer section */
-.xtec-footer {
+.xylusec-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px 0 30px;
     margin-top: 70px;
 }
-.xtec-footer div:first-of-type {
+.xylusec-footer div:first-of-type {
     font-weight: 600;
 }
-.xtec-footer div {
+.xylusec-footer div {
     margin-top: 10px;
 }
-.xtec-footer .xtec-links a {
+.xylusec-footer .xylusec-links a {
     color: #005ae0;
 }
 
-.xtec-footer .xtec-social-links a:focus {
+.xylusec-footer .xylusec-social-links a:focus {
     box-shadow: none;
 }
 
-.xtec-footer .xtec-social-links a:hover {
+.xylusec-footer .xylusec-social-links a:hover {
     color: #005AE0;
 }
 
-.xtec-footer div svg.xtec-facebook, .xtec-footer div svg.xtec-linkedin {
+.xylusec-footer div svg.xylusec-facebook, .xylusec-footer div svg.xylusec-linkedin {
     width: 16px;
     height: 16px;
 }
-.xtec-footer div svg.xtec-twitter, .xtec-footer div svg.xtec-youtube {
+.xylusec-footer div svg.xylusec-twitter, .xylusec-footer div svg.xylusec-youtube {
     width: 17px;
     height: 16px;
 }
-.xtec-footer .xtec-social-links a{
+.xylusec-footer .xylusec-social-links a{
     text-decoration : none;
     color: #787c82;
 }
 /* end footer section*/
 
-.xtec_button {
+.xylusec_button {
     font-weight: 600 !important;
     padding: 10px 15px;
     border-radius: 4px;
@@ -700,38 +700,38 @@ html:not([data-scroll="0"]) .xtec-header {
     background-color: #005AE0;
     border: 0;
 }
-.xtec_button:hover, .xtec_button:active, .xtec_button:focus {
+.xylusec_button:hover, .xylusec_button:active, .xylusec_button:focus {
     background-color: #0049b3;
     border: 0;
     color: #fff;
 }
 
 /* setting css  start */
-.xtec-settings-wrapper {
+.xylusec-settings-wrapper {
     display: flex;
     flex-direction: column;
     gap: 20px;
     margin: 5px;
 }
 
-.xtec-setting-row {
+.xylusec-setting-row {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.xtec-inner-section-1 {
+.xylusec-inner-section-1 {
     flex: 0 0 220px;
     font-weight: 600;
 }
 
-.xtec-inner-section-2 {
+.xylusec-inner-section-2 {
     flex: 1;
 }
 
-.xtec-inner-section-2 select,
-.xtec-inner-section-2 input[type="text"],
-.xtec-inner-section-2 input[type="number"] {
+.xylusec-inner-section-2 select,
+.xylusec-inner-section-2 input[type="text"],
+.xylusec-inner-section-2 input[type="number"] {
     max-width: 100%;
     width: 50%;
     padding: 7px 10px;
@@ -739,7 +739,7 @@ html:not([data-scroll="0"]) .xtec-header {
     border-radius: 4px;
 }
 
-.xtec-inner-section-2 input[type="color"] {
+.xylusec-inner-section-2 input[type="color"] {
     max-width: 100%;
     width: 50%;
     border: 1px solid #ccd0d4;

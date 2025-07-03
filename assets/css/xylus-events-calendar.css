@@ -1,4 +1,4 @@
-#xtec-event-search {
+#xylusec-event-search {
     padding: 10px 15px;
     width: 100%;
     max-width: 400px;
@@ -7,22 +7,22 @@
     font-size: 16px;
 }
 
-#xtec-search-events {
+#xylusec-search-events {
   text-transform: lowercase;
 }
 
-#xtec-search-events:first-letter {
+#xylusec-search-events:first-letter {
   text-transform: uppercase;
 }
 
 /* Calendar Element */
-#xtec-calendar {
+#xylusec-calendar {
     flex-grow: 1;
     margin: 0;
 }
 
 /* Event styling */
-#xtec-calendar .fc-event {
+#xylusec-calendar .fc-event {
     cursor: pointer;
     padding: 5px;
     margin: 2px;
@@ -34,7 +34,7 @@
     border-radius: 5px;
 }
 
-#xtec-calendar .fc-xtec-event-image {
+#xylusec-calendar .fc-xylusec-event-image {
     width: 100%;
     height: auto;
     margin-bottom: 5px;
@@ -43,7 +43,7 @@
 
 
 /* Tooltip Styles */
-.xtec-event-tooltip {
+.xylusec-event-tooltip {
 	position: absolute;
 	z-index: 99999;
     width: 250px;
@@ -60,32 +60,32 @@
     transform: translateX(-50%);
 }
 
-.xtec-event-tooltip p{
+.xylusec-event-tooltip p{
     line-height: unset;
 }
 
-.xtec-event-tooltip img {
+.xylusec-event-tooltip img {
     width: 100%;
     height: auto;
     border-radius: 3px;
     margin-bottom: 8px;
 }
 
-.xtec-event-tooltip h4 {
+.xylusec-event-tooltip h4 {
     margin: 0 0 5px 0;
     font-size: 16px;
     color: #333;
     cursor: pointer; /* clickable title */
 }
 
-.xtec-event-tooltip .xtec-event-date {
+.xylusec-event-tooltip .xylusec-event-date {
     font-size: 13px;
     color: #666;
     margin-bottom: 5px;
 }
 
 /* Popup Overlay */
-.xtec-event-popup-overlay {
+.xylusec-event-popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -99,7 +99,7 @@
 }
 
 /* Popup Content */
-.xtec-event-popup {
+.xylusec-event-popup {
     background: white;
     padding: 20px;
     width: 400px;
@@ -108,7 +108,7 @@
     box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
-.xtec-event-popup .close-popup {
+.xylusec-event-popup .close-popup {
     position: absolute;
     top: 10px;
     right: 15px;
@@ -116,21 +116,21 @@
     cursor: pointer;
 }
 
-.xtec-event-popup img {
+.xylusec-event-popup img {
     width: 100%;
     border-radius: 4px;
     margin-top: 10px;
 }
 
 /* grid view css start */
-.xtec-event-grid-container {
+.xylusec-event-grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 columns */
     gap: 25px;
     padding: 20px 0;
 }
 
-.xtec-event-card {
+.xylusec-event-card {
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -142,39 +142,39 @@
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
-    .xtec-event-grid-container {
+    .xylusec-event-grid-container {
         grid-template-columns: repeat(3, 1fr); /* 3 columns */
     }
 }
 
 @media (max-width: 900px) {
-    .xtec-event-grid-container {
+    .xylusec-event-grid-container {
         grid-template-columns: repeat(2, 1fr); /* 2 columns */
     }
 }
 
 @media (max-width: 600px) {
-    .xtec-event-grid-container {
+    .xylusec-event-grid-container {
         grid-template-columns: 1fr; /* 1 column */
     }
 }
 
 /* Rest of your existing CSS remains the same */
-.xtec-event-img img {
+.xylusec-event-img img {
     width: 100%;
     height: 180px;
     object-fit: cover;
     display: block;
 }
 
-.xtec-event-info {
+.xylusec-event-info {
     padding: 20px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-.xtec-event-title {
+.xylusec-event-title {
     font-size: 18px;
     margin: 0 0 12px 0;
     color: #222;
@@ -182,7 +182,7 @@
     font-weight: 600;
 }
 
-.xtec-event-meta {
+.xylusec-event-meta {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -190,15 +190,15 @@
     color: #555;
 }
 
-.xtec-event-location {
+.xylusec-event-location {
     font-weight: 500;
 }
 
-.xtec-event-date {
+.xylusec-event-date {
     color: #666;
 }
 
-.xtec-event-excerpt {
+.xylusec-event-excerpt {
     font-size: 14px;
     color: #555;
     line-height: 1.5;
@@ -206,7 +206,7 @@
     flex-grow: 1;
 }
 
-.xtec-event-footer {
+.xylusec-event-footer {
     margin-top: auto;
 }
 
@@ -214,7 +214,7 @@
 
 
 /* row view css start */
-.xtec-event-row {
+.xylusec-event-row {
     padding: 0;
     margin-bottom: 30px;
     border: 1px solid #e0e0e0;
@@ -225,26 +225,26 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.xtec-event-row-content {
+.xylusec-event-row-content {
     display: flex;
     width: 100%;
 }
 
-.xtec-event-image {
+.xylusec-event-image {
     width: 300px;
     height: auto;
     object-fit: cover;
     flex-shrink: 0;
 }
 
-.xtec-image-anchor-container {
+.xylusec-image-anchor-container {
     min-width: 30%;
     display: block;
     overflow: hidden;
     width: 30%;
 }
 
-.xtec-image-anchor-container img {
+.xylusec-image-anchor-container img {
     width: 100%;
     object-fit: cover;
     object-position: center;
@@ -252,32 +252,32 @@
     height: 280px;
 }
 
-.xtec-event-details {
+.xylusec-event-details {
     padding: 25px;
     flex-grow: 1;
 }
 
-.xtec-event-title {
+.xylusec-event-title {
     font-size: 24px;
     margin: 0 0 10px 0;
     color: #333;
 }
 
-.xtec-event-location {
+.xylusec-event-location {
     font-size: 16px;
     color: #555;
     margin-bottom: 15px;
     font-weight: 500;
 }
 
-.xtec-event-excerpt {
+.xylusec-event-excerpt {
     font-size: 14px;
     color: #666;
     margin-bottom: 20px;
     line-height: 1.5;
 }
 
-.xtec-event-meta {
+.xylusec-event-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -285,13 +285,13 @@
     border-top: 1px solid #eee;
 }
 
-.xtec-event-date {
+.xylusec-event-date {
     font-size: 14px;
     color: #555;
     font-weight: 500;
 }
 
-.xtec-event-meta-row{
+.xylusec-event-meta-row{
     display: flex;
     flex-direction: row;
     margin-bottom: 0;
@@ -299,29 +299,29 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .xtec-event-row-content {
+    .xylusec-event-row-content {
         flex-direction: column;
     }
     
-    .xtec-event-image {
+    .xylusec-event-image {
         width: 100%;
         height: 200px;
     }
 
-    .xtec-image-anchor-container {
+    .xylusec-image-anchor-container {
         width: 100%;
     }
 }
 
 @media (max-width: 600px) {
-  .xtec-event-meta-row {
+  .xylusec-event-meta-row {
     display: flex;
     flex-direction: column;
   }
-  .xtec-event-meta-row a{
+  .xylusec-event-meta-row a{
     width: 100% !important;
   }
-  .xtec-image-anchor-container {
+  .xylusec-image-anchor-container {
     width: 100%;
   }
 }
@@ -330,7 +330,7 @@
 
 /* Button Styles */
 
-.xtec-event-button {
+.xylusec-event-button {
     display: inline-block;
     background: #000;
     color: #fff;
@@ -344,7 +344,7 @@
     transition: background 0.3s;
     box-sizing: border-box;
 }
-#xtec-calendar-container .fc-button {
+#xylusec-calendar-container .fc-button {
     padding: 8px 14px;
     background-color: #2c3e50;
     color: #fff;
@@ -356,38 +356,38 @@
     align-items: center;
 }
 
-#xtec-calendar-container .fc-toolbar-chunk{
+#xylusec-calendar-container .fc-toolbar-chunk{
     display: flex;
 }
 
 
 
-#xtec-calendar-container .fc-button:first-child {
+#xylusec-calendar-container .fc-button:first-child {
     border-radius: 5px 0 0 5px;
 }
 
-#xtec-calendar-container .fc-button:last-child {
+#xylusec-calendar-container .fc-button:last-child {
     border-radius: 0 5px 5px 0;
 }
 
-#xtec-calendar-container .fc-button:hover {
+#xylusec-calendar-container .fc-button:hover {
     background-color: #2c3e50;
 }
 
 
 /* Responsive (Mobile View) */
 @media (max-width: 768px) {
-    #xtec-calendar-container .fc-button-group {
+    #xylusec-calendar-container .fc-button-group {
         justify-content: space-between;
         width: 100%;
     }
 
-    #xtec-calendar-container .fc-button {
+    #xylusec-calendar-container .fc-button {
         flex: 1 1 auto;
         font-size: 16px;
     }
 
-    #xtec-search-events {
+    #xylusec-search-events {
         width: 100%;
     }
 }
@@ -395,125 +395,125 @@
 
 /* calendar css start */
 @media ( max-width: 768px ) {
-    #xtec-calendar-container {
+    #xylusec-calendar-container {
         height: auto;
         min-height: 100vh;
         padding: 10px;
     }
     
-    #xtec-calendar .fc-toolbar {
+    #xylusec-calendar .fc-toolbar {
         flex-direction: column;
     }
     
-    #xtec-calendar .fc-toolbar-title {
+    #xylusec-calendar .fc-toolbar-title {
         margin: 10px 0;
         font-size: 1.2em;
     }
     
-    #xtec-event-search {
+    #xylusec-event-search {
         max-width: 100%;
     }
 }
 
-#xtec-calendar  .fc-dayGridMonth-view tr.fc-scrollgrid-section.fc-scrollgrid-section-header th {
+#xylusec-calendar  .fc-dayGridMonth-view tr.fc-scrollgrid-section.fc-scrollgrid-section-header th {
     width: 100% !important;
     padding: 0 !important;
 }
 
-#xtec-calendar tr.fc-scrollgrid-section.fc-scrollgrid-section-body td{
+#xylusec-calendar tr.fc-scrollgrid-section.fc-scrollgrid-section-body td{
     padding: 0 !important;
 }
 
-#xtec-calendar table.fc-scrollgrid-sync-table {
+#xylusec-calendar table.fc-scrollgrid-sync-table {
     width: 100% !important;
 }
 
-#xtec-calendar-container .fc-header-toolbar.fc-toolbar.fc-toolbar-ltr{
+#xylusec-calendar-container .fc-header-toolbar.fc-toolbar.fc-toolbar-ltr{
     border: 1px solid #d3d3d3;
     border-radius: 5px;
     padding: 1em;
 }
-#xtec-calendar-container a.fc-col-header-cell-cushion {
+#xylusec-calendar-container a.fc-col-header-cell-cushion {
     padding: 10px !important;
 }
 
-#xtec-calendar-container .fc-daygrid-day-frame {
+#xylusec-calendar-container .fc-daygrid-day-frame {
   border-radius: 4px;
 }
 
-#xtec-calendar-container .fc-col-header {
+#xylusec-calendar-container .fc-col-header {
     border-radius: 5px;
 }
 
-#xtec-calendar-container .fc-scrollgrid {
+#xylusec-calendar-container .fc-scrollgrid {
   border-radius: 5px; 
 }
 
-#xtec-calendar-container .fc-scrollgrid-section > td {
+#xylusec-calendar-container .fc-scrollgrid-section > td {
   border-radius: 0px 0px 5px 5px;
 }
-#xtec-calendar-container .fc-scrollgrid-section > th {
+#xylusec-calendar-container .fc-scrollgrid-section > th {
   border-radius: 0px 5px 0px 0px;
 }
 
-#xtec-calendar-container .fc .fc-daygrid-day-top {
+#xylusec-calendar-container .fc .fc-daygrid-day-top {
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
 }
 
-#xtec-calendar-container .fc .fc-day-other .fc-daygrid-day-top, .fc-daygrid-day-top{
+#xylusec-calendar-container .fc .fc-day-other .fc-daygrid-day-top, .fc-daygrid-day-top{
     padding: 10px !important;
 }
 
-#xtec-calendar-container .fc-today-button {
+#xylusec-calendar-container .fc-today-button {
     border-radius: 5px !important;
 }
 
-#xtec-calendar-container a.xtec-event-button:hover, .xtec_load_more_button:hover, .fc-button-group .fc-button:hover, .xtec-custom-buttons-container .fc-button:hover {
+#xylusec-calendar-container a.xylusec-event-button:hover, .xylusec_load_more_button:hover, .fc-button-group .fc-button:hover, .xylusec-custom-buttons-container .fc-button:hover {
     opacity: 0.8;
 }
-#xtec-calendar-container .fc-event-past {
+#xylusec-calendar-container .fc-event-past {
     opacity: 0.6;
 }
 
-#xtec-calendar-container a{
+#xylusec-calendar-container a{
     text-decoration: none !important;
 }
 
-#xtec-calendar table.fc-col-header{
+#xylusec-calendar table.fc-col-header{
     margin: 0;
 }
- #xtec-calendar table.fc-scrollgrid-sync-table {
+ #xylusec-calendar table.fc-scrollgrid-sync-table {
     margin-bottom:0;
 }
 
-#xtec-calendar-container .fc-xtec-event-title{
+#xylusec-calendar-container .fc-xylusec-event-title{
     white-space: normal;
     text-overflow: unset;
     overflow: visible;
     word-break: break-word;
     line-height: 1.5;
 }
-#xtec-calendar .fc-daygrid-event-dot, #xtec-calendar .fc-event-time{
+#xylusec-calendar .fc-daygrid-event-dot, #xylusec-calendar .fc-event-time{
     display: none;
 }
 
 
-#xtec-calendar .fc .fc-scroller-liquid-absolute {
+#xylusec-calendar .fc .fc-scroller-liquid-absolute {
     inset: 0px;
     position: unset !important;
     overflow: visible !important;
 }
 
-#xtec-calendar .fc-daygrid-day-top {
+#xylusec-calendar .fc-daygrid-day-top {
     margin: -10px 0 0 -5px;
 }
 
 
 /* calendar css end */
 
-.xtec-custom-buttons-container {
+.xylusec-custom-buttons-container {
     display:flex;
     justify-content:space-between;
     align-items: stretch;
@@ -522,7 +522,7 @@
     padding: 1em;
     border-radius: 5px;
 }
-.xtec-custom-buttons-container-first-child{
+.xylusec-custom-buttons-container-first-child{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -531,14 +531,14 @@
 }
 
 @media ( max-width: 768px ) {
-    #xtec-calendar-container.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
+    #xylusec-calendar-container.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
         display: flex;
         flex-direction: row;
     }
-    #xtec-calendar-container .fc-toolbar-chunk:first-child {
+    #xylusec-calendar-container .fc-toolbar-chunk:first-child {
         display: flex;
     }
-    #xtec-calendar-container .xtec-custom-buttons-container{
+    #xylusec-calendar-container .xylusec-custom-buttons-container{
         display:flex;
         justify-content:space-between;
         align-items:center;
@@ -559,7 +559,7 @@
         display: flex;
         flex-direction: column;
     }
-    .xtec-custom-buttons-container{
+    .xylusec-custom-buttons-container{
         display:flex;
         justify-content:space-between;
         align-items:center;
@@ -570,7 +570,7 @@
         gap:10px;
         flex-direction: column;
     }
-    .xtec-custom-buttons-container-first-child{
+    .xylusec-custom-buttons-container-first-child{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -580,7 +580,7 @@
 }
 
 
-.xtec_load_more_button{
+.xylusec_load_more_button{
     background-color: #2c3e50;
     color: #fff;
     display: inline-block;
@@ -595,18 +595,18 @@
 }
 
 @media (max-width: 768px) {
-    .xtec_load_more_button {
+    .xylusec_load_more_button {
         padding: 10px !important;
     }
 }
 
 /* spinner css start */
-.xtec-spinner-main{
+.xylusec-spinner-main{
     display: flex;
     justify-content: center;
 }
 
-.xtec-load-spinner {
+.xylusec-load-spinner {
     margin-top: 15px;
     height: 30px;
     aspect-ratio: 2.5;
@@ -632,15 +632,15 @@
 
 
 /* staggered view start */
-.xtec-custom-grid-staggered-view {
+.xylusec-custom-grid-staggered-view {
   padding: 10px 0px;
 }
 
-.xtec-event-grid-staggered-container {
+.xylusec-event-grid-staggered-container {
   column-count: 4;
 }
 
-.xtec-event-card-staggered {
+.xylusec-event-card-staggered {
   display: block;
   width: 100%;
   background: #fff;
@@ -652,54 +652,54 @@
   position: relative;
 }
 
-.xtec-staggered-image img {
+.xylusec-staggered-image img {
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
 }
 
-.xtec-staggered-details {
+.xylusec-staggered-details {
   padding: 15px;
 }
 
-.xtec-event-title {
+.xylusec-event-title {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.xtec-event-location,
-.xtec-event-date {
+.xylusec-event-location,
+.xylusec-event-date {
   font-size: 14px;
   color: #777;
   margin-bottom: 6px;
 }
 
-.xtec-event-excerpt {
+.xylusec-event-excerpt {
   font-size: 15px;
   color: #444;
   margin-bottom: 12px;
 }
 
-.xtec-load-more-wrap {
+.xylusec-load-more-wrap {
   margin-top: 40px;
   text-align: center;
 }
 
 /* Responsive columns */
 @media (max-width: 1200px) {
-  .xtec-event-grid-staggered-container {
+  .xylusec-event-grid-staggered-container {
     column-count: 3;
   }
 }
 @media (max-width: 900px) {
-  .xtec-event-grid-staggered-container {
+  .xylusec-event-grid-staggered-container {
     column-count: 2;
   }
 }
 @media (max-width: 600px) {
-  .xtec-event-grid-staggered-container {
+  .xylusec-event-grid-staggered-container {
     column-count: 1;
   }
 }

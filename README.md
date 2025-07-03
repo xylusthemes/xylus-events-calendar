@@ -1,6 +1,6 @@
-# Easy Events Calendar
+# Xylus Events Calendar
 
-**Easy Events Calendar** displays upcoming events from various third-party plugins in a unified, responsive, and customizable calendar with multiple layout options.
+**Xylus Events Calendar** displays upcoming events from various third-party plugins in a unified, responsive, and customizable calendar with multiple layout options.
 
 📅 **Supports Events Imported From:**
 - Import Eventbrite Events
@@ -24,7 +24,7 @@
 - Customizable load more button: text, background color, text color.
 - Pagination setting to control how many events to show at once.
 - Settings panel to manage appearance and functionality.
-- Shortcode: `[easy_events_calendar]` to render events anywhere.
+- Shortcode: `[xylus_events_calendar]` to render events anywhere.
 - Compatible with modern WordPress versions.
 
 ---
@@ -33,8 +33,8 @@
 
 1. Upload the plugin to the `/wp-content/plugins/` directory.
 2. Activate the plugin via **Plugins > Installed Plugins**.
-3. Go to **Settings > Easy Events Calendar** to configure options.
-4. Use the shortcode `[easy_events_calendar]` in any page or post.
+3. Go to **Settings > Xylus Events Calendar** to configure options.
+4. Use the shortcode `[xylus_events_calendar]` in any page or post.
 
 ---
 
@@ -64,7 +64,7 @@ Yes, you can change the button text, button color, text color, and the number of
 
 ### How do I display the calendar?
 
-Use the shortcode `[easy_events_calendar]` in your content or use the widget/block in your theme.
+Use the shortcode `[xylus_events_calendar]` in your content or use the widget/block in your theme.
 
 ---
 
