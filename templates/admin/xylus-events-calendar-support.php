@@ -86,9 +86,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                         </div>
 
                         <?php 
-							global $xt_events_calendar;
+							global $xylusec_events_calendar;
                             $plugin_list = array();
-                            $plugin_list = $xt_events_calendar->common->xylusec_get_xyuls_themes_plugins();
+                            $plugin_list = $xylusec_events_calendar->common->xylusec_get_xyuls_themes_plugins();
                         ?>
                         <div class="" style="margin-top: 20px;">
                             <h3 class="setting_bar"><?php esc_html_e( 'Plugins you should try','xylus-events-calendar' ); ?></h3>

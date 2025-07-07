@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Xylus_Events_Calendar_Ajax {
+class Xylus_Events_Calendar_Ajax_Handler {
 
 	/**
 	 * Initialize the class and set its properties.
@@ -120,7 +120,7 @@ class Xylus_Events_Calendar_Ajax {
 	 * @return void
 	 */
 	public function xylusec_load_more_events() {
-		global $xt_events_calendar;
+		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
 		$paged   = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
@@ -128,12 +128,12 @@ class Xylus_Events_Calendar_Ajax {
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$events  = $xt_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
+		$events  = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
 
 		if ($events->have_posts()) :
 			while ($events->have_posts()) : $events->the_post();
 				$event_id   = get_the_ID();    
-				$vdbutton   = $xt_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
+				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
 				$start_ts   = get_post_meta( $event_id, 'start_ts', true );
 				$location   = get_post_meta( $event_id, 'venue_name', true );
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
@@ -172,7 +172,7 @@ class Xylus_Events_Calendar_Ajax {
 	 * @return void
 	 */
 	public function xylusec_load_more_row_events() {
-		global $xt_events_calendar;
+		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
 		$paged        = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
@@ -180,13 +180,13 @@ class Xylus_Events_Calendar_Ajax {
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$query        = $xt_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
+		$query        = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
 		
 		
 		if ($query->have_posts()) :
 			while ($query->have_posts()) : $query->the_post();
 				$event_id   = get_the_ID();    
-				$vdbutton   = $xt_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 30 );
+				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 30 );
 				$start_ts   = get_post_meta( $event_id, 'start_ts', true );
 				$location   = get_post_meta( $event_id, 'venue_name', true );
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
@@ -225,7 +225,7 @@ class Xylus_Events_Calendar_Ajax {
 	 * @return void
 	 */
 	public function xylusec_load_more_staggered_events() {
-		global $xt_events_calendar;
+		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
 		$paged              = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
@@ -233,13 +233,13 @@ class Xylus_Events_Calendar_Ajax {
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color        = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$query              = $xt_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
+		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
 
 		
 		if ($query->have_posts()) :
 			while ($query->have_posts()) : $query->the_post();
 				$event_id   = get_the_ID();    
-				$vdbutton   = $xt_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
+				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
 				$start_ts   = get_post_meta( $event_id, 'start_ts', true );
 				$location   = get_post_meta( $event_id, 'venue_name', true );
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );

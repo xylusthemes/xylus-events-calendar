@@ -76,7 +76,7 @@ class Xylus_Events_Calendar_Admin {
 	 */
 
 	public function xylusec_admin_page(){
-        global $xt_events_calendar;
+        global $xylusec_events_calendar;
 		
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $active_tab = isset( $_GET['tab'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) ) : 'general';
@@ -86,7 +86,7 @@ class Xylus_Events_Calendar_Admin {
             $page_title = $gettab;
         }
         
-        $posts_header_result = $xt_events_calendar->common->xylusec_render_common_header( $page_title );
+        $posts_header_result = $xylusec_events_calendar->common->xylusec_render_common_header( $page_title );
         ?>
         
         <div class="xylusec-container" >
@@ -135,7 +135,7 @@ class Xylus_Events_Calendar_Admin {
             </div>
         </div>
         <?php
-        $posts_footer_result = $xt_events_calendar->common->xylusec_render_common_footer();
+        $posts_footer_result = $xylusec_events_calendar->common->xylusec_render_common_footer();
     }
 
 	/**
@@ -145,7 +145,7 @@ class Xylus_Events_Calendar_Admin {
 	 * @return void
 	 */
 	public function xylusec_get_selected_tab_submenu_xtfefoli( $submenu_file ) {
-		global $xt_events_calendar;
+		global $xylusec_events_calendar;
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! empty( $_GET['page'] ) && esc_attr( sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) == 'xt_events_calendar' ) {

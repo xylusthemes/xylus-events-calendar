@@ -11,7 +11,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-global $xt_events_calendar;
+global $xylusec_events_calendar;
 
 $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
 

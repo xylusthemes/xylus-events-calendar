@@ -33,7 +33,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		 * Xylus_Events_Calendar The one true Xylus_Events_Calendar.
 		 */
 		private static $instance;
-		public $common, $xt_events_calendar, $admin, $ajax;
+		public $common, $xylusec_events_calendar, $admin, $ajax_handler;
 
 		/**
 		 * Main Xylus Events Calendar Instance.
@@ -60,9 +60,9 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 				register_activation_hook( __FILE__, array( self::$instance, 'xylusec_plugin_set_activation_flag' ) );
 
 				self::$instance->includes();
-				self::$instance->common     = new Xylus_Events_Calendar_Common();
-				self::$instance->admin      = new Xylus_Events_Calendar_Admin();
-				self::$instance->ajax       = new Xylus_Events_Calendar_Ajax();
+				self::$instance->common       = new Xylus_Events_Calendar_Common();
+				self::$instance->admin        = new Xylus_Events_Calendar_Admin();
+				self::$instance->ajax_handler = new Xylus_Events_Calendar_Ajax_Handler();
 
 			}
 			return self::$instance;
@@ -231,7 +231,7 @@ endif; // End If class exists check.
  * Use this function like you would a global variable, except without needing
  * to declare the global.
  *
- * Example: <?php $xt_events_calendar = xylusec_xt_events_calendar(); ?>
+ * Example: <?php $xylusec_events_calendar = xylusec_xt_events_calendar(); ?>
  *
  * @since 1.0.0
  * @return object|Xylus_Events_Calendar The one true Xylus_Events_Calendar Instance.
@@ -254,6 +254,6 @@ function xylusec_get_options() {
 
 // Get Xylus_Events_Calendar Running.
 global $xylusec_errors, $xylusec_success_msg, $xylusec_warnings, $xylusec_info_msg;
-$xt_events_calendar = xylusec_xt_events_calendar();
+$xylusec_events_calendar = xylusec_xt_events_calendar();
 $xylusec_errors = $xylusec_warnings = $xylusec_success_msg = $xylusec_info_msg = array();
 

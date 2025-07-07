@@ -3,7 +3,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-global $xt_events_calendar;
+global $xylusec_events_calendar;
 $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
 ?>
 <div id="xylusec-calendar-container">
@@ -23,7 +23,7 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
     <div id="xylusec-grid-view-container" class="custom-grid-view" style="display: none;">
         <div class="xylusec-event-grid-container"></div>
         <div class="xylusec-load-more-wrap">
-            <?php echo wp_kses_post( $xt_events_calendar->common->xylusec_get_xylusec_load_more_button( $xylusec_options, 'load-more-events' ) ); ?>
+            <?php echo wp_kses_post( $xylusec_events_calendar->common->xylusec_get_xylusec_load_more_button( $xylusec_options, 'load-more-events' ) ); ?>
             <div class="xylusec-spinner-main" >
                 <span class="xylusec-load-spinner xylusec-spinner" style="display:none;"></span>
             </div>
@@ -33,7 +33,7 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
     <div id="xylusec-row-view-container" class="custom-row-view" style="display: none;">
         <div class="xylusec-event-row-container"></div>
         <div class="xylusec-load-more-wrap">
-            <?php echo wp_kses_post( $xt_events_calendar->common->xylusec_get_xylusec_load_more_button( $xylusec_options, 'load-more-row-events' ) ); ?>
+            <?php echo wp_kses_post( $xylusec_events_calendar->common->xylusec_get_xylusec_load_more_button( $xylusec_options, 'load-more-row-events' ) ); ?>
             <div class="xylusec-spinner-main" >
                 <span class="xylusec-load-spinner xylusec-spinner" style="display:none;"></span>
             </div>
@@ -43,7 +43,7 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
     <div id="xylusec-grid-staggered-view-container" class="xylusec-custom-grid-staggered-view" style="display: none;">
         <div class="xylusec-event-grid-staggered-container"></div>
         <div class="xylusec-load-more-wrap">
-            <?php echo wp_kses_post( $xt_events_calendar->common->xylusec_get_xylusec_load_more_button( $xylusec_options, 'load-more-grid-staggered-events' ) ); ?>
+            <?php echo wp_kses_post( $xylusec_events_calendar->common->xylusec_get_xylusec_load_more_button( $xylusec_options, 'load-more-grid-staggered-events' ) ); ?>
             <div class="xylusec-spinner-main" >
                 <span class="xylusec-load-spinner xylusec-spinner" style="display:none;"></span>
             </div>
