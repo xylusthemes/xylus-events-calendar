@@ -77,8 +77,8 @@ class XYLUSEC_Shortcode_List_Table extends WP_List_Table {
 		$data[] = array(
 					'id'            => 1,
 					'how_to_use'    => 'Explore upcoming events in various layouts, including a calendar, grid, list, and more',
-					'shortcode'     => '<p class="xylusec_short_code">[xylus_events_calendar]</p>',
-					'action'     	=> '<button class="xylusec-btn-copy-shortcode button-primary"  data-value="[xylus_events_calendar]">Copy</button>',
+					'shortcode'     => '<p class="xylusec_short_code">[easy_events_calendar]</p>',
+					'action'     	=> '<button class="xylusec-btn-copy-shortcode button-primary"  data-value="[easy_events_calendar]">Copy</button>',
 					);
 		return $data;
 	}
