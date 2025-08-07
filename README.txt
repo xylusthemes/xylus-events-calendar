@@ -4,7 +4,7 @@ Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
 Tested up to: 6.8
 Requires PHP: 8.0 
-Stable tag: 1.0.0  
+Stable tag: 1.0.1  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -90,6 +90,9 @@ Use the shortcode `<code>[easy_events_calendar]</code>` on any post, page, or wi
 ---
 
 == Changelog ==
+
+= 1.0.1 =
+* Updated plugin branding and improved overall presentation.
 
 = 1.0.0 =
 * Initial release
