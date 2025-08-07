@@ -1,4 +1,4 @@
-=== Xylus Events Calendar ===
+=== Easy Events Calendar : All-in-One Events Calendar with Social Event, Eventbrite, Meetup, Google & iCal Import Support ===
 Contributors: xylus, Rajat1192  
 Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
@@ -12,22 +12,22 @@ Display upcoming events from multiple sources in a responsive calendar with cust
 
 == Description ==
 
-**Xylus Events Calendar** is a lightweight yet powerful solution to showcase all your upcoming events—no matter the source—on a beautiful and responsive calendar interface. Whether you're importing events from Meetup, Eventbrite, Facebook, or WP Event Aggregator, this plugin displays them cleanly with multiple layout choices and easy settings.
+**Easy Events Calendar** is a lightweight yet powerful solution to showcase all your upcoming events—no matter the source—on a beautiful and responsive calendar interface. Whether you're importing events from Meetup, Eventbrite, Facebook, or WP Event Aggregator, this plugin displays them cleanly with multiple layout choices and easy settings.
 
-📖 [Documentation](http://docs.xylusthemes.com/docs/xylus-events-calendar/)  | 🔗 [Plugin Website](https://xylusthemes.com/plugins/xylus-events-calendar/)
+📖 [Documentation](http://docs.xylusthemes.com/docs/easy-events-calendar/)  | 🔗 [Plugin Website](https://xylusthemes.com/plugins/easy-events-calendar/)
 
 ---
 
 ### ✅ Supported Event Sources
 
-Xylus Events Calendar works seamlessly with the following third-party plugins:
+Easy Events Calendar works seamlessly with the following third-party plugins:
 
 - [Import Eventbrite Events](https://wordpress.org/plugins/import-eventbrite-events/)
 - [Import Social Events](https://wordpress.org/plugins/import-facebook-events/)
 - [Import Meetup Events](https://wordpress.org/plugins/import-meetup-events/)
 - [WP Event Aggregator](https://wordpress.org/plugins/wp-event-aggregator/)
 
-> These plugins handle event importing — Xylus Events Calendar focuses on **displaying** them beautifully.
+> These plugins handle event importing — Easy Events Calendar focuses on **displaying** them beautifully.
 
 ---
 
@@ -48,17 +48,17 @@ Xylus Events Calendar works seamlessly with the following third-party plugins:
 - Load more functionality with adjustable pagination.
 - Customise button text, background colour, and text colour.
 - Simple and intuitive settings panel in the admin area.
-- Use anywhere with the `[xylus_events_calendar]` shortcode.
+- Use anywhere with the `[easy_events_calendar]` shortcode.
 
 ---
 
 == Installation ==
 
 1. Upload the plugin folder to `/wp-content/plugins/` or install via WordPress dashboard.
-2. Activate **Xylus Events Calendar** from the Plugins menu.
-3. Go to **Settings > Xylus Events Calendar** to configure display and styling options.
+2. Activate **Easy Events Calendar** from the Plugins menu.
+3. Go to **Settings > Easy Events Calendar** to configure display and styling options.
 4. Make sure at least one of the supported event import plugins is active and importing upcoming events.
-5. Use the shortcode `[xylus_events_calendar]` anywhere to show the calendar (page, post, widget, or block).
+5. Use the shortcode `[easy_events_calendar]` anywhere to show the calendar (page, post, widget, or block).
 
 ---
 
@@ -75,7 +75,7 @@ You’ll need at least one of these plugins to import events:
 Yes! You can customise button text, button background colour, text colour, number of events shown before "Load More", and more through the settings panel.
 
 = How do I display the calendar on a page? =  
-Use the shortcode `<code>[xylus_events_calendar]</code>` on any post, page, or widget area.
+Use the shortcode `<code>[easy_events_calendar]</code>` on any post, page, or widget area.
 
 ---
 

@@ -44,7 +44,7 @@ class Xylus_Events_Calendar_Admin {
         add_action( 'admin_init', array( $this, 'xylusec_handle_so_settings_submit' ), 99 );
         add_action( 'xylusec_notice', array( $this, 'xylusec_display_notices' ) );
 		add_action( 'admin_init', array( $this, 'xylusec_plugin_maybe_save_default_options' ) );
-		add_shortcode('xylus_events_calendar', array( $this, 'xylusec_calendar_shortcode' ) );
+		add_shortcode('easy_events_calendar', array( $this, 'xylusec_calendar_shortcode' ) );
 	}
 
 	public function xylusec_calendar_shortcode($atts) {
@@ -61,9 +61,9 @@ class Xylus_Events_Calendar_Admin {
 	 * @return void
 	 */
 	public function xylusec_add_menu_pages() {
-		add_menu_page( __( 'Xylus Events Calendar', 'xylus-events-calendar' ), __( 'Xylus Events Calendar', 'xylus-events-calendar' ), 'manage_options', 'xt_events_calendar', array( $this, 'xylusec_admin_page' ), 'dashicons-calendar', '30' );
+		add_menu_page( __( 'Easy Events Calendar', 'xylus-events-calendar' ), __( 'Easy Events Calendar', 'xylus-events-calendar' ), 'manage_options', 'xt_events_calendar', array( $this, 'xylusec_admin_page' ), 'dashicons-calendar', '30' );
 		global $submenu;	
-		$submenu['xt_events_calendar'][] = array( __( 'Xylus Events Calendar', 'xylus-events-calendar' ), 'manage_options', admin_url( 'admin.php?page=xt_events_calendar&tab=general' ) );
+		$submenu['xt_events_calendar'][] = array( __( 'Easy Events Calendar', 'xylus-events-calendar' ), 'manage_options', admin_url( 'admin.php?page=xt_events_calendar&tab=general' ) );
 		$submenu['xt_events_calendar'][] = array( __( 'Shortcode', 'xylus-events-calendar' ), 'manage_options', admin_url( 'admin.php?page=xt_events_calendar&tab=shortcode' ) );
 		$submenu['xt_events_calendar'][] = array( __( 'Support & Help', 'xylus-events-calendar' ), 'manage_options', admin_url( 'admin.php?page=xt_events_calendar&tab=support' ) );
 	}

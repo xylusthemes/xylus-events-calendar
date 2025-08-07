@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:       Xylus Events Calendar
+ * Plugin Name:       Easy Events Calendar : All-in-One Events Calendar with Social Event, Eventbrite, Meetup, Google & iCal Import Support
  * Plugin URI:        https://xylusthemes.com/plugins/xylus-events-calendar/
- * Description:       Display events from multiple sources in a unified calendar view. Xylus Events Calendar supports events imported from Meetup, Eventbrite, Facebook, and WP Event Aggregator. Includes multiple calendar views, filtering, and responsive layouts.
+ * Description:       Display events from multiple sources in a unified calendar view. Easy Events Calendar supports events imported from Meetup, Eventbrite, Facebook, and WP Event Aggregator. Includes multiple calendar views, filtering, and responsive layouts.
  * Version:           1.0.0
  * Author:            Xylus Themes
  * Author URI:        https://xylusthemes.com

@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Xylus Events Calendar 1.0.0\n"
+"Project-Id-Version: Easy Events Calendar 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/xylus-events-calendar\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: includes/admin/class-xylus-events-calendar-admin.php:64
 #: includes/admin/class-xylus-events-calendar-admin.php:66
-msgid "Xylus Events Calendar"
+msgid "Easy Events Calendar"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -25,7 +25,7 @@ msgid "https://xylusthemes.com/plugins/xylus-events-calendar/"
 msgstr ""
 
 #. Description of the plugin
-msgid "Display events from multiple sources in a unified calendar view. Xylus Events Calendar supports events imported from Meetup, Eventbrite, Facebook, and WP Event Aggregator. Includes multiple calendar views, filtering, and responsive layouts."
+msgid "Display events from multiple sources in a unified calendar view. Easy Events Calendar supports events imported from Meetup, Eventbrite, Facebook, and WP Event Aggregator. Includes multiple calendar views, filtering, and responsive layouts."
 msgstr ""
 
 #. Author of the plugin
