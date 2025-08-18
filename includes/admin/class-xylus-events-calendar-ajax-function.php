@@ -55,25 +55,42 @@ class Xylus_Events_Calendar_Ajax_Handler {
 	public function xylusec_get_events() {
 		check_ajax_referer('xylusec_nonce', 'nonce');
 		
-		$start = isset( $_GET['start'] ) ? (int)esc_attr( sanitize_text_field( wp_unslash( $_GET['start'] ) ) ) : '';
-		$end   = isset( $_GET['end'] ) ? (int)esc_attr( sanitize_text_field( wp_unslash( $_GET['end'] ) ) ) : '';	
+		$start              = isset( $_GET['start'] ) ? (int)esc_attr( sanitize_text_field( wp_unslash( $_GET['start'] ) ) ) : '';
+		$end                = isset( $_GET['end'] ) ? (int)esc_attr( sanitize_text_field( wp_unslash( $_GET['end'] ) ) ) : '';	
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
+
+		if( $selected_post_type == 'ajde_events' ){
+			$start_key = 'evcal_srow';
+			$end_key   = 'evcal_erow';
+			$type      = 'NUMERIC'; 
+		}elseif( $selected_post_type == 'event' ){
+			$start_key = '_event_start';
+			$end_key   = '_event_end';
+			$type      = 'DATETIME';
+			$start     = gmdate( 'Y-m-d H:i:s', $start );
+			$end       = gmdate( 'Y-m-d H:i:s', $end );
+		}else{
+			$start_key = 'start_ts';
+			$end_key   = 'end_ts';
+			$type      = 'NUMERIC';
+		}
+
 		$args  = [
-			'post_type' => $selected_post_type,
+			'post_type'      => $selected_post_type,
 			'posts_per_page' => -1,
-			'meta_query' => [         //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'meta_query'     => [		//phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				'relation' => 'AND',
 				[
-					'key' => 'start_ts',
-					'value' => $start,
+					'key'     => $start_key,
+					'value'   => $start,
 					'compare' => '>=',
-					'type' => 'NUMERIC'
+					'type'    => $type,
 				],
 				[
-					'key' => 'end_ts',
-					'value' => $end,
+					'key'     => $end_key,
+					'value'   => $end,
 					'compare' => '<=',
-					'type' => 'NUMERIC'
+					'type'    => $type,
 				]
 			]
 		];
@@ -88,6 +105,18 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			while ($query->have_posts()) {
 				$query->the_post();
 				$post_id = get_the_ID();
+
+				if( $selected_post_type == 'event' ){
+					$getmetas = get_post_meta( $post_id, $start_key, true );
+					$getmetae = get_post_meta( $post_id, $end_key, true );
+					$startgm = gmdate('Y-m-d\TH:i:s', strtotime( $getmetas ) );
+					$endgm   = gmdate('Y-m-d\TH:i:s', strtotime( $getmetae ) );
+					$formated_date = gmdate('M j, Y g:i a', strtotime( $getmetas ) );
+				}else{
+					$startgm = gmdate('Y-m-d\TH:i:s', get_post_meta( $post_id, $start_key, true ) );
+					$endgm   = gmdate('Y-m-d\TH:i:s', get_post_meta( $post_id, $end_key, true ) );
+					$formated_date = gmdate('M j, Y g:i a', get_post_meta( $post_id, $start_key, true ) );
+				}
 				
 				// Get a color from our palette (using post ID for consistency)
 			$color_index = $post_id % count($color_palette);
@@ -97,15 +126,15 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				$events[] = [
 					'id' => $post_id,
 					'title' => html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8'),
-					'start' => gmdate('Y-m-d\TH:i:s', get_post_meta($post_id, 'start_ts', true)),
-					'end' => gmdate('Y-m-d\TH:i:s', get_post_meta($post_id, 'end_ts', true)),
+					'start' => $startgm,
+					'end' => $endgm,
 					'url' => esc_url( get_permalink() ),
 					'description' => get_the_excerpt(),
 					'image' => esc_url( get_the_post_thumbnail_url($post_id, 'medium') ),
 					'color' => $color,
 					'textColor' => $text_color,
 					'borderColor' => 'rgba(0,0,0,0.1)',
-					'formattedDate' => gmdate('M j, Y g:i a', get_post_meta($post_id, 'start_ts', true))
+					'formattedDate' => $formated_date,
 				];
 			}
 		}
@@ -130,12 +159,28 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
 		$events  = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
 
+		if( $selected_post_type == 'ajde_events' ){
+			$start_key = 'evcal_srow';
+			$end_key   = 'evcal_erow';
+		}elseif( $selected_post_type == 'event' ){
+			$start_key = '_event_start';
+			$end_key   = '_event_end';
+		}else{
+			$start_key = 'start_ts';
+			$end_key   = 'end_ts';
+		}
+
 		if ($events->have_posts()) :
 			while ($events->have_posts()) : $events->the_post();
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
-				$start_ts   = get_post_meta( $event_id, 'start_ts', true );
+				$start_ts   = get_post_meta( $event_id, $start_key, true );
 				$location   = get_post_meta( $event_id, 'venue_name', true );
+				
+				if( $selected_post_type == 'event' ){
+					$start_ts = strtotime( $start_ts );
+				}
+
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				?>
 				<div class="xylusec-event-card">
@@ -181,14 +226,29 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
 		$query        = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
-		
+
+		if( $selected_post_type == 'ajde_events' ){
+			$start_key = 'evcal_srow';
+			$end_key   = 'evcal_erow';
+		}elseif( $selected_post_type == 'event' ){
+			$start_key = '_event_start';
+			$end_key   = '_event_end';
+		}else{
+			$start_key = 'start_ts';
+			$end_key   = 'end_ts';
+		}
 		
 		if ($query->have_posts()) :
 			while ($query->have_posts()) : $query->the_post();
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 30 );
-				$start_ts   = get_post_meta( $event_id, 'start_ts', true );
+				$start_ts   = get_post_meta( $event_id, $start_key, true );
 				$location   = get_post_meta( $event_id, 'venue_name', true );
+
+				if( $selected_post_type == 'event' ){
+					$start_ts = strtotime( $start_ts );
+				}
+
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				?>
 				<div class="xylusec-event-row">
@@ -235,13 +295,28 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		$title_color        = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
 		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
 
+		if( $selected_post_type == 'ajde_events' ){
+			$start_key = 'evcal_srow';
+			$end_key   = 'evcal_erow';
+		}elseif( $selected_post_type == 'event' ){
+			$start_key = '_event_start';
+			$end_key   = '_event_end';
+		}else{
+			$start_key = 'start_ts';
+			$end_key   = 'end_ts';
+		}
 		
 		if ($query->have_posts()) :
 			while ($query->have_posts()) : $query->the_post();
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
-				$start_ts   = get_post_meta( $event_id, 'start_ts', true );
+				$start_ts   = get_post_meta( $event_id, $start_key, true );
 				$location   = get_post_meta( $event_id, 'venue_name', true );
+
+				if( $selected_post_type == 'event' ){
+					$start_ts = strtotime( $start_ts );
+				}
+
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				
 				?>

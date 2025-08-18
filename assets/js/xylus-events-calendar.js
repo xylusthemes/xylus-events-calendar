@@ -458,6 +458,11 @@
 		let staggeredKeyword = '';
 		let isLoadingStaggered = false;
 
+		var $grid = $('.xylusec-event-grid-staggered-container').masonry({
+			itemSelector: '.xylusec-event-card-staggered',
+			percentPosition: true
+		});
+
 		function fetchStaggeredEvents(reset = false) {
 			if (isLoadingStaggered) return;
 
@@ -477,9 +482,12 @@
 				success: function(response) {
 					if (reset) {
 						$('.xylusec-event-grid-staggered-container').html(response);
+						$grid.masonry('reloadItems').masonry();
 						staggeredPage = 2;
 					} else {
-						$('.xylusec-event-grid-staggered-container').append(response);
+						var $items = $(response);
+						$('.xylusec-event-grid-staggered-container').append($items);
+						$grid.masonry('appended', $items);
 						staggeredPage++;
 					}
 
