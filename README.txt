@@ -4,7 +4,7 @@ Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
 Tested up to: 6.8
 Requires PHP: 8.0 
-Stable tag: 1.0.1  
+Stable tag: 1.0.2  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -26,6 +26,8 @@ Easy Events Calendar works seamlessly with the following third-party plugins:
 - [Import Social Events](https://wordpress.org/plugins/import-facebook-events/)
 - [Import Meetup Events](https://wordpress.org/plugins/import-meetup-events/)
 - [WP Event Aggregator](https://wordpress.org/plugins/wp-event-aggregator/)
+- [EventON](https://wordpress.org/plugins/eventon-lite/)
+- [Events Manager](https://wordpress.org/plugins/events-manager/)
 
 > These plugins handle event importing — Easy Events Calendar focuses on **displaying** them beautifully.
 
@@ -90,6 +92,11 @@ Use the shortcode `<code>[easy_events_calendar]</code>` on any post, page, or wi
 ---
 
 == Changelog ==
+
+= 1.0.2 =
+* ADDED: Support for EventOn plugin.
+* ADDED: Support for Events Manager plugin.
+* FIXED: Issue with event ordering in Masonry(Staggered) layout.
 
 = 1.0.1 =
 * Updated plugin branding and improved overall presentation.

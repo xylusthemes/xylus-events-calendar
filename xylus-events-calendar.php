@@ -3,7 +3,7 @@
  * Plugin Name:       Easy Events Calendar : All-in-One Events Calendar with Social Event, Eventbrite, Meetup, Google & iCal Import Support
  * Plugin URI:        https://xylusthemes.com/plugins/xylus-events-calendar/
  * Description:       Display events from multiple sources in a unified calendar view. Easy Events Calendar supports events imported from Meetup, Eventbrite, Facebook, and WP Event Aggregator. Includes multiple calendar views, filtering, and responsive layouts.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Xylus Themes
  * Author URI:        https://xylusthemes.com
  * License:           GPL-2.0+
@@ -87,7 +87,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		 * @since 1.0.0
 		 */
 		public function __clone() {
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'xylus-events-calendar' ), '1.0.1' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'xylus-events-calendar' ), '1.0.2' );
 		}
 
 		/**
@@ -96,7 +96,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		 * @since 1.0.0
 		 */
 		public function __wakeup() {
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'xylus-events-calendar' ), '1.0.1' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'xylus-events-calendar' ), '1.0.2' );
 		}
 
 
@@ -116,7 +116,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 
 			// Plugin version.
 			if ( ! defined( 'XYLUSEC_VERSION' ) ) {
-				define( 'XYLUSEC_VERSION', '1.0.1' );
+				define( 'XYLUSEC_VERSION', '1.0.2' );
 			}
 
 			// Plugin folder Path.
