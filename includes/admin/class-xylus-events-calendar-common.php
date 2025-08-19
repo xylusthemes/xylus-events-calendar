@@ -185,7 +185,26 @@ class Xylus_Events_Calendar_Common {
             return new WP_Query(); // Return empty query
         }
 
-        $current_time = current_time( 'timestamp' );
+        $current_time       = current_time( 'timestamp' );
+        $get_options        = get_option( XYLUSEC_OPTIONS );
+		$selected_plugin    = $get_options['xylusec_event_source'];
+
+		if( $selected_plugin == 'ajde_events' ){
+			$start_key = 'evcal_srow';
+			$end_key   = 'evcal_erow';
+			$type      = 'NUMERIC'; 
+		}elseif( $selected_plugin == 'event' ){
+			$start_key = '_event_start';
+			$end_key   = '_event_end';
+			$type      = 'DATETIME';
+			$current_time = gmdate( 'Y-m-d H:i:s', $current_time );
+		}else{
+			$start_key = 'start_ts';
+			$end_key   = 'end_ts';
+			$type      = 'NUMERIC';
+		}
+        
+        $orderby = $type === 'NUMERIC' ? 'meta_value_num' : 'meta_value';
 
         $args = [
             'post_type'      => $post_type,
@@ -193,14 +212,14 @@ class Xylus_Events_Calendar_Common {
             'paged'          => max( 1, intval( $paged ) ),
             'meta_query'     => [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
                 [
-                    'key'     => 'end_ts',
+                    'key'     => $end_key,
                     'value'   => $current_time,
                     'compare' => '>',
-                    'type'    => 'NUMERIC',
+                    'type'    => $type,
                 ],
             ],
-            'meta_key'       => 'start_ts', //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-            'orderby'        => 'meta_value_num',
+            'meta_key'       => $start_key, //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+            'orderby'        => $orderby,
             'order'          => 'ASC',
             's'              => sanitize_text_field( $keyword ), // basic sanitization
         ];

@@ -42,6 +42,8 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
                                 <option value="eventbrite_events" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'eventbrite_events' ); ?>><?php esc_attr_e( 'Import Eventbrite Events', 'xylus-events-calendar' ); ?></option>
                                 <option value="facebook_events" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'facebook_events' ); ?>><?php esc_attr_e( 'Import Facebook Events', 'xylus-events-calendar' ); ?></option>
                                 <option value="meetup_events" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'meetup_events' ); ?>><?php esc_attr_e( 'Import Meetup Events', 'xylus-events-calendar' ); ?></option>
+                                <option value="ajde_events" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'ajde_events' ); ?>><?php esc_attr_e( 'EventOn', 'xylus-events-calendar' ); ?></option>
+                                <option value="event" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'event' ); ?>><?php esc_attr_e( 'Events Manager', 'xylus-events-calendar' ); ?></option>
                             </select>
                         </div>
                     </div>

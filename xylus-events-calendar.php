@@ -207,6 +207,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			$js_dir = XYLUSEC_PLUGIN_URL . 'assets/js/';
 			
 			wp_enqueue_script( 'moment' );
+			wp_enqueue_script( 'masonry' );
 			wp_enqueue_script( 'fullcalendar-js', plugins_url( 'assets/js/xylus-events-calendar-fullcalendar.global.min.js', __FILE__ ), array( 'jquery', 'moment' ), '6.1.17', true );
 			wp_register_script( 'xylus-events-calendar',  $js_dir . 'xylus-events-calendar.js',  array( 'jquery', 'jquery-ui-core', 'fullcalendar-js' ),  XYLUSEC_VERSION,  true  );
 			wp_enqueue_script( 'xylus-events-calendar' );
