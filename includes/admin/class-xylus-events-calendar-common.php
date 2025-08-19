@@ -180,14 +180,18 @@ class Xylus_Events_Calendar_Common {
      * @param int $per_page Number of events per page.
      * @return WP_Query
      */
-    public function xylusec_get_upcoming_events( $post_type = '', $paged = 1, $keyword = '', $per_page = 12 ) {
+    public function xylusec_get_upcoming_events( $post_type = '', $paged = 1, $keyword = '', $per_page = 12, $shortcode_atts = array() ) {
         if ( empty( $post_type ) ) {
             return new WP_Query(); // Return empty query
         }
 
+        $atts               = json_decode( stripslashes(  $shortcode_atts ), true );
+		$category           = isset( $atts['category'] ) ? $atts['category'] : '';
+		$cats               = array_map( 'trim', explode( ',', $category ) );
         $current_time       = current_time( 'timestamp' );
         $get_options        = get_option( XYLUSEC_OPTIONS );
 		$selected_plugin    = $get_options['xylusec_event_source'];
+        $selected_taxonomy  = $this->get_selected_post_type_category( $selected_plugin );
 
 		if( $selected_plugin == 'ajde_events' ){
 			$start_key = 'evcal_srow';
@@ -209,6 +213,7 @@ class Xylus_Events_Calendar_Common {
         $args = [
             'post_type'      => $post_type,
             'posts_per_page' => $per_page,
+            'post_status'    => array('publish'),
             'paged'          => max( 1, intval( $paged ) ),
             'meta_query'     => [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
                 [
@@ -223,6 +228,16 @@ class Xylus_Events_Calendar_Common {
             'order'          => 'ASC',
             's'              => sanitize_text_field( $keyword ), // basic sanitization
         ];
+
+        if ( ! empty( $category ) ) {
+            $args['tax_query'] = [
+                [
+                    'taxonomy' => $selected_taxonomy,
+                    'field'    => 'slug',
+                    'terms'    => $cats,
+                ]
+            ];
+        }
 
         return new WP_Query( $args );
     }
@@ -251,6 +266,32 @@ class Xylus_Events_Calendar_Common {
         $button = '<a href="' . esc_url( $event_permalink ) . '" class="xylusec-event-button" style="' . esc_attr( $style ) . '">' . esc_html( $label ) . '</a>';
 
         return $button;
+    }
+
+    /**
+     * Get Post Type taxonomy
+     *
+     * @since 1.0.3
+     */
+    public function get_selected_post_type_category( $post_type ) {
+         $category = '';
+        if ( empty( $post_type ) ) {
+            return $category;
+        }
+        if( $post_type == 'wp_events' ){
+            $category = 'event_category';
+        }elseif( $post_type == 'eventbrite_events' ){
+            $category = 'eventbrite_category';
+        }elseif( $post_type == 'facebook_events' ){
+            $category = 'facebook_category';
+        }elseif( $post_type == 'meetup_events' ){
+            $category = 'meetup_category';
+        }elseif( $post_type == 'ajde_events' ){
+            $category = 'event_type';
+        }elseif( $post_type == 'event' ){
+            $category = 'event-categories';
+        }
+        return $category;
     }
 
     /**

@@ -48,6 +48,10 @@ class Xylus_Events_Calendar_Admin {
 	}
 
 	public function xylusec_calendar_shortcode($atts) {
+		wp_enqueue_script( 'xylus-events-calendar' );
+		$inline = 'if (window.xylusec_ajax) { xylusec_ajax.shortcode_atts = ' . wp_json_encode( $atts ) . '; }';
+		wp_add_inline_script( 'xylus-events-calendar', $inline, 'before' );
+		
 		ob_start();
 		include XYLUSEC_PLUGIN_DIR . 'templates/admin/xylus-events-calendar-template.php';
 		return ob_get_clean();

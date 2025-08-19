@@ -81,7 +81,8 @@
 							action: 'xylusec_get_events',
 							start: startTimestamp,
 							end: endTimestamp,
-							nonce: xylusec_ajax.nonce
+							nonce: xylusec_ajax.nonce,
+							shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
 						},
 						type: 'GET',
 						success: function(response) {
@@ -307,7 +308,8 @@
 					action: 'xylusec_load_more_events',
 					paged: reset ? 1 : rowPage,
 					keyword: rowKeyword,
-					nonce: xylusec_ajax.nonce
+					nonce: xylusec_ajax.nonce,
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
 				},
 				success: function(response) {
 					if (reset) {
@@ -392,7 +394,8 @@
 					action: 'xylusec_load_more_row_events',
 					paged: reset ? 1 : rowPage,
 					keyword: rowKeyword,
-					nonce: xylusec_ajax.nonce
+					nonce: xylusec_ajax.nonce,
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
 				},
 				success: function(response) {
 					if (reset) {
@@ -477,7 +480,8 @@
 					action: 'xylusec_load_more_staggered_events',
 					paged: reset ? 1 : staggeredPage,
 					keyword: staggeredKeyword,
-					nonce: xylusec_ajax.nonce
+					nonce: xylusec_ajax.nonce,
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
 				},
 				success: function(response) {
 					if (reset) {
