@@ -286,11 +286,9 @@
 		
 		const calendarWrapper = $('#xylusec-calendar');
 		const gridWrapper = $('#xylusec-grid-view-container');
-		const rowWrapper = $('#xylusec-row-view-container');
-		const staggeredWrapper = $('#xylusec-grid-staggered-view-container');
 		
 		let rowPage = 1;
-		let rowKeyword = '';
+		let gridKeyword = '';
 		let isLoading = false;
 
 		function fetchEvents(reset = false) {
@@ -306,7 +304,7 @@
 				data: {
 					action: 'xylusec_load_more_events',
 					paged: reset ? 1 : rowPage,
-					keyword: rowKeyword,
+					keyword: gridKeyword,
 					nonce: xylusec_ajax.nonce
 				},
 				success: function(response) {
@@ -320,47 +318,46 @@
 
 					if (!response.trim()) {
 						$('#load-more-events').hide();
+						$('.xylusec-event-grid-container').hide()
+						$('.xylusec-no-events').show();
+						
 					} else {
+						$('.xylusec-no-events').hide();
 						$('#load-more-events').show();
+						$('.xylusec-event-grid-container').show();
 					}
-				},
-				complete: function() {
 					isLoading = false;
 					$('.xylusec-load-spinner').hide();
-					$('#load-more-events').prop('disabled', false).show();
 				}
 			});
 		}
 
 		// Load more row events
 		$('#load-more-events').on('click', function() {
-			calendarWrapper.hide();
-			rowWrapper.hide();
-			staggeredWrapper.hide();
+			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			gridWrapper.show();
 			fetchEvents(false);
 		});
 
 		// Search row events
 		$('#xylusec-search-events').on('click', function() {
-			rowKeyword = $('#xylusec-search').val().trim();
-			fetchEvents(true);
+			if ($('.fc-button-grid').hasClass('fc-active')) {
+				gridKeyword = $('#xylusec-search').val().trim();
+				fetchEvents(true);
+			}
 		});
 
 		// Show Row View
 		$('.fc-button-grid').on('click', function() {
-			calendarWrapper.hide();
-			rowWrapper.hide();
-			staggeredWrapper.hide();
+			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			gridWrapper.show();
+			gridKeyword = $('#xylusec-search').val().trim();
 			fetchEvents(true);
 		});
 
 		// Back to Month View
 		$('.fc-button-month').on('click', function() {
-			rowWrapper.hide();
-			gridWrapper.hide();
-			staggeredWrapper.hide();
+			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container' ).hide();
 			calendarWrapper.show();
 		});
 	});
@@ -370,9 +367,7 @@
 	/** row view js start */
 	jQuery(document).ready(function($) {
 		const calendarWrapper = $('#xylusec-calendar');
-		const gridWrapper = $('#xylusec-grid-view-container');
 		const rowWrapper = $('#xylusec-row-view-container');
-		const staggeredWrapper = $('#xylusec-grid-staggered-view-container');
 		
 		let rowPage = 1;
 		let rowKeyword = '';
@@ -405,14 +400,13 @@
 
 					if (!response.trim()) {
 						$('#load-more-row-events').hide();
+						$('.xylusec-no-events').show();
 					} else {
 						$('#load-more-row-events').show();
+						$('.xylusec-no-events').hide();
 					}
-				},
-				complete: function() {
 					isLoading = false;
 					$('.xylusec-load-spinner').hide();
-					$('#load-more-row-events').prop('disabled', false).show();
 				}
 			});
 		}
@@ -424,24 +418,23 @@
 
 		// Search row events
 		$('#xylusec-search-events').on('click', function() {
-			rowKeyword = $('#xylusec-search').val().trim();
-			fetchRowEvents(true);
+			if ($('.fc-button-row').hasClass('fc-active')) {
+				rowKeyword = $('#xylusec-search').val().trim();
+				fetchRowEvents(true);
+			}
 		});
 
 		// Show Row View
 		$('.fc-button-row').on('click', function() {
-			calendarWrapper.hide();
-			gridWrapper.hide();
-			staggeredWrapper.hide();
+			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			rowWrapper.show();
+			rowKeyword = $('#xylusec-search').val().trim();
 			fetchRowEvents(true); // This will reset to page 1
 		});
 
 		// Back to Month View
 		$('.fc-button-month').on('click', function() {
-			rowWrapper.hide();
-			staggeredWrapper.hide();
-			gridWrapper.hide();
+			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container' ).hide();
 			calendarWrapper.show();
 		});
 	});
@@ -451,8 +444,6 @@
 	jQuery(document).ready(function($) {
 		const staggeredWrapper = $('#xylusec-grid-staggered-view-container');
 		const calendarWrapper = $('#xylusec-calendar');
-		const gridWrapper = $('#xylusec-grid-view-container');
-		const rowWrapper = $('#xylusec-row-view-container');
 
 		let staggeredPage = 1;
 		let staggeredKeyword = '';
@@ -493,14 +484,13 @@
 
 					if (!response.trim()) {
 						$('#load-more-grid-staggered-events').hide();
+						$('.xylusec-no-events').show();
 					} else {
 						$('#load-more-grid-staggered-events').show();
+						$('.xylusec-no-events').hide();
 					}
-				},
-				complete: function() {
 					isLoadingStaggered = false;
 					$('.xylusec-load-spinner').hide();
-					$('#load-more-grid-staggered-events').prop('disabled', false).show();
 				}
 			});
 		}
@@ -512,28 +502,156 @@
 
 		// Search
 		$('#xylusec-search-events').on('click', function() {
-			staggeredKeyword = $('#xylusec-search').val().trim();
-			fetchStaggeredEvents(true);
+			if ($('.fc-button-staggered').hasClass('fc-active')) {
+				staggeredKeyword = $('#xylusec-search').val().trim();
+				fetchStaggeredEvents(true);
+			}
 		});
 
 		// Show Staggered View
 		$('.fc-button-staggered').on('click', function() {
-			calendarWrapper.hide();
-			gridWrapper.hide();
-			rowWrapper.hide();
+			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-slider-view-container').hide();
 			staggeredWrapper.show();
+			staggeredKeyword = $('#xylusec-search').val().trim();
 			fetchStaggeredEvents(true);
 		});
 
 		// Month View
 		$('.fc-button-month').on('click', function() {
-			staggeredWrapper.hide();
-			rowWrapper.hide();
-			gridWrapper.hide();
+			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-slider-view-container, #xylusec-grid-staggered-view-container').hide();
 			calendarWrapper.show();
 		});
 	});
 	/** staggered view end */
+
+	/** slider view start */
+	jQuery(document).ready(function($){
+		const wrapper = $('.xylusec-event-slider-container');
+		const sliderContainer = $('#xylusec-slider-view-container');
+		let slideIndex = 0;
+		let page = 1;
+		let isLoading = false;
+		let noMoreEvents = false; 
+		let sliderKeyword = $('#xylusec-search').val().trim();
+
+		// Load events by AJAX
+		function fetchSlides(reset = false){
+			if (isLoading) return;
+			isLoading = true;
+			if ( reset ) {
+				$('.xylusec-load-spinner').show();
+				$('.xylusec-slider-arrow-main').hide();
+				$('.xylusec-event-slider-container').hide();
+			}
+
+			$.ajax({
+				url   : xylusec_ajax.ajaxurl,
+				type  : 'POST',
+				data  : {
+					action : 'xylusec_load_more_slider_events',
+					paged  : (reset ? 1 : page),
+					keyword: sliderKeyword,
+					nonce  : xylusec_ajax.nonce
+				},
+				success: function(resp){
+					const trimmed = $.trim(resp);
+
+					if (reset){
+						if(trimmed){
+							wrapper.html(trimmed);
+							slideIndex = 0;
+							page = 2;
+							noMoreEvents = false;
+
+							wrapper.find('.xylusec-slider-slide')
+								.removeClass('active')
+								.eq(0).addClass('active');
+							$('.xylusec-no-events').hide();
+							
+							$('.xylusec-event-slider-container').show();
+							$('.xylusec-slider-arrow-main').show();
+						} else {
+							wrapper.html('');
+							page = 1;
+							noMoreEvents = true;
+							$('.xylusec-event-slider-container').hide();
+							$('.xylusec-slider-arrow-main').hide();
+							$('.xylusec-no-events').show();
+							
+						}
+					}
+					else if (trimmed){
+						wrapper.append(trimmed);
+						page++;
+					}
+					else {
+						noMoreEvents = true;
+					}
+					isLoading = false;
+					$('.xylusec-load-spinner').hide();
+				}
+			});
+		}
+
+		// Show slide by index
+		function showSlide(index){
+			const slides = $('.xylusec-slider-slide');
+			if (!slides.length) return;
+
+			if(index === slides.length - 1 && !noMoreEvents){
+				fetchSlides(false);
+			}
+
+			if (index >= slides.length){
+				index = 0;
+			}
+			if (index < 0) index = 0;
+
+			slideIndex = index;
+			$('.xylusec-slider-slide').removeClass('active').eq(index).addClass('active');
+		}
+
+		// Append arrow buttons if not exists
+		if (!$('.xylusec-slider-arrow').length) {
+			sliderContainer.prepend(
+				'<div class="xylusec-slider-arrow-main">' +
+					'<div><span class="xylusec-event-button xylusec-slider-arrow left">&#10094;</span></div>' +
+					'<div><span class="xylusec-event-button xylusec-slider-arrow right">&#10095;</span></div>' +
+				'</div>'
+			);
+		}
+
+		// Manual navigation
+		$('.xylusec-slider-arrow.left').on('click', () => showSlide(slideIndex - 1));
+		$('.xylusec-slider-arrow.right').on('click', () => showSlide(slideIndex + 1));
+		
+		setInterval(() => {
+			showSlide(slideIndex + 1);
+		}, 5000 );
+
+		// Show slider view
+		$('.fc-button-slider').on('click', function(){
+			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container').hide();
+			sliderContainer.show();
+			sliderKeyword = $('#xylusec-search').val().trim();
+			fetchSlides(true);
+		});
+
+		// Search row events
+		$('#xylusec-search-events').on('click', function() {
+			if ($('.fc-button-slider').hasClass('fc-active')) {
+				sliderKeyword = $('#xylusec-search').val().trim();
+				fetchSlides(true);
+			}
+		});
+
+		// Back to month view
+		$('.fc-button-month').on('click', function(){
+			sliderContainer.hide();
+			$('#xylusec-calendar').show();
+		});
+	});
+	/** slider view end */
 
 	jQuery(document).ready(function($) {
 		$(document).on('click', '.fc-timeGridWeek-button', function () {
