@@ -224,7 +224,58 @@ class Xylus_Events_Calendar_Common {
             's'              => sanitize_text_field( $keyword ), // basic sanitization
         ];
 
-        return new WP_Query( $args );
+        //return new WP_Query( $args );
+        $event_query = $this->xylusec_get_uc_events( $args );
+        return $event_query;
+    }
+
+    /**
+     * Get events with custom search
+     *
+     * @since 1.0.0
+     * @param array $args Query arguments.
+     * @return WP_Query
+     */
+    function xylusec_get_uc_events($args) {
+        // Add the filter BEFORE WP_Query
+        add_filter( 'posts_search', array( $this, 'xylusec_title_only_search' ), 10, 2 );
+        
+        $query = new WP_Query( $args );
+
+        // Remove filter AFTER WP_Query
+        remove_filter( 'posts_search', array( $this, 'xylusec_title_only_search' ), 10, 2 );
+
+        return $query;
+    }
+
+    /**
+     * Custom search filter to search only in post titles
+     *
+     * @since 1.0.0
+     * @param string $search Search SQL.
+     * @param WP_Query $wp_query WP Query object.
+     * @return string Modified search SQL.
+     */
+    function xylusec_title_only_search( $search, $wp_query ) {
+        global $wpdb;
+
+        // If no search term, just return the normal query
+        if ( empty( $wp_query->query_vars['s'] ) ) {
+            return $search;
+        }
+
+        // Restrict for specific post_type (optional)
+        if ( isset( $wp_query->query_vars['post_type'] ) && $wp_query->query_vars['post_type'] !== 'event' ) {
+            return $search;
+        }
+
+        // Escape and prepare search
+        $q = '%' . $wpdb->esc_like( $wp_query->query_vars['s'] ) . '%';
+
+        // Return the full WHERE clause for search
+        $search = $wpdb->prepare( " AND ({$wpdb->posts}.post_title LIKE %s) ", $q );
+
+        return $search;
     }
 
     /**

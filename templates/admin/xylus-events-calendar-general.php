@@ -54,7 +54,7 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
                         <div class="xylusec-inner-section-2">
                             <select id="xylusec_default_view" name="xylusec_default_view">
                                 <?php
-                                $views = [ 'month', 'week', 'day', 'list', 'grid', 'row', 'staggered' ];
+                                $views = [ 'month', 'week', 'day', 'list', 'grid', 'row', 'staggered', 'slider' ];
                                 foreach ( $views as $view ) {
                                     echo '<option value="' . esc_attr( $view ) . '" ' . selected( $xylusec_options['xylusec_default_view'] ?? '', $view, false ) . '>' . esc_attr( ucfirst( $view ) ) . '</option>';
                                 }
