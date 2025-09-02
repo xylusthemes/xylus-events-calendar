@@ -33,7 +33,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		 * Xylus_Events_Calendar The one true Xylus_Events_Calendar.
 		 */
 		private static $instance;
-		public $common, $xylusec_events_calendar, $admin, $ajax_handler;
+		public $common, $xylusec_events_calendar, $admin, $ajax_handler, $widgets;
 
 		/**
 		 * Main Xylus Events Calendar Instance.
@@ -63,6 +63,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 				self::$instance->common       = new Xylus_Events_Calendar_Common();
 				self::$instance->admin        = new Xylus_Events_Calendar_Admin();
 				self::$instance->ajax_handler = new Xylus_Events_Calendar_Ajax_Handler();
+				self::$instance->widgets      = new Easy_Events_Calendar_Widgets();
 
 			}
 			return self::$instance;
@@ -134,9 +135,14 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 				define( 'XYLUSEC_PLUGIN_FILE', __FILE__ );
 			}
 
-			// Options.
+			// General Options.
 			if ( ! defined( 'XYLUSEC_OPTIONS' ) ) {
 				define( 'XYLUSEC_OPTIONS', 'xylusec_xt_event_calendar_options' );
+			}
+
+			// Widget Options.
+			if ( ! defined( 'XYLUSEC_WIDGET_OPTIONS' ) ) {
+				define( 'XYLUSEC_WIDGET_OPTIONS', 'xylusec_xtec_widget_options' );
 			}
 
 			// Pro plugin Buy now Link.
@@ -158,6 +164,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-admin.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-ajax-function.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-list-table.php';
+			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-widgets.php';
 		}
 
 		/**
@@ -193,6 +200,22 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 
 			$css_dir = XYLUSEC_PLUGIN_URL . 'assets/css/';
 			wp_enqueue_style('xylus-events-calendar-css', $css_dir . 'xylus-events-calendar.css', false, XYLUSEC_VERSION );
+			wp_enqueue_style('xylus-events-calendar-widget-css', $css_dir . 'xylus-events-calendar-widget.css', false, XYLUSEC_VERSION );
+			
+			$xylusec_options = get_option( XYLUSEC_WIDGET_OPTIONS, [] );
+			$custom_css = ":root {";
+			if( $xylusec_options ){
+				foreach ( $xylusec_options as $key => $default ) {
+					$value = !empty($xylusec_options[$key]) ? $xylusec_options[$key] : $default;
+					if ( $value ) {
+						$var_name = str_replace('xylusec_', '--xec-', $key);
+						$var_name = str_replace('_', '-', $var_name);
+						$custom_css .= "$var_name: $value;";
+					}
+				}
+			}
+			$custom_css .= "}";
+			wp_add_inline_style('xylus-events-calendar-widget-css', $custom_css);
 		}
 
 		/**
