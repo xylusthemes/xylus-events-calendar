@@ -20,6 +20,15 @@
 .easy-events-widget-list-style1 .event-title-style1:hover{
     color: var(--xec-widget-title-hover-color);
 }
+
+.easy-events-widget-list-style1 .event-title-style1 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
 /* Widget Style 1 end */
 
 /* Widget Style 2 start */
@@ -76,6 +85,12 @@
     color: var(--xec-widget-title-color);
     text-decoration: none;
     transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .easy-events-widget-grid.style-2 .event-title:hover {
@@ -121,6 +136,12 @@
     color: var(--xec-widget-title-color);
     text-decoration: none;
     transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .easy-events-widget-grid.style-3 .event-title:hover {
@@ -172,8 +193,13 @@
     font-weight: 600;
     color: var(--xec-widget-title-color);
     text-decoration: none;
-    display: block;
     margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .easy-events-widget-badge.style-4 .event-info .event-title:hover {
@@ -226,8 +252,13 @@
     font-size: 15px;
     color: var(--xec-widget-title-color);
     text-decoration: none;
-    display: block;
     margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .easy-events-widget-horizontal.style-5 .event-title:hover {
@@ -307,7 +338,12 @@
     font-weight: 600;
     color: var(--xec-widget-title-color);
     text-decoration: none;
-    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .easy-events-widget-masonry.style-6 .event-title:hover {
@@ -356,6 +392,12 @@
     color: var(--xec-widget-title-color);
     text-decoration: none;
     transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .easy-events-widget-timeline.style-7 .event-title:hover {
@@ -416,6 +458,11 @@
     font-weight: 600;
     line-height: 1.3;
     color: var(--xec-widget-title-color);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 /* Widget Style 8 end */
 
@@ -458,6 +505,12 @@
     text-decoration: none;
     flex: 1;
     transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .easy-events-widget-badge.style-9 .event-title:hover {
@@ -517,6 +570,12 @@
     color: var(--xec-widget-title-color);
     text-decoration: none;
     transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .easy-events-widget-overlay.style-10 .event-title:hover {

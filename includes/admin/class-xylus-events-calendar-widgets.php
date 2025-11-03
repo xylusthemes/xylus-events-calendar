@@ -234,9 +234,11 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             $time_display = $event_date ? date( 'h:i A', $event_date ) : '';
 
             // Featured image
-            $thumb = get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' );
-            if ( ! $thumb ) {
-                $thumb = 'https://via.placeholder.com/80x80?text=Event';
+            if ( '' !== get_the_post_thumbnail() ) {
+                $thumb = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
+            }else{
+                $image_date  = date_i18n( 'D', $event_date );
+                $thumb       = 'https://dummyimage.com/200x200/ccc/969696.png&text=' . $image_date;
             }
 
             echo '<div class="event-card">';
@@ -282,9 +284,11 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
 
             // Thumbnail
-            $thumb = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
-            if ( ! $thumb ) {
-                $thumb = 'https://via.placeholder.com/300x200?text=Event';
+            if ( '' !== get_the_post_thumbnail() ) {
+                $thumb = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
+            }else{
+                $image_date  = date_i18n( 'F+d', $event_date );
+                $thumb       = 'https://dummyimage.com/200x200/ccc/969696.png&text=' . $image_date;
             }
 
             echo '<div class="event-card">';
@@ -357,9 +361,14 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
 
             // Background image
-            $thumb_url = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
+            if ( '' !== get_the_post_thumbnail() ) {
+                $thumb_url = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
+            }else{
+                $image_date  = date_i18n( 'F+d', $event_date );
+                $thumb_url       = 'https://dummyimage.com/250x250/ccc/969696.png&text=' . $image_date;
+            }
 
-            echo '<div class="overlay-card" style="background-image:url(' . esc_url( $thumb_url ) . ');">';
+            echo '<div class="overlay-card" style="background-image:url(' . esc_url( $thumb_url ) . ');background-position: bottom;">';
                 echo '<a href="' . esc_url( $event_url ) . '" class="overlay-link">';
                     echo '<div class="overlay-gradient">';
                         if ( $date_display ) {
@@ -424,12 +433,14 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
 
             // Thumbnail (fallback to default color block if no image)
-            $thumb_url = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
-            if ( ! $thumb_url ) {
-                $thumb_url = 'https://via.placeholder.com/400x200/eeeeee/cccccc?text=Event';
+            if ( '' !== get_the_post_thumbnail() ) {
+                $thumb_url = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
+            }else{
+                $image_date  = date_i18n( 'F+d', $event_date );
+                $thumb_url   = 'https://dummyimage.com/250x250/ccc/969696.png&text=' . $image_date;
             }
 
-            echo '<div class="event-overlay-card" style="background-image: url(' . esc_url( $thumb_url ) . ');">';
+            echo '<div class="event-overlay-card" style="background-image: url(' . esc_url( $thumb_url ) . ');background-position: center;">';
                 if ( $date_display ) {
                     echo '<span class="event-date-badge">' . esc_html( $date_display ) . '</span>';
                 }
