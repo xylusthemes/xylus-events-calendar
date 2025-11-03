@@ -45,6 +45,10 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		// Staggered grid view
 		add_action('wp_ajax_xylusec_load_more_staggered_events', array( $this, 'xylusec_load_more_staggered_events' ) );
 		add_action('wp_ajax_nopriv_xylusec_load_more_staggered_events', array( $this, 'xylusec_load_more_staggered_events' ) );
+
+		// Slider view
+		add_action('wp_ajax_xylusec_load_more_slider_events', array( $this, 'xylusec_load_more_slider_events' ) );
+		add_action('wp_ajax_nopriv_xylusec_load_more_slider_events', array( $this, 'xylusec_load_more_slider_events' ) );
 	} 
 
 	/**
@@ -207,6 +211,10 @@ class Xylus_Events_Calendar_Ajax_Handler {
 							<a href="<?php the_permalink(); ?>">
 								<?php the_post_thumbnail( 'medium' ); ?>
 							</a>
+						<?php else: ?>
+							<a href="<?php the_permalink(); ?>">
+								<img src="https://dummyimage.com/350x350/ccc/969696.png&text=<?php echo gmdate( 'F+d', $start_ts ); ?>" alt="<?php the_title(); ?>" />
+							</a>
 						<?php endif; ?>
 					</div>
 					<div class="xylusec-event-info">
@@ -364,4 +372,74 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		wp_reset_postdata();
 		wp_die();
 	}
+
+	/**
+	 * Load more events for the slider view.
+	 *
+	 * @return void
+	 */
+	public function xylusec_load_more_slider_events() {
+		global $xylusec_events_calendar;
+		check_ajax_referer('xylusec_nonce', 'nonce');
+
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
+		$paged        = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
+		$keyword      = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
+		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
+		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
+		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
+		$query        = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts  );
+
+		if( $selected_post_type == 'ajde_events' ){
+			$start_key = 'evcal_srow';
+			$end_key   = 'evcal_erow';
+		}elseif( $selected_post_type == 'event' ){
+			$start_key = '_event_start';
+			$end_key   = '_event_end';
+		}else{
+			$start_key = 'start_ts';
+			$end_key   = 'end_ts';
+		}
+		
+		if ($query->have_posts()) :
+			while ($query->have_posts()) : $query->the_post();
+				$event_id   = get_the_ID();    
+				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 70 );
+				$start_ts   = get_post_meta( $event_id, $start_key, true );
+				$location   = get_post_meta( $event_id, 'venue_name', true );
+
+				if( $selected_post_type == 'event' ){
+					$start_ts = strtotime( $start_ts );
+				}
+
+				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
+				?>
+				<div class="xylusec-slider-slide">
+					<div class="xylusec-slider-event-card">
+					<div class="xylusec-slider-event-info">
+						<h3><a class="xylusec-slider-event-title" style="color:<?php echo esc_attr( $title_color ); ?>;" href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_attr( get_the_title() ); ?></a></h3>
+						<span class="xylusec-slider-event-meta"><strong><?php echo esc_html( $location ); ?></strong></span>
+						<div class="xylusec-slider-event-meta"><span class="xylusec-slider-event-date"><strong><?php echo esc_html( $event_date ); ?></strong></span></div>
+						<p class="xylusec-slider-event-desc">
+							<?php echo wp_kses_post( wp_trim_words( get_the_excerpt(), 20 ) ); ?>
+						</p>
+						<?php echo wp_kses_post( $vdbutton ); ?>
+					</div>
+					<?php 
+						if ( has_post_thumbnail( $event_id ) ) {
+							$permalink = get_permalink( $event_id );
+							echo '<div class="xylusec-slider-event-img" ><a href="' . esc_url( $permalink ) . '">';
+							echo get_the_post_thumbnail( $event_id, 'full', [  ] );
+							echo '</a></div>';
+						}
+					?>
+					</div>
+				</div>
+				<?php
+			endwhile;
+		endif;
+		wp_reset_postdata();
+		wp_die();
+	}
+
 }
