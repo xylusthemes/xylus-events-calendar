@@ -54,12 +54,23 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
                         <div class="xylusec-inner-section-2">
                             <select id="xylusec_default_view" name="xylusec_default_view">
                                 <?php
-                                $views = [ 'month', 'week', 'day', 'list', 'grid', 'row', 'staggered' ];
+                                $views = [ 'month', 'week', 'day', 'list', 'grid', 'row', 'staggered', 'slider' ];
                                 foreach ( $views as $view ) {
                                     echo '<option value="' . esc_attr( $view ) . '" ' . selected( $xylusec_options['xylusec_default_view'] ?? '', $view, false ) . '>' . esc_attr( ucfirst( $view ) ) . '</option>';
                                 }
                                 ?>
                             </select>
+                        </div>
+                    </div>
+
+                    <!-- Event Source -->
+                    <div class="xylusec-setting-row">
+                        <div class="xylusec-inner-section-1">
+                            <label for="xylusec_event_source"><?php esc_attr_e( 'Hide Header', 'xylus-events-calendar' ); ?></label>
+                        </div>
+                        <div class="xylusec-inner-section-2">
+                            <input type="checkbox" id="xylusec_hide_header" name="xylusec_hide_header" value="1" <?php checked( $xylusec_options['xylusec_hide_header'] ?? 'no', 'yes' ); ?>>
+                            <label for="xylusec_hide_header"><?php esc_attr_e( 'Check to hide the header, including the search box and view buttons.', 'xylus-events-calendar' ); ?></label>
                         </div>
                     </div>
 

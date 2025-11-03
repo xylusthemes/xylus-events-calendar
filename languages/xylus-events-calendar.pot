@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-03T07:02:04+00:00\n"
+"POT-Creation-Date: 2025-11-03T07:44:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: xylus-events-calendar\n"
@@ -39,37 +39,31 @@ msgstr ""
 msgid "https://xylusthemes.com"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:65
-#: includes/admin/class-xylus-events-calendar-admin.php:67
+#: includes/admin/class-xylus-events-calendar-admin.php:68
+#: includes/admin/class-xylus-events-calendar-admin.php:70
 msgid "Easy Events Calendar"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:68
-#: includes/admin/class-xylus-events-calendar-admin.php:112
-msgid "Widget Appearance"
-msgstr ""
-
-#: includes/admin/class-xylus-events-calendar-admin.php:69
-#: includes/admin/class-xylus-events-calendar-admin.php:115
+#: includes/admin/class-xylus-events-calendar-admin.php:71
+#: includes/admin/class-xylus-events-calendar-admin.php:114
 #: includes/admin/class-xylus-events-calendar-list-table.php:53
 msgid "Shortcode"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:70
-#: includes/admin/class-xylus-events-calendar-admin.php:118
+#: includes/admin/class-xylus-events-calendar-admin.php:72
+#: includes/admin/class-xylus-events-calendar-admin.php:117
 msgid "Support & Help"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:109
+#: includes/admin/class-xylus-events-calendar-admin.php:111
 msgid "General"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:200
+#: includes/admin/class-xylus-events-calendar-admin.php:199
 msgid "Settings saved successfully."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:202
-#: includes/admin/class-xylus-events-calendar-admin.php:235
+#: includes/admin/class-xylus-events-calendar-admin.php:201
 msgid "No changes made or something went wrong."
 msgstr ""
 
@@ -173,24 +167,31 @@ msgstr ""
 msgid "Default Calendar View"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:68
+#: templates/admin/xylus-events-calendar-general.php:69
+msgid "Hide Header"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:73
+msgid "Check to hide the header, including the search box and view buttons."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:79
 msgid "Events Per Page"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:76
+#: templates/admin/xylus-events-calendar-general.php:87
 msgid "Load More Button Text"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:84
+#: templates/admin/xylus-events-calendar-general.php:95
 msgid "View Details"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:92
+#: templates/admin/xylus-events-calendar-general.php:103
 msgid "Week Starts On"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:127
-#: templates/admin/xylus-events-calendar-widget.php:62
+#: templates/admin/xylus-events-calendar-general.php:138
 msgid "Save Settings"
 msgstr ""
 
