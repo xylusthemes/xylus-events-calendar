@@ -1,0 +1,584 @@
+:root {
+    --xec-widget-background-color: #ffffff;
+    --xec-widget-hover-background-color: #f0f4f8;
+    --xec-widget-title-color: #333333;
+    --xec-widget-title-hover-color: #ff5a5f;
+    --xec-widget-date-color: #888888;
+    --xec-widget-border-color: #f0f4f8;
+}
+
+
+/* Widget Style 1 start */
+.easy-events-widget-list-style1 .event-date-style1{
+    color: var(--xec-widget-date-color);
+}
+
+.easy-events-widget-list-style1 .event-title-style1{
+    color: var(--xec-widget-title-color);
+}
+
+.easy-events-widget-list-style1 .event-title-style1:hover{
+    color: var(--xec-widget-title-hover-color);
+}
+
+.easy-events-widget-list-style1 .event-title-style1 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+/* Widget Style 1 end */
+
+/* Widget Style 2 start */
+.easy-events-widget-grid.style-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.easy-events-widget-grid.style-2 .event-card {
+    position: relative;
+    border: 1px solid var(--xec-widget-border-color);
+    padding: 12px 15px; /* default padding */
+    border-radius: 8px;
+    background: var(--xec-widget-background-color);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Left border strip hidden by default */
+.easy-events-widget-grid.style-2 .event-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: var(--xec-widget-border-color);
+    border-radius: 8px 0 0 8px;
+    transition: width 0.3s ease;
+}
+
+/* Hover state */
+.easy-events-widget-grid.style-2 .event-card:hover {
+    padding-left: 20px;
+    border-color: var(--xec-widget-border-color);
+    background: var(--xec-widget-hover-background-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.easy-events-widget-grid.style-2 .event-card:hover::before {
+    width: 5px;
+}
+
+.easy-events-widget-grid.style-2 .event-date {
+    font-size: 12px;
+    color: var(--xec-widget-date-color);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.easy-events-widget-grid.style-2 .event-title {
+    font-weight: 600;
+    color: var(--xec-widget-title-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.easy-events-widget-grid.style-2 .event-title:hover {
+    color: var(--xec-widget-title-hover-color);
+}
+/* Widget Style 2 end */
+
+/* Widget Style 3 start */
+.easy-events-widget-grid.style-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.easy-events-widget-grid.style-3 .event-card {
+    position: relative;
+    border: 1px solid var(--xec-widget-border-color);
+    border-top: 4px solid var(--xec-widget-border-color); /* top accent line */
+    padding: 15px;
+    border-radius: 10px;
+    background: var(--xec-widget-background-color);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Hover effect: card upar uth jaye */
+.easy-events-widget-grid.style-3 .event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    border-top-color: var(--xec-widget-border-color);
+    background: var(--xec-widget-hover-background-color);
+}
+
+.easy-events-widget-grid.style-3 .event-date {
+    font-size: 12px;
+    color: var(--xec-widget-date-color);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.easy-events-widget-grid.style-3 .event-title {
+    font-weight: 600;
+    color: var(--xec-widget-title-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.easy-events-widget-grid.style-3 .event-title:hover {
+    color: var(--xec-widget-title-hover-color);
+}
+/* Widget Style 3 end */
+
+/* Widget Style 4 start */
+.easy-events-widget-badge.style-4 .event-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--xec-widget-border-color);
+}
+
+.easy-events-widget-badge.style-4 .event-date-circle {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: var(--xec-widget-date-color); /* date circle background */
+    color: #fff; /* text color inside circle can remain white */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.easy-events-widget-badge.style-4 .event-date-circle .day {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.easy-events-widget-badge.style-4 .event-date-circle .month {
+    font-size: 12px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.easy-events-widget-badge.style-4 .event-info {
+    flex: 1;
+}
+
+.easy-events-widget-badge.style-4 .event-info .event-title {
+    font-weight: 600;
+    color: var(--xec-widget-title-color);
+    text-decoration: none;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.easy-events-widget-badge.style-4 .event-info .event-title:hover {
+    color: var(--xec-widget-title-hover-color);
+}
+
+.easy-events-widget-badge.style-4 .event-info .event-time {
+    font-size: 13px;
+    color: var(--xec-widget-date-color);
+}
+/* Widget Style 4 end */
+
+/* Widget Style 5 start */
+.easy-events-widget-horizontal.style-5 .event-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    padding: 12px;
+    border: 1px solid var(--xec-widget-border-color);
+    border-radius: 10px;
+    background: var(--xec-widget-background-color);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.easy-events-widget-horizontal.style-5 .event-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+    background: var(--xec-widget-hover-background-color);
+}
+
+.easy-events-widget-horizontal.style-5 .event-thumb {
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+.easy-events-widget-horizontal.style-5 .event-thumb img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.easy-events-widget-horizontal.style-5 .event-details {
+    flex: 1;
+}
+
+.easy-events-widget-horizontal.style-5 .event-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--xec-widget-title-color);
+    text-decoration: none;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.easy-events-widget-horizontal.style-5 .event-title:hover {
+    color: var(--xec-widget-title-hover-color);
+}
+
+.easy-events-widget-horizontal.style-5 .event-date {
+    font-size: 13px;
+    color: var(--xec-widget-date-color);
+    margin-bottom: 2px;
+}
+
+.easy-events-widget-horizontal.style-5 .event-time {
+    font-size: 12px;
+    color: var(--xec-widget-date-color);
+}
+/* Widget Style 5 end */
+
+/* Widget Style 6 start*/
+.easy-events-widget-masonry.style-6 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.easy-events-widget-masonry.style-6 .event-card {
+    position: relative;
+    background: var(--xec-widget-background-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.easy-events-widget-masonry.style-6 .event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    background: var(--xec-widget-hover-background-color);
+}
+
+.easy-events-widget-masonry.style-6 .event-thumb {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.easy-events-widget-masonry.style-6 .event-thumb img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.easy-events-widget-masonry.style-6 .event-card:hover .event-thumb img {
+    transform: scale(1.05);
+}
+
+.easy-events-widget-masonry.style-6 .event-date {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: var(--xec-widget-date-color);
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.easy-events-widget-masonry.style-6 .event-details {
+    padding: 10px;
+    text-align: center;
+}
+
+.easy-events-widget-masonry.style-6 .event-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--xec-widget-title-color);
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.easy-events-widget-masonry.style-6 .event-title:hover {
+    color: var(--xec-widget-title-hover-color);
+}
+/* Widget Style 6 end */
+
+/* Widget Style 7 start */
+.easy-events-widget-timeline.style-7 {
+    position: relative;
+    padding-left: 25px;
+    border-left: 2px solid var(--xec-widget-border-color);
+}
+
+.easy-events-widget-timeline.style-7 .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.easy-events-widget-timeline.style-7 .timeline-marker {
+    position: absolute;
+    left: -11px;
+    top: 3px;
+    width: 14px;
+    height: 14px;
+    background: var(--xec-widget-date-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--xec-widget-date-color)33;
+}
+
+.easy-events-widget-timeline.style-7 .timeline-content {
+    padding: 0 0 0 10px;
+}
+
+.easy-events-widget-timeline.style-7 .event-date {
+    display: block;
+    font-size: 12px;
+    color: var(--xec-widget-date-color);
+    margin-bottom: 3px;
+}
+
+.easy-events-widget-timeline.style-7 .event-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--xec-widget-title-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.easy-events-widget-timeline.style-7 .event-title:hover {
+    color: var(--xec-widget-title-hover-color);
+}
+/* Widget Style 7 end */
+
+/* Widget Style 8 start */
+.easy-events-widget-grid.style-8 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.easy-events-widget-grid.style-8 .overlay-card {
+    position: relative;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.easy-events-widget-grid.style-8 .overlay-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.easy-events-widget-grid.style-8 .overlay-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.easy-events-widget-grid.style-8 .overlay-gradient {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to top, var(--xec-widget-background-color, rgba(0,0,0,0.7)), rgba(0,0,0,0));
+    color: var(--xec-widget-title-color);
+}
+
+.easy-events-widget-grid.style-8 .event-date {
+    font-size: 13px;
+    opacity: 0.85;
+    display: block;
+    margin-bottom: 5px;
+    color: var(--xec-widget-date-color);
+}
+
+.easy-events-widget-grid.style-8 .event-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--xec-widget-title-color);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Widget Style 8 end */
+
+/* Widget Style 9 start */
+.easy-events-widget-badge.style-9 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.easy-events-widget-badge.style-9 .event-badge {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--xec-widget-border-color);
+    border-radius: 20px;
+    background: var(--xec-widget-background-color);
+    transition: all 0.3s ease;
+}
+
+.easy-events-widget-badge.style-9 .event-badge:hover {
+    background: var(--xec-widget-hover-background-color);
+    border-color: var(--xec-widget-title-hover-color);
+    transform: translateY(-2px);
+}
+
+.easy-events-widget-badge.style-9 .event-date {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--xec-widget-date-color);
+    margin-right: 10px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.easy-events-widget-badge.style-9 .event-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--xec-widget-title-color);
+    text-decoration: none;
+    flex: 1;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.easy-events-widget-badge.style-9 .event-title:hover {
+    color: var(--xec-widget-title-hover-color);
+}
+/* Widget Style 9 end */
+
+/* Widget Style 10 start */
+.easy-events-widget-overlay.style-10 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.easy-events-widget-overlay.style-10 .event-overlay-card {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 180px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--xec-widget-background-color);
+}
+
+.easy-events-widget-overlay.style-10 .event-overlay-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    background: var(--xec-widget-hover-background-color);
+}
+
+.easy-events-widget-overlay.style-10 .event-date-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--xec-widget-date-color);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.easy-events-widget-overlay.style-10 .event-overlay-content {
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    text-align: center;
+    padding: 10px;
+}
+
+.easy-events-widget-overlay.style-10 .event-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--xec-widget-title-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.easy-events-widget-overlay.style-10 .event-title:hover {
+    color: var(--xec-widget-title-hover-color);
+}
+/* Widget Style 10 end */

@@ -42,6 +42,7 @@ class Xylus_Events_Calendar_Admin {
         add_action( 'admin_menu', array( $this, 'xylusec_add_menu_pages' ) );
 		add_filter( 'submenu_file', array( $this, 'xylusec_get_selected_tab_submenu_xtfefoli' ) );
         add_action( 'admin_init', array( $this, 'xylusec_handle_so_settings_submit' ), 99 );
+        add_action( 'admin_init', array( $this, 'xylusec_handle_so_widget_settings_submit' ), 99 );
         add_action( 'xylusec_notice', array( $this, 'xylusec_display_notices' ) );
 		add_action( 'admin_init', array( $this, 'xylusec_plugin_maybe_save_default_options' ) );
 		add_shortcode('easy_events_calendar', array( $this, 'xylusec_calendar_shortcode' ) );
@@ -68,6 +69,7 @@ class Xylus_Events_Calendar_Admin {
 		add_menu_page( __( 'Easy Events Calendar', 'xylus-events-calendar' ), __( 'Easy Events Calendar', 'xylus-events-calendar' ), 'manage_options', 'xt_events_calendar', array( $this, 'xylusec_admin_page' ), 'dashicons-calendar', '30' );
 		global $submenu;	
 		$submenu['xt_events_calendar'][] = array( __( 'Easy Events Calendar', 'xylus-events-calendar' ), 'manage_options', admin_url( 'admin.php?page=xt_events_calendar&tab=general' ) );
+		$submenu['xt_events_calendar'][] = array( __( 'Widget Appearance', 'xylus-events-calendar' ), 'manage_options', admin_url( 'admin.php?page=xt_events_calendar&tab=widget' ) );
 		$submenu['xt_events_calendar'][] = array( __( 'Shortcode', 'xylus-events-calendar' ), 'manage_options', admin_url( 'admin.php?page=xt_events_calendar&tab=shortcode' ) );
 		$submenu['xt_events_calendar'][] = array( __( 'Support & Help', 'xylus-events-calendar' ), 'manage_options', admin_url( 'admin.php?page=xt_events_calendar&tab=support' ) );
 	}
@@ -85,7 +87,7 @@ class Xylus_Events_Calendar_Admin {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $active_tab = isset( $_GET['tab'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) ) : 'general';
         $gettab     = ucwords( str_replace( '_', ' ', $active_tab ) );
-        if( $active_tab == 'general' || $active_tab == 'shortcode' || $active_tab == 'support' ){
+        if( $active_tab == 'general' || $active_tab == 'widget' || $active_tab == 'shortcode' || $active_tab == 'support'  ){
             $gettab     = ucwords( str_replace( '_', ' ', $gettab ) );
             $page_title = $gettab;
         }
@@ -110,6 +112,9 @@ class Xylus_Events_Calendar_Admin {
 												<a href="<?php echo esc_url( admin_url( 'admin.php?page=xt_events_calendar&tab=general' ) ); ?>" class="var-tab <?php echo $active_tab == 'general' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
 													<span class="tab-label"><?php esc_attr_e( 'General', 'xylus-events-calendar' ); ?></span>
 												</a>
+												<a href="<?php echo esc_url( admin_url( 'admin.php?page=xt_events_calendar&tab=widget' ) ); ?>" class="var-tab <?php echo $active_tab == 'widget' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+													<span class="tab-label"><?php esc_attr_e( 'Widget Appearance', 'xylus-events-calendar' ); ?></span>
+												</a>
 												<a href="<?php echo esc_url( admin_url( 'admin.php?page=xt_events_calendar&tab=shortcode' ) ); ?>" class="var-tab <?php echo $active_tab == 'shortcode' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
 													<span class="tab-label"><?php esc_attr_e( 'Shortcode', 'xylus-events-calendar' ); ?></span>
 												</a>
@@ -126,6 +131,8 @@ class Xylus_Events_Calendar_Admin {
                             $valid_tabs = [ 'general', 'shortcode', 'support' ];
                             if( $active_tab == 'general' ){
                                 require_once XYLUSEC_PLUGIN_DIR . '/templates/admin/xylus-events-calendar-general.php';
+							}elseif( $active_tab == 'widget' ){
+                                require_once XYLUSEC_PLUGIN_DIR . '/templates/admin/xylus-events-calendar-widget.php';
 							}elseif( $active_tab == 'shortcode' ){
                                 require_once XYLUSEC_PLUGIN_DIR . '/templates/admin/xylus-events-calendar-shortcode.php';
                             }elseif( $active_tab == 'support' ){
@@ -197,6 +204,39 @@ class Xylus_Events_Calendar_Admin {
 
 			if ( $updated ) {
 				$xylusec_success_msg[] = __( 'Settings saved successfully.', 'xylus-events-calendar' );
+			} else {
+				$xylusec_errors[] = __( 'No changes made or something went wrong.', 'xylus-events-calendar' );
+			}
+		}
+	}
+
+	/**
+	 * Process Saving liknedin feedpress sharing option
+	 *
+	 * @since    1.0.0
+	 */
+	public function xylusec_handle_so_widget_settings_submit() {
+		global $xylusec_errors, $xylusec_success_msg;
+
+		if (
+			isset( $_POST['xylusec_so_widget_action'] ) &&
+			'xylusec_so_widget_settings' === esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_so_widget_action'] ) ) ) &&
+			check_admin_referer( 'xylusec_so_widget_setting_form_nonce_action', 'xylusec_so_widget_setting_form_nonce' )
+		) {
+			// Sanitize and collect all form fields
+			$xylusec_so_widget_options = [
+				'xylusec_widget_background_color'         => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_widget_background_color'] ?? '' ) ) ),
+				'xylusec_widget_hover_background_color'   => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_widget_hover_background_color'] ?? '' ) ) ),
+				'xylusec_widget_title_color'              => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_widget_title_color'] ?? 10 ) ) ),
+				'xylusec_widget_title_hover_color'        => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_widget_title_hover_color'] ?? '' ) ) ),
+				'xylusec_widget_date_color'               => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_widget_date_color'] ?? '' ) ) ),
+				'xylusec_widget_border_color'             => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_widget_border_color'] ?? 0 ) ) ),
+			];
+
+			$updated = update_option( XYLUSEC_WIDGET_OPTIONS, $xylusec_so_widget_options );
+
+			if ( $updated ) {
+				$xylusec_success_msg[] = __( 'Widget Settings saved successfully.', 'xylus-events-calendar' );
 			} else {
 				$xylusec_errors[] = __( 'No changes made or something went wrong.', 'xylus-events-calendar' );
 			}
