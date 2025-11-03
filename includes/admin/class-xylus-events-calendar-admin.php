@@ -48,6 +48,10 @@ class Xylus_Events_Calendar_Admin {
 	}
 
 	public function xylusec_calendar_shortcode($atts) {
+		wp_enqueue_script( 'xylus-events-calendar' );
+		$inline = 'if (window.xylusec_ajax) { xylusec_ajax.shortcode_atts = ' . wp_json_encode( $atts ) . '; }';
+		wp_add_inline_script( 'xylus-events-calendar', $inline, 'before' );
+		
 		ob_start();
 		include XYLUSEC_PLUGIN_DIR . 'templates/admin/xylus-events-calendar-template.php';
 		return ob_get_clean();
@@ -175,9 +179,11 @@ class Xylus_Events_Calendar_Admin {
 			check_admin_referer( 'xylusec_so_setting_form_nonce_action', 'xylusec_so_setting_form_nonce' )
 		) {
 			// Sanitize and collect all form fields
+			$hide_header = isset( $_POST['xylusec_hide_header'] ) && esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_hide_header'] ) ) ) === '1' ? 'yes' : 'no';
 			$xylusec_so_options = [
 				'xylusec_event_source'        => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_event_source'] ?? '' ) ) ),
 				'xylusec_default_view'        => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_default_view'] ?? '' ) ) ),
+				'xylusec_hide_header'         => $hide_header,
 				'xylusec_events_per_page'     => esc_attr( sanitize_text_field( wp_unslash( absint( $_POST['xylusec_events_per_page'] ?? 10 ) ) ) ),
 				'xylusec_load_more_label'     => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_load_more_label'] ?? '' ) ) ),
 				'xylusec_view_details_label'  => esc_attr( sanitize_text_field( wp_unslash( $_POST['xylusec_view_details_label'] ?? '' ) ) ),
