@@ -53,11 +53,17 @@ class Xylus_Events_Calendar_Ajax_Handler {
 	 * @return void
 	 */
 	public function xylusec_get_events() {
+		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 		
+		$atts_json          = isset( $_GET['shortcode_atts'] ) ? $_GET['shortcode_atts'] : '{}';
+    	$atts               = json_decode( stripslashes($atts_json), true );
+		$category           = isset( $atts['category'] ) ? $atts['category'] : '';
+		$cats               = array_map( 'trim', explode( ',', $category ) );
 		$start              = isset( $_GET['start'] ) ? (int)esc_attr( sanitize_text_field( wp_unslash( $_GET['start'] ) ) ) : '';
 		$end                = isset( $_GET['end'] ) ? (int)esc_attr( sanitize_text_field( wp_unslash( $_GET['end'] ) ) ) : '';	
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
+        $selected_taxonomy  = $xylusec_events_calendar->common->get_selected_post_type_category( $selected_post_type );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';
@@ -78,6 +84,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		$args  = [
 			'post_type'      => $selected_post_type,
 			'posts_per_page' => -1,
+			'post_status'    => array('publish'),
 			'meta_query'     => [		//phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				'relation' => 'AND',
 				[
@@ -94,6 +101,16 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				]
 			]
 		];
+
+		if ( ! empty( $category ) ) {
+			$args['tax_query'] = [
+				[
+					'taxonomy' => $selected_taxonomy,
+					'field'    => 'slug',
+					'terms'    => $cats
+				]
+			];
+		}
 		
 		$color_palette = [ '#bee9fa','#d1f8d1','#f8cfcf','#fff3cd','#e0d4f5','#fce5cd','#d9faff','#e6f5d0','#fddde6','#cfe2f3','#ffe6f0','#e0f7fa','#e6ffe6','#f9f1dc','#f0e5d8','#dfe7fd','#fff0f5','#e4f9f5','#f7f4ea','#f3e6ff' ];
 		$text_colors   = [ '#0A4F70','#2E7031','#A94442','#8A6D3B','#5E4B8B','#B85C00','#31708F','#607D3B','#9F3858','#3A5F7F','#B03A5D','#317C80','#338055','#7A6332','#7D6F58','#5B6EBF','#A35B73','#31706B','#7E7654','#5B3B8A' ];
@@ -152,12 +169,13 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
-		$paged   = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
-		$keyword = isset( $_POST['keyword']) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
+		$paged              = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
+		$keyword            = isset( $_POST['keyword']) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
-		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$events  = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
+		$title_color        = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
+		$events             = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';
@@ -219,13 +237,14 @@ class Xylus_Events_Calendar_Ajax_Handler {
 	public function xylusec_load_more_row_events() {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
-
-		$paged        = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
-		$keyword      = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
+		
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
+		$paged              = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
+		$keyword            = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
-		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$query        = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
+		$title_color        = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
+		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';
@@ -288,12 +307,13 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
 		$paged              = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
 		$keyword            = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color        = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
+		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';
