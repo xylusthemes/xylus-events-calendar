@@ -5,9 +5,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 global $xylusec_events_calendar;
 $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
+$is_header_hide      = isset( $xylusec_options['xylusec_hide_header'] ) ? $xylusec_options['xylusec_hide_header'] : 'no';
 ?>
 <div id="xylusec-calendar-container">
-    <div class="xylusec-custom-buttons-container">
+    <div class="xylusec-custom-buttons-container" <?php echo esc_attr( $is_header_hide === 'yes' ? 'style=display:none;' : '' ); ?> >
         <div class="xylusec-custom-buttons-container-first-child">
             <input id="xylusec-search" type="search" placeholder="Search Events..." style="padding: 7px;border:1px solid #ccc;border-radius:5px;width: 100%;">
             <button id="xylusec-search-events" type="button" class="xylusec_load_more_button" style="padding: 2px 10px;"><?php echo esc_attr( 'Search', 'xylus-events-calendar' ); ?></button>
