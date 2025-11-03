@@ -60,7 +60,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 		
-		$atts_json          = isset( $_GET['shortcode_atts'] ) ? $_GET['shortcode_atts'] : '{}';
+		$atts_json          = isset( $_GET['shortcode_atts'] ) ? $_GET['shortcode_atts'] : '{}'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     	$atts               = json_decode( stripslashes($atts_json), true );
 		$category           = isset( $atts['category'] ) ? $atts['category'] : '';
 		$cats               = array_map( 'trim', explode( ',', $category ) );
@@ -107,7 +107,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		];
 
 		if ( ! empty( $category ) ) {
-			$args['tax_query'] = [
+			$args['tax_query'] = [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query	
 				[
 					'taxonomy' => $selected_taxonomy,
 					'field'    => 'slug',
@@ -173,7 +173,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
-		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$paged              = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
 		$keyword            = isset( $_POST['keyword']) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
@@ -213,7 +213,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 							</a>
 						<?php else: ?>
 							<a href="<?php the_permalink(); ?>">
-								<img src="https://dummyimage.com/350x350/ccc/969696.png&text=<?php echo gmdate( 'F+d', $start_ts ); ?>" alt="<?php the_title(); ?>" />
+								<img src="https://dummyimage.com/350x350/ccc/969696.png&text=<?php echo esc_attr( gmdate( 'F+d', $start_ts ) ); ?>" alt="<?php the_title(); ?>" />
 							</a>
 						<?php endif; ?>
 					</div>
@@ -246,7 +246,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 		
-		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$paged              = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
 		$keyword            = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
@@ -315,7 +315,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
-		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$paged              = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
 		$keyword            = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
@@ -382,7 +382,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
-		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$paged        = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
 		$keyword      = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';

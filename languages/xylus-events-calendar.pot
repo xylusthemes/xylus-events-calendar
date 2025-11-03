@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-03T09:41:50+00:00\n"
+"POT-Creation-Date: 2025-11-03T10:22:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: xylus-events-calendar\n"
@@ -143,6 +143,62 @@ msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-list-table.php:54
 msgid "Action"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:72
+msgid "No upcoming events found."
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:493
+msgid "Title:"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:499
+msgid "Number of events to show:"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:505
+msgid "Select Style:"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:507
+msgid "Style 1 (List)"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:508
+msgid "Style 2 (Card Grid)"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:509
+msgid "Style 3 Modern card with top border + hover shadow"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:510
+msgid "Style 4 Date badge + title list"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:511
+msgid "Style 5 Horizontal card with thumbnail"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:512
+msgid "Style 6 Grid/Masonry cards"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:513
+msgid "Style 7 Timeline view"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:514
+msgid "Style 8 Modern Bar"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:515
+msgid "Style 9 Vertical Timeline"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:516
+msgid "Style 10 Image Overlay"
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-general.php:26

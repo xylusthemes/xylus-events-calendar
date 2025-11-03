@@ -23,8 +23,8 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
 
         parent::__construct(
             'easy_events_calendar_widget',
-            __( 'Easy Events Calendar – Upcoming Events', 'easy-events-calendar' ),
-            array( 'description' => __( 'Display upcoming events from Easy Events Calendar.', 'easy-events-calendar' ) )
+            esc_attr( 'Easy Events Calendar – Upcoming Events', 'xylus-events-calendar' ),
+            array( 'description' => esc_attr( 'Display upcoming events from Easy Events Calendar.', 'xylus-events-calendar' ) )
         );
     }
 
@@ -32,14 +32,14 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     public function widget( $args, $instance ) {
         global $xylusec_events_calendar;
 
-        echo $args['before_widget'];
+        echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-        $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Upcoming Events', 'easy-events-calendar' );
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_attr( 'Upcoming Events', 'xylus-events-calendar' );
         $limit = ! empty( $instance['limit'] ) ? absint( $instance['limit'] ) : 5;
         $style = ! empty( $instance['style'] ) ? $instance['style'] : 'style1';
 
         if ( ! empty( $title ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $title ) . $args['after_title'];
+            echo $args['before_title'] . apply_filters( 'widget_title', $title ) . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         }
 
         // fetch events
@@ -69,10 +69,10 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $this->xylusec_render_style_1( $events_query, $selected_post_type );
             }
         } else {
-            echo '<p>' . __( 'No upcoming events found.', 'easy-events-calendar' ) . '</p>';
+            esc_attr_e( 'No upcoming events found.', 'xylus-events-calendar' );
         }
 
-        echo $args['after_widget'];
+        echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     // ========== Style 1 ==========
@@ -98,7 +98,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             echo '<li>';
             echo '<a class="event-title-style1" href="' . esc_url( $event_url ) . '">' . esc_html( $event_title ) . '</a>';
             if ( $event_date ) {
-                echo '<span class="event-date-style1"> - ' . gmdate( 'M d, Y', $event_date ) . '</span>';
+                echo '<span class="event-date-style1"> - ' . esc_attr( gmdate( 'M d, Y', $event_date ) ) . '</span>';
             }
             echo '</li>';
         }
@@ -128,7 +128,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             echo '<div class="event-card">';
                 echo '<div class="event-card-header">';
                     if ( $event_date ) {
-                        echo '<span class="event-date">' . date( 'M d, Y', $event_date ) . '</span>';
+                        echo '<span class="event-date">' . esc_attr( gmdate( 'M d, Y', $event_date ) ) . '</span>';
                     }
                 echo '</div>';
                 echo '<div class="event-card-body">';
@@ -164,7 +164,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             echo '<div class="event-card">';
                 // Top border + Date (optional badge bhi bana sakte)
                 if ( $event_date ) {
-                    echo '<span class="event-date">' . date( 'M d, Y', $event_date ) . '</span>';
+                    echo '<span class="event-date">' . esc_attr( gmdate( 'M d, Y', $event_date ) ) . '</span>';
                 }
 
                 // Event title
@@ -198,9 +198,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $event_date = strtotime( $event_date );
             }
 
-            $day   = $event_date ? date( 'd', $event_date ) : '';
-            $month = $event_date ? date( 'M', $event_date ) : '';
-            $time  = $event_date ? date( 'h:i A', $event_date ) : '';
+            $day   = $event_date ? gmdate( 'd', $event_date ) : '';
+            $month = $event_date ? gmdate( 'M', $event_date ) : '';
+            $time  = $event_date ? gmdate( 'h:i A', $event_date ) : '';
 
             echo '<div class="event-item">';
                 // Left: circular badge
@@ -245,8 +245,8 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $event_date = strtotime( $event_date );
             }
 
-            $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
-            $time_display = $event_date ? date( 'h:i A', $event_date ) : '';
+            $date_display = $event_date ? gmdate( 'M d, Y', $event_date ) : '';
+            $time_display = $event_date ? gmdate( 'h:i A', $event_date ) : '';
 
             // Featured image
             if ( '' !== get_the_post_thumbnail() ) {
@@ -299,7 +299,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $event_date = strtotime( $event_date );
             }
 
-            $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
+            $date_display = $event_date ? gmdate( 'M d, Y', $event_date ) : '';
 
             // Thumbnail
             if ( '' !== get_the_post_thumbnail() ) {
@@ -346,7 +346,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $event_date = strtotime( $event_date );
             }
 
-            $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
+            $date_display = $event_date ? gmdate( 'M d, Y', $event_date ) : '';
 
             echo '<div class="timeline-item">';
                 echo '<div class="timeline-marker"></div>';
@@ -382,7 +382,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             if ( ! ctype_digit( $event_date ) ) {
                 $event_date = strtotime( $event_date );
             }
-            $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
+            $date_display = $event_date ? gmdate( 'M d, Y', $event_date ) : '';
 
             // Background image
             if ( '' !== get_the_post_thumbnail() ) {
@@ -427,7 +427,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             if ( ! ctype_digit( $event_date ) ) {
                 $event_date = strtotime( $event_date );
             }
-            $date_display = $event_date ? date( 'M d', $event_date ) : '';
+            $date_display = $event_date ? gmdate( 'M d', $event_date ) : '';
 
             echo '<div class="event-badge">';
                 if ( $date_display ) {
@@ -460,7 +460,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
             if ( ! ctype_digit( $event_date ) ) {
                 $event_date = strtotime( $event_date );
             }
-            $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
+            $date_display = $event_date ? gmdate( 'M d, Y', $event_date ) : '';
 
             // Thumbnail (fallback to default color block if no image)
             if ( '' !== get_the_post_thumbnail() ) {
@@ -485,35 +485,35 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
 
     // Widget backend form
     public function form( $instance ) {
-        $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Upcoming Events', 'easy-events-calendar' );
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_attr( 'Upcoming Events', 'xylus-events-calendar' );
         $limit = ! empty( $instance['limit'] ) ? absint( $instance['limit'] ) : 5;
         $style = ! empty( $instance['style'] ) ? $instance['style'] : 'style1';
         ?>
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'xylus-events-calendar' ); ?></label>
             <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
                 name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
                 value="<?php echo esc_attr( $title ); ?>">
         </p>
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php _e( 'Number of events to show:' ); ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php esc_attr_e( 'Number of events to show:', 'xylus-events-calendar' ); ?></label>
             <input class="tiny-text" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"
                 name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>" type="number" step="1" min="1"
                 value="<?php echo esc_attr( $limit ); ?>" size="3">
         </p>
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'style' ) ); ?>"><?php _e( 'Select Style:' ); ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'style' ) ); ?>"><?php esc_attr_e( 'Select Style:', 'xylus-events-calendar'  ); ?></label>
             <select id="<?php echo esc_attr( $this->get_field_id( 'style' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'style' ) ); ?>">
-                <option value="style1" <?php selected( $style, 'style1' ); ?>><?php _e( 'Style 1 (List)', 'easy-events-calendar' ); ?></option>
-                <option value="style2" <?php selected( $style, 'style2' ); ?>><?php _e( 'Style 2 (Card Grid)', 'easy-events-calendar' ); ?></option>
-                <option value="style3" <?php selected( $style, 'style3' ); ?>><?php _e( 'Style 3 Modern card with top border + hover shadow', 'easy-events-calendar' ); ?></option>
-                <option value="style4" <?php selected( $style, 'style4' ); ?>><?php _e( 'Style 4 Date badge + title list', 'easy-events-calendar' ); ?></option>
-                <option value="style5" <?php selected( $style, 'style5' ); ?>><?php _e( 'Style 5 Horizontal card with thumbnail', 'easy-events-calendar' ); ?></option>
-                <option value="style6" <?php selected( $style, 'style6' ); ?>><?php _e( 'Style 6 Grid/Masonry cards', 'easy-events-calendar' ); ?></option>
-                <option value="style7" <?php selected( $style, 'style7' ); ?>><?php _e( 'Style 7 Timeline view', 'easy-events-calendar' ); ?></option>
-                <option value="style8" <?php selected( $style, 'style8' ); ?>><?php _e( 'Style 8 Modern Bar', 'easy-events-calendar' ); ?></option>
-                <option value="style9" <?php selected( $style, 'style9' ); ?>><?php _e( 'Style 9 Vertical Timeline', 'easy-events-calendar' ); ?></option>
-                <option value="style10" <?php selected( $style, 'style10' ); ?>><?php _e( 'Style 10 Image Overlay', 'easy-events-calendar' ); ?></option>
+                <option value="style1" <?php selected( $style, 'style1' ); ?>><?php esc_attr_e( 'Style 1 (List)', 'xylus-events-calendar' ); ?></option>
+                <option value="style2" <?php selected( $style, 'style2' ); ?>><?php esc_attr_e( 'Style 2 (Card Grid)', 'xylus-events-calendar' ); ?></option>
+                <option value="style3" <?php selected( $style, 'style3' ); ?>><?php esc_attr_e( 'Style 3 Modern card with top border + hover shadow', 'xylus-events-calendar' ); ?></option>
+                <option value="style4" <?php selected( $style, 'style4' ); ?>><?php esc_attr_e( 'Style 4 Date badge + title list', 'xylus-events-calendar' ); ?></option>
+                <option value="style5" <?php selected( $style, 'style5' ); ?>><?php esc_attr_e( 'Style 5 Horizontal card with thumbnail', 'xylus-events-calendar' ); ?></option>
+                <option value="style6" <?php selected( $style, 'style6' ); ?>><?php esc_attr_e( 'Style 6 Grid/Masonry cards', 'xylus-events-calendar' ); ?></option>
+                <option value="style7" <?php selected( $style, 'style7' ); ?>><?php esc_attr_e( 'Style 7 Timeline view', 'xylus-events-calendar' ); ?></option>
+                <option value="style8" <?php selected( $style, 'style8' ); ?>><?php esc_attr_e( 'Style 8 Modern Bar', 'xylus-events-calendar' ); ?></option>
+                <option value="style9" <?php selected( $style, 'style9' ); ?>><?php esc_attr_e( 'Style 9 Vertical Timeline', 'xylus-events-calendar' ); ?></option>
+                <option value="style10" <?php selected( $style, 'style10' ); ?>><?php esc_attr_e( 'Style 10 Image Overlay', 'xylus-events-calendar' ); ?></option>
             </select>
         </p>
         <?php
