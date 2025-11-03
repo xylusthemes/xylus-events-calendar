@@ -230,7 +230,7 @@ class Xylus_Events_Calendar_Common {
         ];
 
         if ( ! empty( $category ) ) {
-			$args['tax_query'] = [
+			$args['tax_query'] = [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query	
 				[
 					'taxonomy' => $selected_taxonomy,
 					'field'    => 'slug',

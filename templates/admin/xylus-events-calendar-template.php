@@ -10,7 +10,7 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
 $arrowbg_color  = isset( $xylusec_options['xylusec_button_color'] ) ? esc_attr( $xylusec_options['xylusec_button_color'] ) : '#000';
 $text_color     = isset( $xylusec_options['xylusec_text_color'] ) ? esc_attr( $xylusec_options['xylusec_text_color'] ) : '#fff';
 $title_color    = isset( $xylusec_options['xylusec_event_title_color'] ) ? esc_attr( $xylusec_options['xylusec_event_title_color'] ) : '#60606e';
-$is_header_hide      = isset( $xylusec_options['xylusec_hide_header'] ) ? $xylusec_options['xylusec_hide_header'] : 'no';
+$is_header_hide = isset( $xylusec_options['xylusec_hide_header'] ) ? $xylusec_options['xylusec_hide_header'] : 'no';
 ?>
 <div id="xylusec-calendar-container">
     <div class="xylusec-custom-buttons-container" <?php echo esc_attr( $is_header_hide === 'yes' ? 'style=display:none;' : '' ); ?> >
@@ -37,7 +37,7 @@ $is_header_hide      = isset( $xylusec_options['xylusec_hide_header'] ) ? $xylus
                 </div>
             </div>
         </div>
-        <div class="xylusec-no-events" style="display: none;padding:15px;text-align:center;color:<?php echo $title_color; ?>;border:1px solid <?php echo $arrowbg_color; ?>;border-radius:5px;margin-top:15px;">
+        <div class="xylusec-no-events" style="display: none;padding:15px;text-align:center;color:<?php echo esc_attr( $title_color ); ?>;border:1px solid <?php echo esc_attr( $arrowbg_color ); ?>;border-radius:5px;margin-top:15px;">
             <?php echo esc_attr( 'Uh-oh! No events found nearby. Change the filters or swing by later to see what’s new!', 'xylus-events-calendar' ); ?>
         </div>
     </div>
@@ -52,7 +52,7 @@ $is_header_hide      = isset( $xylusec_options['xylusec_hide_header'] ) ? $xylus
                 </div>
             </div>
         </div>
-        <div class="xylusec-no-events" style="display: none;padding:15px;text-align:center;color:<?php echo $title_color; ?>;border:1px solid <?php echo $arrowbg_color; ?>;border-radius:5px;margin-top:15px;">
+        <div class="xylusec-no-events" style="display: none;padding:15px;text-align:center;color:<?php echo esc_attr( $title_color ); ?>;border:1px solid <?php echo esc_attr( $arrowbg_color ); ?>;border-radius:5px;margin-top:15px;">
             <?php echo esc_attr( 'Uh-oh! No events found nearby. Change the filters or swing by later to see what’s new!', 'xylus-events-calendar' ); ?>
         </div>
     </div>
@@ -67,7 +67,7 @@ $is_header_hide      = isset( $xylusec_options['xylusec_hide_header'] ) ? $xylus
                 </div>
             </div>
         </div>
-        <div class="xylusec-no-events" style="display: none;padding:15px;text-align:center;color:<?php echo $title_color; ?>;border:1px solid <?php echo $arrowbg_color; ?>;border-radius:5px;margin-top:15px;">
+        <div class="xylusec-no-events" style="display: none;padding:15px;text-align:center;color:<?php echo esc_attr( $title_color ); ?>;border:1px solid <?php echo esc_attr( $arrowbg_color ); ?>;border-radius:5px;margin-top:15px;">
             <?php echo esc_attr( 'Uh-oh! No events found nearby. Change the filters or swing by later to see what’s new!', 'xylus-events-calendar' ); ?>
         </div>
     </div>
@@ -82,12 +82,12 @@ $is_header_hide      = isset( $xylusec_options['xylusec_hide_header'] ) ? $xylus
             </div>
             <style>
                 .xylusec-slider-arrow {
-                    background: <?php echo $arrowbg_color; ?>;
-                    color: <?php echo $text_color; ?>;
+                    background: <?php echo esc_attr( $arrowbg_color ); ?>;
+                    color: <?php echo esc_attr( $text_color ); ?>;
                 }
             </style>
         </div>
-        <div class="xylusec-no-events" style="display: none;padding:15px;text-align:center;color:<?php echo $title_color; ?>;border:1px solid <?php echo $arrowbg_color; ?>;border-radius:5px;margin-top:15px;">
+        <div class="xylusec-no-events" style="display: none;padding:15px;text-align:center;color:<?php echo esc_attr( $title_color ); ?>;border:1px solid <?php echo esc_attr( $arrowbg_color ); ?>;border-radius:5px;margin-top:15px;">
             <?php echo esc_attr( 'Uh-oh! No events found nearby. Change the filters or swing by later to see what’s new!', 'xylus-events-calendar' ); ?>
         </div>
     </div>
