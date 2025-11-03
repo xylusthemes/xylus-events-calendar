@@ -4,7 +4,7 @@ Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
 Tested up to: 6.8
 Requires PHP: 8.0 
-Stable tag: 1.0.2  
+Stable tag: 1.0.3  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -92,6 +92,13 @@ Use the shortcode `<code>[easy_events_calendar]</code>` on any post, page, or wi
 ---
 
 == Changelog ==
+
+= 1.0.3 =
+* ADDED: New slider layout.
+* ADDED: Support for multiple widgets.
+* ADDED: Option to hide the header.
+* ADDED: Category parameter support in the shortcode.
+* IMPROVEMENTS: Security and code quality improvements.
 
 = 1.0.2 =
 * ADDED: Support for EventOn plugin.
