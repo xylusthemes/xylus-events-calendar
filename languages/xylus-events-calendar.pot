@@ -39,23 +39,23 @@ msgstr ""
 msgid "https://xylusthemes.com"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:64
-#: includes/admin/class-xylus-events-calendar-admin.php:66
+#: includes/admin/class-xylus-events-calendar-admin.php:68
+#: includes/admin/class-xylus-events-calendar-admin.php:70
 msgid "Easy Events Calendar"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:67
-#: includes/admin/class-xylus-events-calendar-admin.php:110
+#: includes/admin/class-xylus-events-calendar-admin.php:71
+#: includes/admin/class-xylus-events-calendar-admin.php:114
 #: includes/admin/class-xylus-events-calendar-list-table.php:53
 msgid "Shortcode"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:68
-#: includes/admin/class-xylus-events-calendar-admin.php:113
+#: includes/admin/class-xylus-events-calendar-admin.php:72
+#: includes/admin/class-xylus-events-calendar-admin.php:117
 msgid "Support & Help"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:107
+#: includes/admin/class-xylus-events-calendar-admin.php:111
 msgid "General"
 msgstr ""
 
