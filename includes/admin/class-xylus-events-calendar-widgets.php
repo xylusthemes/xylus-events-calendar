@@ -91,6 +91,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
 
             echo '<li>';
             echo '<a class="event-title-style1" href="' . esc_url( $event_url ) . '">' . esc_html( $event_title ) . '</a>';
@@ -118,6 +121,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
 
             echo '<div class="event-card">';
                 echo '<div class="event-card-header">';
@@ -151,6 +157,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
 
             echo '<div class="event-card">';
                 // Top border + Date (optional badge bhi bana sakte)
@@ -185,6 +194,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
 
             $day   = $event_date ? date( 'd', $event_date ) : '';
             $month = $event_date ? date( 'M', $event_date ) : '';
@@ -229,6 +241,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
 
             $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
             $time_display = $event_date ? date( 'h:i A', $event_date ) : '';
@@ -280,6 +295,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
 
             $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
 
@@ -324,6 +342,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
 
             $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
 
@@ -358,6 +379,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
             $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
 
             // Background image
@@ -400,6 +424,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
             $date_display = $event_date ? date( 'M d', $event_date ) : '';
 
             echo '<div class="event-badge">';
@@ -430,6 +457,9 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 $start_key = 'start_ts';
             }
             $event_date  = get_post_meta( get_the_ID(), $start_key, true );
+            if ( ! ctype_digit( $event_date ) ) {
+                $event_date = strtotime( $event_date );
+            }
             $date_display = $event_date ? date( 'M d, Y', $event_date ) : '';
 
             // Thumbnail (fallback to default color block if no image)

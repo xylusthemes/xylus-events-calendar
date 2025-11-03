@@ -320,13 +320,11 @@
 
 					if (!response.trim()) {
 						$('#load-more-events').hide();
-						$('.xylusec-event-grid-container').hide()
 						$('.xylusec-no-events').show();
 						
 					} else {
 						$('.xylusec-no-events').hide();
 						$('#load-more-events').show();
-						$('.xylusec-event-grid-container').show();
 					}
 					isLoading = false;
 					$('.xylusec-load-spinner').hide();
@@ -536,7 +534,7 @@
 		let page = 1;
 		let isLoading = false;
 		let noMoreEvents = false; 
-		let sliderKeyword = $('#xylusec-search').val().trim();
+		let sliderKeyword = ($('#xylusec-search').val() || '').trim();
 
 		// Load events by AJAX
 		function fetchSlides(reset = false){

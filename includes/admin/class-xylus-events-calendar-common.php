@@ -185,7 +185,7 @@ class Xylus_Events_Calendar_Common {
             return new WP_Query(); // Return empty query
         }
 
-        $atts               = json_decode( stripslashes(  $shortcode_atts ), true );
+        $atts               = !empty( $shortcode_atts ) ? json_decode( stripslashes(  $shortcode_atts ), true ) : '{}';
 		$category           = isset( $atts['category'] ) ? $atts['category'] : '';
 		$cats               = array_map( 'trim', explode( ',', $category ) );
         $current_time       = current_time( 'timestamp' );
@@ -228,6 +228,16 @@ class Xylus_Events_Calendar_Common {
             'order'          => 'ASC',
             's'              => sanitize_text_field( $keyword ), // basic sanitization
         ];
+
+        if ( ! empty( $category ) ) {
+			$args['tax_query'] = [
+				[
+					'taxonomy' => $selected_taxonomy,
+					'field'    => 'slug',
+					'terms'    => $cats
+				]
+			];
+		}
 
         //return new WP_Query( $args );
         $event_query = $this->xylusec_get_uc_events( $args );
