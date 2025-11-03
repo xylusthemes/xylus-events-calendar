@@ -305,7 +305,7 @@
 				data: {
 					action: 'xylusec_load_more_events',
 					paged: reset ? 1 : rowPage,
-					keyword: rowKeyword,
+					keyword: gridKeyword,
 					nonce: xylusec_ajax.nonce,
 					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
 				},
@@ -555,7 +555,8 @@
 					action : 'xylusec_load_more_slider_events',
 					paged  : (reset ? 1 : page),
 					keyword: sliderKeyword,
-					nonce  : xylusec_ajax.nonce
+					nonce  : xylusec_ajax.nonce,
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
 				},
 				success: function(resp){
 					const trimmed = $.trim(resp);

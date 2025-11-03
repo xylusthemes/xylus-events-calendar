@@ -211,6 +211,10 @@ class Xylus_Events_Calendar_Ajax_Handler {
 							<a href="<?php the_permalink(); ?>">
 								<?php the_post_thumbnail( 'medium' ); ?>
 							</a>
+						<?php else: ?>
+							<a href="<?php the_permalink(); ?>">
+								<img src="https://dummyimage.com/350x350/ccc/969696.png&text=<?php echo gmdate( 'F+d', $start_ts ); ?>" alt="<?php the_title(); ?>" />
+							</a>
 						<?php endif; ?>
 					</div>
 					<div class="xylusec-event-info">
@@ -378,12 +382,13 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		global $xylusec_events_calendar;
 		check_ajax_referer('xylusec_nonce', 'nonce');
 
+		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}';
 		$paged        = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
 		$keyword      = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$query        = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count );
+		$query        = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts  );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';
@@ -412,7 +417,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				<div class="xylusec-slider-slide">
 					<div class="xylusec-slider-event-card">
 					<div class="xylusec-slider-event-info">
-						<h3><a style="color:<?php echo esc_attr( $title_color ); ?>;" href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_attr( get_the_title() ); ?></a></h3>
+						<h3><a class="xylusec-slider-event-title" style="color:<?php echo esc_attr( $title_color ); ?>;" href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_attr( get_the_title() ); ?></a></h3>
 						<span class="xylusec-slider-event-meta"><strong><?php echo esc_html( $location ); ?></strong></span>
 						<div class="xylusec-slider-event-meta"><span class="xylusec-slider-event-date"><strong><?php echo esc_html( $event_date ); ?></strong></span></div>
 						<p class="xylusec-slider-event-desc">
