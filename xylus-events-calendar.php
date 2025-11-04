@@ -165,6 +165,8 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-ajax-function.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-list-table.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-widgets.php';
+			require_once XYLUSEC_PLUGIN_DIR . 'includes/easy-events-calendar-shortcode.php';
+			require_once XYLUSEC_PLUGIN_DIR . 'includes/elementor/register-elementor-widget.php';
 		}
 
 		/**
