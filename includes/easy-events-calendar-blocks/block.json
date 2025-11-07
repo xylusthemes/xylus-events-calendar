@@ -1,0 +1,30 @@
+{
+  "apiVersion": 2,
+  "name": "xylus/easy-events-calendar",
+  "title": "Easy Events Calendar",
+  "category": "widgets",
+  "icon": "calendar",
+  "description": "Display upcoming events.",
+  "keywords": ["event", "calendar", "easy"],
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "limit": {
+      "type": "number",
+      "default": 5
+    },
+    "style": {
+      "type": "string",
+      "default": "style1"
+    },
+    "category": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "xylus-events-calendar-widget-css",
+  "editorStyle": "xylus-events-calendar-widget-css",
+  "render": "file:./block.php"
+}
