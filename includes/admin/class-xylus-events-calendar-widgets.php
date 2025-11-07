@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 class Easy_Events_Calendar_Widgets extends WP_Widget {
 
-    private $xylusec_options;
+    public $xylusec_options;
 
     function __construct() {
         $this->xylusec_options = get_option( XYLUSEC_OPTIONS, true );
@@ -76,7 +76,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 1 ==========
-    private function xylusec_render_style_1( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_1( $events_query, $selected_post_type ) {
         echo '<ul class="easy-events-widget-list-style1">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -107,7 +107,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 2 ==========
-    private function xylusec_render_style_2( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_2( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-grid style-2">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -141,7 +141,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 3 ==========
-    private function xylusec_render_style_3( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_3( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-grid style-3">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -178,7 +178,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 4 ==========
-    private function xylusec_render_style_4( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_4( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-badge style-4">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -225,7 +225,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 5 ==========
-    private function xylusec_render_style_5( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_5( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-horizontal style-5">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -279,7 +279,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 6 ==========
-    private function xylusec_render_style_6( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_6( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-masonry style-6">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -326,7 +326,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 7 ==========
-    private function xylusec_render_style_7( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_7( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-timeline style-7">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -363,7 +363,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 8 ==========
-    private function xylusec_render_style_8( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_8( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-grid style-8">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -408,7 +408,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 9 ==========
-    private function xylusec_render_style_9( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_9( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-badge style-9">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
@@ -441,7 +441,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
     }
 
     // ========== Style 10 ==========
-    private function xylusec_render_style_10( $events_query, $selected_post_type ) {
+    public function xylusec_render_style_10( $events_query, $selected_post_type ) {
         echo '<div class="easy-events-widget-overlay style-10">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
