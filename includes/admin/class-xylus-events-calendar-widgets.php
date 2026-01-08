@@ -34,9 +34,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
 
         echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
+        $shortcode_atts = array();
         $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_attr( 'Upcoming Events', 'xylus-events-calendar' );
         $limit = ! empty( $instance['limit'] ) ? absint( $instance['limit'] ) : 5;
         $style = ! empty( $instance['style'] ) ? $instance['style'] : 'style1';
+        $category = ! empty( $instance['category'] ) ? $instance['category'] : '';
+        $shortcode_atts = array( 'category' => $category );
+        $shortcode_atts = wp_json_encode( $shortcode_atts );
 
         if ( ! empty( $title ) ) {
             echo $args['before_title'] . apply_filters( 'widget_title', $title ) . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -44,7 +48,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
 
         // fetch events
         $selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
-        $events_query = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, 1, '', $limit );
+        $events_query = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, 1, '', $limit, $shortcode_atts );
 
         if ( $events_query->have_posts() ) {
             if ( $style === 'style2' ) {
@@ -485,15 +489,47 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
 
     // Widget backend form
     public function form( $instance ) {
+        global $xylusec_events_calendar;
         $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_attr( 'Upcoming Events', 'xylus-events-calendar' );
         $limit = ! empty( $instance['limit'] ) ? absint( $instance['limit'] ) : 5;
         $style = ! empty( $instance['style'] ) ? $instance['style'] : 'style1';
+        $category = ! empty( $instance['category'] ) ? $instance['category'] : '';
+        $get_optiom = get_option( XYLUSEC_OPTIONS, true );
+        $selected_post_type = isset( $get_optiom['xylusec_event_source'] ) ? $get_optiom['xylusec_event_source'] : '';
+        $selected_taxonomy  = $xylusec_events_calendar->common->get_selected_post_type_category( $selected_post_type );
+        $terms = array();
+        if ( ! empty( $selected_taxonomy ) ) {
+            $terms = get_terms( array(
+                'taxonomy'   => $selected_taxonomy,
+                'hide_empty' => false,
+            ) );
+        }
         ?>
         <p>
             <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'xylus-events-calendar' ); ?></label>
             <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
                 name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
                 value="<?php echo esc_attr( $title ); ?>">
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id( 'category' ); ?>">
+                <?php echo esc_html__( 'Select Category', 'xylus-events-calendar' ); ?>
+            </label>
+
+            <select class="widefat"
+                id="<?php echo $this->get_field_id( 'category' ); ?>"
+                name="<?php echo $this->get_field_name( 'category' ); ?>">
+
+                <option value=""><?php echo esc_html__( 'All Categories', 'xylus-events-calendar' ); ?></option>
+                <?php
+                if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+                    foreach ( $terms as $term ) {
+                        $selected = ( $category == $term->slug ) ? 'selected' : '';
+                        echo '<option value="' . esc_attr( $term->slug ) . '" ' . $selected . '>' . esc_html( $term->name ) . '</option>';
+                    }
+                }
+                ?>
+            </select>
         </p>
         <p>
             <label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php esc_attr_e( 'Number of events to show:', 'xylus-events-calendar' ); ?></label>
@@ -525,6 +561,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         $instance['title'] = sanitize_text_field( $new_instance['title'] );
         $instance['limit'] = absint( $new_instance['limit'] );
         $instance['style'] = in_array( $new_instance['style'], array( 'style1', 'style2', 'style3', 'style4', 'style5', 'style6', 'style7', 'style8', 'style9', 'style10' ) ) ? $new_instance['style'] : 'style1';
+        $instance['category'] = sanitize_text_field( $new_instance['category'] );
         return $instance;
     }
 }
