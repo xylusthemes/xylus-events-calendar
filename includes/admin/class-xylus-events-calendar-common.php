@@ -245,7 +245,6 @@ class Xylus_Events_Calendar_Common {
             $offset = ( $paged - 1 ) * $per_page;
             
             // Base query parts
-            $select = "SELECT SQL_CALC_FOUND_ROWS p.*, MIN(i.start_date) as instance_start, MIN(i.end_date) as instance_end";
             $from   = " FROM $wpdb->posts p";
             $join   = " JOIN $table_name i ON p.ID = i.event_id";
             
@@ -282,26 +281,32 @@ class Xylus_Events_Calendar_Common {
                 }
             }
 
-            // Final query construction
-            $order    = $past ? 'DESC' : 'ASC';
+            // Get total count using a reliable COUNT(DISTINCT p.ID) query
+            $count_query = "SELECT COUNT(DISTINCT p.ID)" . $from . $join . $where;
+            $total_posts = $wpdb->get_var( $count_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
+            // Final query construction for posts
+            $select   = "SELECT p.*, MIN(i.start_date) as instance_start, MIN(i.end_date) as instance_end";
             $group_by = " GROUP BY p.ID";
+            $order    = $past ? 'DESC' : 'ASC';
             $order_by = " ORDER BY i.start_date $order";
             $limit    = $wpdb->prepare( " LIMIT %d, %d", $offset, $per_page );
 
             $query_str = $select . $from . $join . $where . $group_by . $order_by . $limit;
 
             $posts = $wpdb->get_results( $query_str ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
-            $total_posts = $wpdb->get_var( "SELECT FOUND_ROWS()" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
             // Create a mock WP_Query object to maintain compatibility with existing templates
             $query = new WP_Query();
             $query->parse_query( array(
-                'post_type' => $post_type,
-                'fields'    => 'all',
+                'post_type'      => $post_type,
+                'fields'         => 'all',
+                'paged'          => $paged,
+                'posts_per_page' => $per_page,
             ) );
             $query->posts = $posts;
             $query->post_count = count( $posts );
-            $query->found_posts = $total_posts;
+            $query->found_posts = intval( $total_posts );
             $query->max_num_pages = ceil( $total_posts / $per_page );
             $query->is_archive = true;
             

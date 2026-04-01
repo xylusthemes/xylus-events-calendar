@@ -281,6 +281,10 @@ class Xylus_Events_Calendar_Admin {
 		$filter_venue     = isset( $_GET['eec_venue'] ) ? sanitize_text_field( wp_unslash( $_GET['eec_venue'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$filter_organizer = isset( $_GET['eec_organizer'] ) ? sanitize_text_field( wp_unslash( $_GET['eec_organizer'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
+		// Get per_page option to match AJAX logic
+		$options  = get_option( XYLUSEC_OPTIONS, [] );
+		$per_page = ! empty( $options['xylusec_events_per_page'] ) ? intval( $options['xylusec_events_per_page'] ) : 12;
+
 		ob_start();
 		?>
 		<div class="eec-archive-wrap eec-discovery-shortcode">
@@ -356,7 +360,7 @@ class Xylus_Events_Calendar_Admin {
 					'organizer' => $organizer,
 				) );
 
-				$query = $xylusec_events_calendar->common->xylusec_get_upcoming_events( 'eec_events', 1, $search, 12, $shortcode_atts );
+				$query = $xylusec_events_calendar->common->xylusec_get_upcoming_events( 'eec_events', 1, $search, $per_page, $shortcode_atts );
 				/* translators: %d: number of events found */
 				printf( esc_html( _n( '%d event found', '%d events found', $query->found_posts, 'xylus-events-calendar' ) ), intval( $query->found_posts ) );
 				?>

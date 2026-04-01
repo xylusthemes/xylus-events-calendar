@@ -98,7 +98,15 @@
         $(document).on('click', '.eec-archive-pagination a', function(e) {
             e.preventDefault();
             const url = $(this).attr('href');
-            const paged = url.match(/paged=(\d+)/) ? url.match(/paged=(\d+)/)[1] : 1;
+            let paged = 1;
+            const pagedMatch = url.match(/paged=(\d+)/);
+            const pageMatch  = url.match(/\/page\/(\d+)/);
+
+            if (pagedMatch) {
+                paged = pagedMatch[1];
+            } else if (pageMatch) {
+                paged = pageMatch[1];
+            }
             
             eec_perform_ajax(paged);
         });
