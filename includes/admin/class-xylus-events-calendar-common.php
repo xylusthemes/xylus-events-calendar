@@ -35,6 +35,11 @@ class Xylus_Events_Calendar_Common {
 		$placeholders = array(
 			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder.png',
 			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder-1.png',
+			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder-2.png',
+			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder-3.png',
+			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder-4.png',
+			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder-5.png',
+			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder-6.png',
 		);
 		return $placeholders[ array_rand( $placeholders ) ];
 	}
