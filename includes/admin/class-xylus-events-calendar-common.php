@@ -199,8 +199,16 @@ class Xylus_Events_Calendar_Common {
             return new WP_Query(); // Return empty query
         }
 
-        $category           = isset( $atts['category'] ) ? $atts['category'] : '';
-		$cats               = array_map( 'trim', explode( ',', $category ) );
+        // Decode shortcode attributes if they are passed as a JSON string
+        $atts = $shortcode_atts;
+        if ( is_string( $shortcode_atts ) ) {
+            $atts = json_decode( $shortcode_atts, true );
+        }
+
+        $category  = isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '';
+        $venue     = isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '';
+        $organizer = isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '';
+
         $current_time_mysql = current_time( 'mysql' );
         $current_time_ts    = current_time( 'timestamp' );
         $get_options        = get_option( XYLUSEC_OPTIONS );
@@ -229,41 +237,61 @@ class Xylus_Events_Calendar_Common {
 			$type         = 'NUMERIC';
 			$compare_time = $current_time_ts;
 		}
+        
         // If it's our plugin's event post type, we use a custom query to support recurring instances
         if ( $post_type === 'eec_events' ) {
             global $wpdb;
             $table_name = $wpdb->prefix . 'eec_event_instances';
             $offset = ( $paged - 1 ) * $per_page;
             
-            $query_str = $wpdb->prepare( 
-                //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                "SELECT SQL_CALC_FOUND_ROWS p.*, MIN(i.start_date) as instance_start, MIN(i.end_date) as instance_end FROM $wpdb->posts p JOIN $table_name i ON p.ID = i.event_id WHERE p.post_type = %s AND p.post_status = 'publish' AND i.end_date $condition %s GROUP BY p.ID",
+            // Base query parts
+            $select = "SELECT SQL_CALC_FOUND_ROWS p.*, MIN(i.start_date) as instance_start, MIN(i.end_date) as instance_end";
+            $from   = " FROM $wpdb->posts p";
+            $join   = " JOIN $table_name i ON p.ID = i.event_id";
+            
+            // Build WHERE clauses
+            $where = $wpdb->prepare( 
+                " WHERE p.post_type = %s AND p.post_status = 'publish' AND i.end_date $condition %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 $post_type,
                 $current_time_mysql
-);
+            );
 
             if ( ! empty( $keyword ) ) {
-                //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                $query_str .= $wpdb->prepare( " AND (p.post_title LIKE %s OR p.post_content LIKE %s)", '%' . $wpdb->esc_like( $keyword ) . '%', '%' . $wpdb->esc_like( $keyword ) . '%' ); //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                $where .= $wpdb->prepare( " AND (p.post_title LIKE %s OR p.post_content LIKE %s)", '%' . $wpdb->esc_like( $keyword ) . '%', '%' . $wpdb->esc_like( $keyword ) . '%' );
             }
 
-            if ( ! empty( $category ) ) {
-                $term_ids = get_terms( array(
-                    'taxonomy' => $selected_taxonomy,
-                    'slug'     => $cats,
-                    'fields'   => 'ids',
-                ) );
-                if ( ! is_wp_error( $term_ids ) && ! empty( $term_ids ) ) {
-                    $query_str .= " AND p.ID IN (SELECT object_id FROM $wpdb->term_relationships WHERE term_taxonomy_id IN (" . implode( ',', array_map( 'intval', $term_ids ) ) . "))";
+            // Apply Taxonomy Filters (Category, Venue, Organizer)
+            $tax_filters = array(
+                'eec_category'  => $category,
+                'eec_venue'     => $venue,
+                'eec_organizer' => $organizer,
+            );
+
+            foreach ( $tax_filters as $tax => $slug ) {
+                if ( ! empty( $slug ) ) {
+                    $slugs = array_map( 'trim', explode( ',', $slug ) );
+                    $terms = get_terms( array(
+                        'taxonomy' => $tax,
+                        'slug'     => $slugs,
+                        'fields'   => 'all',
+                    ) );
+                    if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+                        $tt_ids = wp_list_pluck( $terms, 'term_taxonomy_id' );
+                        $where .= " AND p.ID IN (SELECT object_id FROM $wpdb->term_relationships WHERE term_taxonomy_id IN (" . implode( ',', array_map( 'intval', $tt_ids ) ) . "))";
+                    }
                 }
             }
 
-            $order = $past ? 'DESC' : 'ASC';
-            $query_str .= " ORDER BY i.start_date $order LIMIT %d, %d";
-            $query_str = $wpdb->prepare( $query_str, $offset, $per_page ); //phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            // Final query construction
+            $order    = $past ? 'DESC' : 'ASC';
+            $group_by = " GROUP BY p.ID";
+            $order_by = " ORDER BY i.start_date $order";
+            $limit    = $wpdb->prepare( " LIMIT %d, %d", $offset, $per_page );
 
-            $posts = $wpdb->get_results( $query_str ); //phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-            $total_posts = $wpdb->get_var( "SELECT FOUND_ROWS()" ); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            $query_str = $select . $from . $join . $where . $group_by . $order_by . $limit;
+
+            $posts = $wpdb->get_results( $query_str ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
+            $total_posts = $wpdb->get_var( "SELECT FOUND_ROWS()" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
             // Create a mock WP_Query object to maintain compatibility with existing templates
             $query = new WP_Query();
@@ -285,7 +313,7 @@ class Xylus_Events_Calendar_Common {
             'posts_per_page' => $per_page,
             'post_status'    => array('publish'),
             'paged'          => max( 1, intval( $paged ) ),
-            'meta_query'     => [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+            'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
                 [
                     'key'     => $end_key,
                     'value'   => $compare_time,
@@ -293,21 +321,41 @@ class Xylus_Events_Calendar_Common {
                     'type'    => $type,
                 ],
             ],
-            'meta_key'       => $start_key, //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+            'meta_key'       => $start_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
             'orderby'        => 'meta_value_num',
             'order'          => 'ASC',
-            's'              => sanitize_text_field( $keyword ), // basic sanitization
+            's'              => sanitize_text_field( $keyword ),
         ];
 
+        // Apply tax_query
+        $tax_query = array( 'relation' => 'AND' );
         if ( ! empty( $category ) ) {
-			$args['tax_query'] = [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query	
-				[
-					'taxonomy' => $selected_taxonomy,
-					'field'    => 'slug',
-					'terms'    => $cats
-				]
-			];
+			$tax_query[] = array(
+                'taxonomy' => $selected_taxonomy,
+                'field'    => 'slug',
+                'terms'    => array_map( 'trim', explode( ',', $category ) )
+            );
 		}
+
+        if ( ! empty( $venue ) ) {
+			$tax_query[] = array(
+                'taxonomy' => 'eec_venue',
+                'field'    => 'slug',
+                'terms'    => array_map( 'trim', explode( ',', $venue ) )
+            );
+		}
+
+        if ( ! empty( $organizer ) ) {
+			$tax_query[] = array(
+                'taxonomy' => 'eec_organizer',
+                'field'    => 'slug',
+                'terms'    => array_map( 'trim', explode( ',', $organizer ) )
+            );
+		}
+
+        if ( count( $tax_query ) > 1 ) {
+            $args['tax_query'] = $tax_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+        }
 
         $event_query = $this->xylusec_get_uc_events( $args );
         return $event_query;
