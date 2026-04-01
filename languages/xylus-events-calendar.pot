@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-01T09:49:35+00:00\n"
+"POT-Creation-Date: 2026-04-01T10:28:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: xylus-events-calendar\n"
@@ -43,51 +43,51 @@ msgstr ""
 msgid "Related Events"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:293
+#: includes/admin/class-xylus-events-calendar-admin.php:297
 #: templates/archive-eec_events.php:61
 msgid "Search events..."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:298
+#: includes/admin/class-xylus-events-calendar-admin.php:302
 #: includes/admin/class-xylus-events-calendar-cpt.php:226
 #: templates/archive-eec_events.php:66
 msgid "All Categories"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:307
+#: includes/admin/class-xylus-events-calendar-admin.php:311
 #: includes/admin/class-xylus-events-calendar-cpt.php:305
 #: templates/archive-eec_events.php:75
 msgid "All Venues"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:316
+#: includes/admin/class-xylus-events-calendar-admin.php:320
 #: includes/admin/class-xylus-events-calendar-cpt.php:340
 #: templates/archive-eec_events.php:84
 msgid "All Organizers"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:323
+#: includes/admin/class-xylus-events-calendar-admin.php:327
 #: templates/archive-eec_events.php:91
 msgid "Filter"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:327
+#: includes/admin/class-xylus-events-calendar-admin.php:331
 #: templates/archive-eec_events.php:95
 msgid "Grid View"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:332
+#: includes/admin/class-xylus-events-calendar-admin.php:336
 #: templates/archive-eec_events.php:100
 msgid "List View"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:340
+#: includes/admin/class-xylus-events-calendar-admin.php:344
 #: templates/archive-eec_events.php:120
 msgid "Reset"
 msgstr ""
 
 #. translators: %d: number of events found
-#: includes/admin/class-xylus-events-calendar-admin.php:361
+#: includes/admin/class-xylus-events-calendar-admin.php:365
 #: templates/archive-eec_events.php:130
 #: templates/taxonomy-eec_category.php:42
 #: templates/taxonomy-eec_organizer.php:71
@@ -99,41 +99,41 @@ msgid_plural "%d events found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:388
-#: includes/admin/class-xylus-events-calendar-admin.php:390
+#: includes/admin/class-xylus-events-calendar-admin.php:392
+#: includes/admin/class-xylus-events-calendar-admin.php:394
 msgid "Easy Events Calendar"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:391
-#: includes/admin/class-xylus-events-calendar-admin.php:435
+#: includes/admin/class-xylus-events-calendar-admin.php:395
+#: includes/admin/class-xylus-events-calendar-admin.php:439
 msgid "Widget Appearance"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:392
-#: includes/admin/class-xylus-events-calendar-admin.php:438
+#: includes/admin/class-xylus-events-calendar-admin.php:396
+#: includes/admin/class-xylus-events-calendar-admin.php:442
 #: includes/admin/class-xylus-events-calendar-list-table.php:53
 msgid "Shortcode"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:393
-#: includes/admin/class-xylus-events-calendar-admin.php:441
+#: includes/admin/class-xylus-events-calendar-admin.php:397
+#: includes/admin/class-xylus-events-calendar-admin.php:445
 msgid "Support & Help"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:432
+#: includes/admin/class-xylus-events-calendar-admin.php:436
 msgid "General"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:525
+#: includes/admin/class-xylus-events-calendar-admin.php:529
 msgid "Settings saved successfully."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:527
-#: includes/admin/class-xylus-events-calendar-admin.php:560
+#: includes/admin/class-xylus-events-calendar-admin.php:531
+#: includes/admin/class-xylus-events-calendar-admin.php:564
 msgid "No changes made or something went wrong."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:558
+#: includes/admin/class-xylus-events-calendar-admin.php:562
 msgid "Widget Settings saved successfully."
 msgstr ""
 
