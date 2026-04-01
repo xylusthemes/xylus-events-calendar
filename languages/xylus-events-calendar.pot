@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-01T10:28:50+00:00\n"
+"POT-Creation-Date: 2026-04-01T11:38:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: xylus-events-calendar\n"
@@ -137,59 +137,59 @@ msgstr ""
 msgid "Widget Settings saved successfully."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:53
+#: includes/admin/class-xylus-events-calendar-common.php:58
 msgid "Dashboard"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:82
+#: includes/admin/class-xylus-events-calendar-common.php:87
 msgid "Made with ♥ by the Xylus Themes"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:84
+#: includes/admin/class-xylus-events-calendar-common.php:89
 msgid "Support"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:86
+#: includes/admin/class-xylus-events-calendar-common.php:91
 #: xylus-events-calendar.php:192
 msgid "Docs"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:88
+#: includes/admin/class-xylus-events-calendar-common.php:93
 msgid "Free Plugins"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:128
+#: includes/admin/class-xylus-events-calendar-common.php:133
 msgid "WP Bulk Delete"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:129
+#: includes/admin/class-xylus-events-calendar-common.php:134
 #: templates/admin/xylus-events-calendar-general.php:43
 msgid "Import Eventbrite Events"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:130
+#: includes/admin/class-xylus-events-calendar-common.php:135
 msgid "Import Social Events"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:131
+#: includes/admin/class-xylus-events-calendar-common.php:136
 #: templates/admin/xylus-events-calendar-general.php:45
 msgid "Import Meetup Events"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:132
+#: includes/admin/class-xylus-events-calendar-common.php:137
 #: templates/admin/xylus-events-calendar-general.php:42
 msgid "WP Event Aggregator"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:133
+#: includes/admin/class-xylus-events-calendar-common.php:138
 msgid "Event Schema / Structured Data"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:134
+#: includes/admin/class-xylus-events-calendar-common.php:139
 msgid "WP Smart Import : Import any XML File to WordPress"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-common.php:135
+#: includes/admin/class-xylus-events-calendar-common.php:140
 msgid "XT Feed for LinkedIn"
 msgstr ""
 
