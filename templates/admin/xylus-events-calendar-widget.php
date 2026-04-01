@@ -31,7 +31,7 @@ $xylusec_widget_options     = get_option( XYLUSEC_WIDGET_OPTIONS, true );
                 <div class="xylusec-settings-wrapper">
                     <!-- Appearance Options -->
                     <?php
-                        $color_fields = [
+                        $xylusec_color_fields = [
                             'xylusec_widget_background_color'       => '#ffffff',
                             'xylusec_widget_hover_background_color' => '#f0f4f8',
                             'xylusec_widget_title_color'            => '#333333',
@@ -40,12 +40,12 @@ $xylusec_widget_options     = get_option( XYLUSEC_WIDGET_OPTIONS, true );
                             'xylusec_widget_border_color'           => '#f0f4f8' 
                         ];
 
-                        foreach ( $color_fields as $key => $default ) {
+                        foreach ( $xylusec_color_fields as $xylusec_key => $xylusec_default ) {
                             ?>
                             <div class="xylusec-setting-row">
-                                <div class="xylusec-inner-section-1"><label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( ucwords( str_replace( '_', ' ', str_replace( 'xylusec_', '', $key ) ) ) ); ?></label></div>
+                                <div class="xylusec-inner-section-1"><label for="<?php echo esc_attr( $xylusec_key ); ?>"><?php echo esc_attr( ucwords( str_replace( '_', ' ', str_replace( 'xylusec_', '', $xylusec_key ) ) ) ); ?></label></div>
                                 <div class="xylusec-inner-section-2">
-                                    <input type="color" id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $xylusec_widget_options[$key] ?? $default ); ?>">
+                                    <input type="color" id="<?php echo esc_attr( $xylusec_key ); ?>" name="<?php echo esc_attr( $xylusec_key ); ?>" value="<?php echo esc_attr( $xylusec_widget_options[$xylusec_key] ?? $xylusec_default ); ?>">
                                 </div>
                             </div>
                             <?php

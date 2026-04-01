@@ -25,6 +25,20 @@ class Xylus_Events_Calendar_Common {
 	public function __construct() {
 	}
 
+	/**
+	 * Get a random placeholder image URL
+	 *
+	 * @since 1.2.0
+	 * @return string
+	 */
+	public function xylusec_get_random_placeholder() {
+		$placeholders = array(
+			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder.png',
+			XYLUSEC_PLUGIN_URL . 'assets/images/event-placeholder-1.png',
+		);
+		return $placeholders[ array_rand( $placeholders ) ];
+	}
+
     /**
      * Render Page header Section
      *
@@ -180,35 +194,91 @@ class Xylus_Events_Calendar_Common {
      * @param int $per_page Number of events per page.
      * @return WP_Query
      */
-    public function xylusec_get_upcoming_events( $post_type = '', $paged = 1, $keyword = '', $per_page = 12, $shortcode_atts = array() ) {
+    public function xylusec_get_upcoming_events( $post_type = '', $paged = 1, $keyword = '', $per_page = 12, $shortcode_atts = array(), $past = false ) {
         if ( empty( $post_type ) ) {
             return new WP_Query(); // Return empty query
         }
 
-        $atts               = !empty( $shortcode_atts ) ? json_decode( stripslashes(  $shortcode_atts ), true ) : '{}';
-		$category           = isset( $atts['category'] ) ? $atts['category'] : '';
+        $category           = isset( $atts['category'] ) ? $atts['category'] : '';
 		$cats               = array_map( 'trim', explode( ',', $category ) );
-        $current_time       = current_time( 'timestamp' );
+        $current_time_mysql = current_time( 'mysql' );
+        $current_time_ts    = current_time( 'timestamp' );
         $get_options        = get_option( XYLUSEC_OPTIONS );
-		$selected_plugin    = $get_options['xylusec_event_source'];
+		$selected_plugin    = isset( $get_options['xylusec_event_source'] ) ? $get_options['xylusec_event_source'] : 'eec_events';
         $selected_taxonomy  = $this->get_selected_post_type_category( $selected_plugin );
 
+        if( $past ){
+            $condition = '<';
+        }else{
+            $condition = '>';
+        }
+
 		if( $selected_plugin == 'ajde_events' ){
-			$start_key = 'evcal_srow';
-			$end_key   = 'evcal_erow';
-			$type      = 'NUMERIC'; 
+			$start_key    = 'evcal_srow';
+			$end_key      = 'evcal_erow';
+			$type         = 'NUMERIC'; 
+			$compare_time = $current_time_ts;
 		}elseif( $selected_plugin == 'event' ){
-			$start_key = '_event_start';
-			$end_key   = '_event_end';
-			$type      = 'DATETIME';
-			$current_time = gmdate( 'Y-m-d H:i:s', $current_time );
+			$start_key    = '_event_start';
+			$end_key      = '_event_end';
+			$type         = 'DATETIME';
+			$compare_time = $current_time_mysql;
 		}else{
-			$start_key = 'start_ts';
-			$end_key   = 'end_ts';
-			$type      = 'NUMERIC';
+			$start_key    = 'start_ts';
+			$end_key      = 'end_ts';
+			$type         = 'NUMERIC';
+			$compare_time = $current_time_ts;
 		}
-        
-        $orderby = $type === 'NUMERIC' ? 'meta_value_num' : 'meta_value';
+        // If it's our plugin's event post type, we use a custom query to support recurring instances
+        if ( $post_type === 'eec_events' ) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'eec_event_instances';
+            $offset = ( $paged - 1 ) * $per_page;
+            
+            $query_str = $wpdb->prepare( 
+                //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT SQL_CALC_FOUND_ROWS p.*, MIN(i.start_date) as instance_start, MIN(i.end_date) as instance_end FROM $wpdb->posts p JOIN $table_name i ON p.ID = i.event_id WHERE p.post_type = %s AND p.post_status = 'publish' AND i.end_date $condition %s GROUP BY p.ID",
+                $post_type,
+                $current_time_mysql
+);
+
+            if ( ! empty( $keyword ) ) {
+                //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                $query_str .= $wpdb->prepare( " AND (p.post_title LIKE %s OR p.post_content LIKE %s)", '%' . $wpdb->esc_like( $keyword ) . '%', '%' . $wpdb->esc_like( $keyword ) . '%' ); //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            }
+
+            if ( ! empty( $category ) ) {
+                $term_ids = get_terms( array(
+                    'taxonomy' => $selected_taxonomy,
+                    'slug'     => $cats,
+                    'fields'   => 'ids',
+                ) );
+                if ( ! is_wp_error( $term_ids ) && ! empty( $term_ids ) ) {
+                    $query_str .= " AND p.ID IN (SELECT object_id FROM $wpdb->term_relationships WHERE term_taxonomy_id IN (" . implode( ',', array_map( 'intval', $term_ids ) ) . "))";
+                }
+            }
+
+            $order = $past ? 'DESC' : 'ASC';
+            $query_str .= " ORDER BY i.start_date $order LIMIT %d, %d";
+            $query_str = $wpdb->prepare( $query_str, $offset, $per_page ); //phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
+            $posts = $wpdb->get_results( $query_str ); //phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            $total_posts = $wpdb->get_var( "SELECT FOUND_ROWS()" ); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
+            // Create a mock WP_Query object to maintain compatibility with existing templates
+            $query = new WP_Query();
+            $query->parse_query( array(
+                'post_type' => $post_type,
+                'fields'    => 'all',
+            ) );
+            $query->posts = $posts;
+            $query->post_count = count( $posts );
+            $query->found_posts = $total_posts;
+            $query->max_num_pages = ceil( $total_posts / $per_page );
+            $query->is_archive = true;
+            
+            return $query;
+        }
 
         $args = [
             'post_type'      => $post_type,
@@ -218,13 +288,13 @@ class Xylus_Events_Calendar_Common {
             'meta_query'     => [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
                 [
                     'key'     => $end_key,
-                    'value'   => $current_time,
-                    'compare' => '>',
+                    'value'   => $compare_time,
+                    'compare' => $condition,
                     'type'    => $type,
                 ],
             ],
             'meta_key'       => $start_key, //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-            'orderby'        => $orderby,
+            'orderby'        => 'meta_value_num',
             'order'          => 'ASC',
             's'              => sanitize_text_field( $keyword ), // basic sanitization
         ];
@@ -239,7 +309,6 @@ class Xylus_Events_Calendar_Common {
 			];
 		}
 
-        //return new WP_Query( $args );
         $event_query = $this->xylusec_get_uc_events( $args );
         return $event_query;
     }
@@ -251,7 +320,7 @@ class Xylus_Events_Calendar_Common {
      * @param array $args Query arguments.
      * @return WP_Query
      */
-    function xylusec_get_uc_events($args) {
+    public function xylusec_get_uc_events($args) {
         // Add the filter BEFORE WP_Query
         add_filter( 'posts_search', array( $this, 'xylusec_title_only_search' ), 10, 2 );
         
@@ -261,6 +330,33 @@ class Xylus_Events_Calendar_Common {
         remove_filter( 'posts_search', array( $this, 'xylusec_title_only_search' ), 10, 2 );
 
         return $query;
+    }
+
+    /**
+     * Get the next upcoming instance for an event
+     *
+     * @since 1.0.4
+     * @param int $event_id Event ID.
+     * @return object|null Upcoming instance row or null.
+     */
+    public function xylusec_get_next_event_instance( $event_id ) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'eec_event_instances';
+        $current_time = current_time( 'mysql' ); // Correct MySQL format for comparison
+
+        //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $instance = $wpdb->get_row( $wpdb->prepare( //phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            "SELECT * FROM $table_name WHERE event_id = %d AND start_date >= %s ORDER BY start_date ASC  LIMIT 1", //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $event_id,
+            $current_time
+        ) );
+
+        if ( ! $instance ) {
+            // Fallback: Get the last instance if no upcoming ones
+            $instance = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE event_id = %d ORDER BY start_date DESC LIMIT 1", $event_id ) ); //phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        }
+
+        return $instance;
     }
 
     /**
@@ -372,4 +468,170 @@ class Xylus_Events_Calendar_Common {
         return $button;
     }
 
+    /**
+     * Get event tags
+     *
+     * @since 1.0.0
+     * @param int $event_id Event ID.
+     * @return array Event tags.
+     */
+    public function xylusec_get_event_tags( $event_id = 0 ) {
+
+        if ( empty( $event_id ) ) {
+            return array();
+        }
+
+        $terms = get_the_terms( $event_id, 'eec_tag' );
+
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+            return array();
+        }
+
+        $tags = array();
+
+        foreach ( $terms as $tag ) {
+            $tags[] = array(
+                'name' => $tag->name,
+                'slug' => $tag->slug,
+            );
+        }
+
+        return $tags;
+    }
+
+    /**
+     * Get event categories
+     *
+     * @since 1.0.0
+     * @param int $event_id Event ID.
+     * @return array Event tags.
+     */
+    public function xylusec_get_event_categories( $event_id = 0 ) {
+
+        if ( empty( $event_id ) ) {
+            return array();
+        }
+
+        $terms = get_the_terms( $event_id, 'eec_category' );
+
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+            return array();
+        }
+
+        $categories = array();
+
+        foreach ( $terms as $category ) {
+            $categories[] = array(
+                'name' => $category->name,
+                'slug' => $category->slug,
+            );
+        }
+
+        return $categories;
+    }
+
+    /**
+     * Get event venues
+     *
+     * @since 1.0.0
+     * @param int $event_id Event ID.
+     * @return array Event tags.
+     */
+    public function xylusec_get_event_venues( $event_id = 0 ) {
+
+        // Standard return structure
+        $venue_data = array(
+            'name'         => '',
+            'slug'         => '',
+            'description'  => '',
+            'full_address' => '',
+            'address1'     => '',
+            'city'         => '',
+            'state'        => '',
+            'country'      => '',
+            'zip'          => '',
+            'latitude'     => '',
+            'longitude'    => '',
+        );
+
+        if ( empty( $event_id ) ) {
+            return $venue_data;
+        }
+
+        $terms = get_the_terms( $event_id, 'eec_venue' );
+
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+            return $venue_data;
+        }
+
+        // Single venue
+        $venue    = $terms[0];
+        $venue_id = (int) $venue->term_id;
+
+        if ( ! $venue_id ) {
+            return $venue_data;
+        }
+
+        // Fill data
+        $venue_data = array(
+            'name'         => $venue->name,
+            'slug'         => $venue->slug,
+            'description'  => $venue->description,
+            'full_address' => get_term_meta( $venue_id, 'venue_full_address', true ),
+            'address1'     => get_term_meta( $venue_id, 'venue_address1', true ),
+            'city'         => get_term_meta( $venue_id, 'venue_city', true ),
+            'state'        => get_term_meta( $venue_id, 'venue_state', true ),
+            'country'      => get_term_meta( $venue_id, 'venue_country', true ),
+            'zip'          => get_term_meta( $venue_id, 'venue_zip', true ),
+            'latitude'     => get_term_meta( $venue_id, 'venue_latitude', true ),
+            'longitude'    => get_term_meta( $venue_id, 'venue_longitude', true ),
+        );
+
+        return $venue_data;
+    }
+
+    /**
+     * Get event organizers
+     *
+     * @since 1.0.0
+     * @param int $event_id Event ID.
+     * @return array Event tags.
+     */
+    public function xylusec_get_event_organizers( $event_id = 0 ) {
+
+        $empty_organizer = array(
+            'name'        => '',
+            'description' => '',
+            'slug'        => '',
+            'email'       => '',
+            'phone'       => '',
+        );
+
+        if ( empty( $event_id ) ) {
+            return array();
+        }
+
+        $terms = get_the_terms( $event_id, 'eec_organizer' );
+
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+            return array();
+        }
+
+        $organizers = array();
+
+        foreach ( $terms as $organizer ) {
+
+            $term_id = (int) $organizer->term_id;
+
+            $organizers[] = array(
+                'name'        => $organizer->name,
+                'description' => $organizer->description,
+                'slug'        => $organizer->slug,
+                'email'       => get_term_meta( $term_id, 'organizer_email', true ),
+                'phone'       => get_term_meta( $term_id, 'organizer_phone', true ),
+            );
+        }
+
+        return $organizers;
+    }
 }

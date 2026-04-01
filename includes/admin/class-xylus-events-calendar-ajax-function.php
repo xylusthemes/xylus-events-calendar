@@ -85,6 +85,64 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			$type      = 'NUMERIC';
 		}
 
+		// If it's our plugin's event post type, use the instances table for better performance and recurrence support
+		if ( $selected_post_type === 'eec_events' ) {
+			global $wpdb;
+			$table_name = $wpdb->prefix . 'eec_event_instances';
+			
+			// Build query for instances
+			$query_str = $wpdb->prepare( 
+				"SELECT i.*, p.post_title, p.post_excerpt FROM $table_name i JOIN $wpdb->posts p ON i.event_id = p.ID WHERE p.post_status = 'publish' AND i.start_date <= %s AND i.end_date >= %s", //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				gmdate( 'Y-m-d H:i:s', $end ),
+				gmdate( 'Y-m-d H:i:s', $start )
+			);
+
+			// Add category filter if exists
+			if ( ! empty( $category ) ) {
+				$term_ids = get_terms( array(
+					'taxonomy' => $selected_taxonomy,
+					'slug'     => $cats,
+					'fields'   => 'ids',
+				) );
+				
+				if ( ! is_wp_error( $term_ids ) && ! empty( $term_ids ) ) {
+					$query_str .= " AND i.event_id IN (
+						SELECT object_id FROM $wpdb->term_relationships 
+						WHERE term_taxonomy_id IN (" . implode( ',', array_map( 'intval', $term_ids ) ) . ")
+					)";
+				}
+			}
+
+			$results = $wpdb->get_results( $query_str ); //phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			
+			$color_palette = [ '#bee9fa','#d1f8d1','#f8cfcf','#fff3cd','#e0d4f5','#fce5cd','#d9faff','#e6f5d0','#fddde6','#cfe2f3','#ffe6f0','#e0f7fa','#e6ffe6','#f9f1dc','#f0e5d8','#dfe7fd','#fff0f5','#e4f9f5','#f7f4ea','#f3e6ff' ];
+			$text_colors   = [ '#0A4F70','#2E7031','#A94442','#8A6D3B','#5E4B8B','#B85C00','#31708F','#607D3B','#9F3858','#3A5F7F','#B03A5D','#317C80','#338055','#7A6332','#7D6F58','#5B6EBF','#A35B73','#31706B','#7E7654','#5B3B8A' ];
+			
+			$events = [];
+			foreach ( $results as $row ) {
+				$post_id = $row->event_id;
+				$color_index = $post_id % count($color_palette);
+				
+				$events[] = [
+					'id'            => $post_id,
+					'instance_id'   => $row->id,
+					'title'         => html_entity_decode( $row->post_title, ENT_QUOTES, 'UTF-8' ),
+					'start'         => gmdate( 'Y-m-d\TH:i:s', strtotime( $row->start_date ) ),
+					'end'           => gmdate( 'Y-m-d\TH:i:s', strtotime( $row->end_date ) ),
+					'url'           => esc_url( get_permalink( $post_id ) ),
+					'description'   => $row->post_excerpt,
+					'image'         => esc_url( get_the_post_thumbnail_url( $post_id, 'medium' ) ),
+					'color'         => $color_palette[$color_index],
+					'textColor'     => $text_colors[$color_index],
+					'borderColor'   => 'rgba(0,0,0,0.1)',
+					'formattedDate' => gmdate( 'M j, Y g:i a', strtotime( $row->start_date ) ),
+				];
+			}
+			
+			wp_send_json( $events );
+		}
+
+		// Fallback for other post types or if something went wrong
 		$args  = [
 			'post_type'      => $selected_post_type,
 			'posts_per_page' => -1,
@@ -175,11 +233,12 @@ class Xylus_Events_Calendar_Ajax_Handler {
 
 		$shortcode_atts     = isset( $_POST['shortcode_atts'] ) ? $_POST['shortcode_atts'] : '{}'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$paged              = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
+		$past               = isset( $_POST['past'] ) && $_POST['past'] == 1;
 		$keyword            = isset( $_POST['keyword']) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color        = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$events             = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts );
+		$events             = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts, $past );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';
@@ -196,13 +255,19 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			while ($events->have_posts()) : $events->the_post();
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
-				$start_ts   = get_post_meta( $event_id, $start_key, true );
-				$location   = get_post_meta( $event_id, 'venue_name', true );
 				
-				if( $selected_post_type == 'event' ){
-					$start_ts = strtotime( $start_ts );
+				// Use instance date if available (for recurring events), fallback to meta
+				$current_post = $events->post;
+				if ( isset( $current_post->instance_start ) ) {
+					$start_ts = strtotime( $current_post->instance_start );
+				} else {
+					$start_ts = get_post_meta( $event_id, $start_key, true );
+					if( $selected_post_type == 'event' ){
+						$start_ts = strtotime( $start_ts );
+					}
 				}
 
+				$location   = get_post_meta( $event_id, 'venue_name', true );
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				?>
 				<div class="xylusec-event-card">
@@ -269,13 +334,19 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			while ($query->have_posts()) : $query->the_post();
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 30 );
-				$start_ts   = get_post_meta( $event_id, $start_key, true );
-				$location   = get_post_meta( $event_id, 'venue_name', true );
-
-				if( $selected_post_type == 'event' ){
-					$start_ts = strtotime( $start_ts );
+				
+				// Use instance date if available (for recurring events), fallback to meta
+				$current_post = $query->post;
+				if ( isset( $current_post->instance_start ) ) {
+					$start_ts = strtotime( $current_post->instance_start );
+				} else {
+					$start_ts = get_post_meta( $event_id, $start_key, true );
+					if( $selected_post_type == 'event' ){
+						$start_ts = strtotime( $start_ts );
+					}
 				}
 
+				$location   = get_post_meta( $event_id, 'venue_name', true );
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				?>
 				<div class="xylusec-event-row">
@@ -338,13 +409,19 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			while ($query->have_posts()) : $query->the_post();
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
-				$start_ts   = get_post_meta( $event_id, $start_key, true );
-				$location   = get_post_meta( $event_id, 'venue_name', true );
-
-				if( $selected_post_type == 'event' ){
-					$start_ts = strtotime( $start_ts );
+				
+				// Use instance date if available (for recurring events), fallback to meta
+				$current_post = $query->post;
+				if ( isset( $current_post->instance_start ) ) {
+					$start_ts = strtotime( $current_post->instance_start );
+				} else {
+					$start_ts = get_post_meta( $event_id, $start_key, true );
+					if( $selected_post_type == 'event' ){
+						$start_ts = strtotime( $start_ts );
+					}
 				}
 
+				$location   = get_post_meta( $event_id, 'venue_name', true );
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				
 				?>
@@ -387,8 +464,9 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		$keyword      = isset( $_POST['keyword'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) ) : '';
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
+		$past               = isset( $_POST['past'] ) && $_POST['past'] == 1;
 		$title_color     = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$query        = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts  );
+		$query        = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts, $past );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';
@@ -405,13 +483,19 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			while ($query->have_posts()) : $query->the_post();
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 70 );
-				$start_ts   = get_post_meta( $event_id, $start_key, true );
-				$location   = get_post_meta( $event_id, 'venue_name', true );
-
-				if( $selected_post_type == 'event' ){
-					$start_ts = strtotime( $start_ts );
+				
+				// Use instance date if available (for recurring events), fallback to meta
+				$current_post = $query->post;
+				if ( isset( $current_post->instance_start ) ) {
+					$start_ts = strtotime( $current_post->instance_start );
+				} else {
+					$start_ts = get_post_meta( $event_id, $start_key, true );
+					if( $selected_post_type == 'event' ){
+						$start_ts = strtotime( $start_ts );
+					}
 				}
 
+				$location   = get_post_meta( $event_id, 'venue_name', true );
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				?>
 				<div class="xylusec-slider-slide">

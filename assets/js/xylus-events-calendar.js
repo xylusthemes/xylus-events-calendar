@@ -139,11 +139,68 @@
 
 					const showTooltip = () => {
 						const rect = info.el.getBoundingClientRect();
-						tooltip.style.top = `${rect.bottom + window.scrollY + 10}px`;
-						tooltip.style.left = `${rect.left + rect.width / 2}px`;
-						tooltip.style.display = 'block';
-						tooltip.style.opacity = '1';
+						
+						// Temporarily show to calculate dimensions
+						tooltip.style.display    = 'block';
+						tooltip.style.visibility = 'hidden';
+						tooltip.style.opacity    = '0';
+						
+						const ttHeight = tooltip.offsetHeight;
+						const ttWidth  = tooltip.offsetWidth;
+						const padding  = 15;
+						
+						const viewport = {
+							width:  window.innerWidth,
+							height: window.innerHeight,
+							scrollY: window.scrollY || window.pageYOffset
+						};
+
+						// Space analysis
+						const space = {
+							bottom: viewport.height - rect.bottom,
+							top:    rect.top,
+							right:  viewport.width - rect.right,
+							left:   rect.left
+						};
+
+						let pos = { top: 0, left: 0 };
+						let placement = 'bottom';
+
+						// Best-fit selection logic
+						if (space.bottom >= ttHeight + 20) {
+							placement = 'bottom';
+						} else if (space.top >= ttHeight + 20) {
+							placement = 'top';
+						} else if (space.right >= ttWidth + 20) {
+							placement = 'right';
+						} else if (space.left >= ttWidth + 20) {
+							placement = 'left';
+						} else {
+							// Fallback to side with maximum available space
+							const maxSpace = Math.max(space.top, space.bottom, space.left, space.right);
+							if (maxSpace === space.bottom) placement = 'bottom';
+							else if (maxSpace === space.top) placement = 'top';
+							else if (maxSpace === space.left) placement = 'left';
+							else placement = 'right';
+						}
+
+						// Coordinate calculation
+						if (placement === 'bottom' || placement === 'top') {
+							pos.left = rect.left + (rect.width / 2) - (ttWidth / 2);
+							pos.top  = (placement === 'bottom') ? (rect.bottom + viewport.scrollY + 10) : (rect.top + viewport.scrollY - ttHeight - 10);
+						} else {
+							pos.top  = rect.top + viewport.scrollY + (rect.height / 2) - (ttHeight / 2);
+							pos.left = (placement === 'right') ? (rect.right + 10) : (rect.left - ttWidth - 10);
+						}
+
+						// Viewport containment: Clamp to screen edges
+						pos.left = Math.max(padding, Math.min(pos.left, viewport.width - ttWidth - padding));
+						pos.top  = Math.max(viewport.scrollY + padding, Math.min(pos.top, viewport.scrollY + viewport.height - ttHeight - padding));
+						
+						tooltip.style.left = `${pos.left}px`;
+						tooltip.style.top  = `${pos.top}px`;
 						tooltip.style.visibility = 'visible';
+						tooltip.style.opacity = '1';
 					};
 
 					const hideTooltip = () => {
@@ -284,15 +341,15 @@
 
 	/** grid view js start */
 	jQuery(document).ready(function($) {
-		
 		const calendarWrapper = $('#xylusec-calendar');
 		const gridWrapper = $('#xylusec-grid-view-container');
 		
 		let rowPage = 1;
 		let gridKeyword = '';
 		let isLoading = false;
+		let triedPastEvents = false;
 
-		function fetchEvents(reset = false) {
+		function fetchEvents(reset = false, past = false) {
 			if (isLoading) return;
 			
 			isLoading = true;
@@ -307,7 +364,8 @@
 					paged: reset ? 1 : rowPage,
 					keyword: gridKeyword,
 					nonce: xylusec_ajax.nonce,
-					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+					past: past ? 1 : 0 // extra param for past events
 				},
 				success: function(response) {
 					if (reset) {
@@ -319,13 +377,18 @@
 					}
 
 					if (!response.trim()) {
-						$('#load-more-events').hide();
-						$('.xylusec-no-events').show();
-						
+						if (!past && !triedPastEvents) {
+							triedPastEvents = true;
+							fetchEvents(true, true);
+						} else {
+							$('#load-more-events').hide();
+							$('.xylusec-no-events').show();
+						}
 					} else {
 						$('.xylusec-no-events').hide();
 						$('#load-more-events').show();
 					}
+
 					isLoading = false;
 					$('.xylusec-load-spinner').hide();
 				}
@@ -336,6 +399,7 @@
 		$('#load-more-events').on('click', function() {
 			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			gridWrapper.show();
+			triedPastEvents = false; // reset when user clicks load more
 			fetchEvents(false);
 		});
 
@@ -343,6 +407,7 @@
 		$('#xylusec-search-events').on('click', function() {
 			if ($('.fc-button-grid').hasClass('fc-active')) {
 				gridKeyword = $('#xylusec-search').val().trim();
+				triedPastEvents = false;
 				fetchEvents(true);
 			}
 		});
@@ -352,12 +417,13 @@
 			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			gridWrapper.show();
 			gridKeyword = $('#xylusec-search').val().trim();
+			triedPastEvents = false;
 			fetchEvents(true);
 		});
 
 		// Back to Month View
 		$('.fc-button-month').on('click', function() {
-			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container' ).hide();
+			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			calendarWrapper.show();
 		});
 	});

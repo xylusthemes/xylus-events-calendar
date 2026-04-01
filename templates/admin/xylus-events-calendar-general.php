@@ -38,6 +38,7 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
                         <div class="xylusec-inner-section-2">
                             <select id="xylusec_event_source" name="xylusec_event_source">
                                 <option value="" disabled selected><?php esc_attr_e( 'Choose...', 'xylus-events-calendar' ); ?></option>
+                                <option value="eec_events" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'eec_events' ); ?>><?php esc_attr_e( 'Easy Event Calnder', 'xylus-events-calendar' ); ?></option>
                                 <option value="wp_events" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'wp_events' ); ?>><?php esc_attr_e( 'WP Event Aggregator', 'xylus-events-calendar' ); ?></option>
                                 <option value="eventbrite_events" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'eventbrite_events' ); ?>><?php esc_attr_e( 'Import Eventbrite Events', 'xylus-events-calendar' ); ?></option>
                                 <option value="facebook_events" <?php selected( $xylusec_options['xylusec_event_source'] ?? '', 'facebook_events' ); ?>><?php esc_attr_e( 'Import Facebook Events', 'xylus-events-calendar' ); ?></option>
@@ -54,9 +55,9 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
                         <div class="xylusec-inner-section-2">
                             <select id="xylusec_default_view" name="xylusec_default_view">
                                 <?php
-                                $views = [ 'month', 'week', 'day', 'list', 'grid', 'row', 'staggered', 'slider' ];
-                                foreach ( $views as $view ) {
-                                    echo '<option value="' . esc_attr( $view ) . '" ' . selected( $xylusec_options['xylusec_default_view'] ?? '', $view, false ) . '>' . esc_attr( ucfirst( $view ) ) . '</option>';
+                                $xylusec_views = [ 'month', 'week', 'day', 'list', 'grid', 'row', 'staggered', 'slider' ];
+                                foreach ( $xylusec_views as $xylusec_view ) {
+                                    echo '<option value="' . esc_attr( $xylusec_view ) . '" ' . selected( $xylusec_options['xylusec_default_view'] ?? '', $xylusec_view, false ) . '>' . esc_attr( ucfirst( $xylusec_view ) ) . '</option>';
                                 }
                                 ?>
                             </select>
@@ -104,9 +105,9 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
                         <div class="xylusec-inner-section-2">
                             <select id="xylusec_week_start" name="xylusec_week_start">
                                 <?php
-                                $days = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
-                                foreach ( $days as $i => $day ) {
-                                    echo '<option value="' . esc_attr( $i ) . '" ' . selected( $xylusec_options['xylusec_week_start'] ?? 0, $i, false ) . '>' . esc_attr( $day ) . '</option>';
+                                $xylusec_days = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
+                                foreach ( $xylusec_days as $xylusec_i => $xylusec_day ) {
+                                    echo '<option value="' . esc_attr( $xylusec_i ) . '" ' . selected( $xylusec_options['xylusec_week_start'] ?? 0, $xylusec_i, false ) . '>' . esc_attr( $xylusec_day ) . '</option>';
                                 }
                                 ?>
                             </select>
@@ -115,13 +116,13 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
 
                     <!-- Appearance Options -->
                     <?php
-                    $color_fields = [ 'xylusec_button_color' => '#2c3e50', 'xylusec_text_color' => '#FFFFFF', 'xylusec_event_title_color' => '#60606e' ];
-                    foreach ( $color_fields as $key => $default ) {
+                    $xylusec_color_fields = [ 'xylusec_button_color' => '#2c3e50', 'xylusec_text_color' => '#FFFFFF', 'xylusec_event_title_color' => '#60606e' ];
+                    foreach ( $xylusec_color_fields as $xylusec_key => $xylusec_default ) {
                         ?>
                         <div class="xylusec-setting-row">
-                            <div class="xylusec-inner-section-1"><label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( ucwords( str_replace( '_', ' ', str_replace( 'xylusec_', '', $key ) ) ) ); ?></label></div>
+                            <div class="xylusec-inner-section-1"><label for="<?php echo esc_attr( $xylusec_key ); ?>"><?php echo esc_attr( ucwords( str_replace( '_', ' ', str_replace( 'xylusec_', '', $xylusec_key ) ) ) ); ?></label></div>
                             <div class="xylusec-inner-section-2">
-                                <input type="color" id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $xylusec_options[$key] ?? $default ); ?>">
+                                <input type="color" id="<?php echo esc_attr( $xylusec_key ); ?>" name="<?php echo esc_attr( $xylusec_key ); ?>" value="<?php echo esc_attr( $xylusec_options[$xylusec_key] ?? $xylusec_default ); ?>">
                             </div>
                         </div>
                         <?php
