@@ -33,7 +33,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		 * Xylus_Events_Calendar The one true Xylus_Events_Calendar.
 		 */
 		private static $instance;
-		public $common, $xylusec_events_calendar, $admin, $ajax_handler, $widgets, $cpt, $template_loader, $recurrence;
+		public $common, $xylusec_events_calendar, $admin, $ajax_handler, $widgets, $cpt, $template_loader, $recurrence, $events_list;
 
 		/**
 		 * Main Xylus Events Calendar Instance.
@@ -67,6 +67,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 				self::$instance->widgets         = new Easy_Events_Calendar_Widgets();
 				self::$instance->template_loader = new Xylus_Events_Calendar_Template_Loader();
 				self::$instance->recurrence      = new Xylus_Events_Calendar_Recurrence();
+				self::$instance->events_list     = new Xylus_Events_Calendar_Events_List();
 
 			}
 			return self::$instance;
@@ -168,6 +169,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-admin.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-ajax-function.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-list-table.php';
+			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-events-list.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-widgets.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-template-loader.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-recurrence.php';
