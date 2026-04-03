@@ -54,20 +54,20 @@ function xylus_enqueue_block_editor() {
     global $xylusec_events_calendar;
 
     $get_options       = get_option( XYLUSEC_OPTIONS );
-    $selected_plugin   = $get_options['xylusec_event_source'];
+    $selected_plugin   = isset( $get_options['xylusec_event_source'] ) ? $get_options['xylusec_event_source'] : 'eec_events';
     $taxonomy          = $xylusec_events_calendar->common->get_selected_post_type_category( $selected_plugin );
 
     // Get taxonomy terms
     $terms = get_terms([
         'taxonomy'   => $taxonomy,
-        'hide_empty' => false
+        'hide_empty' => true
     ]);
 
     $categories = [];
 
     if (!is_wp_error($terms)) {
         foreach ($terms as $term) {
-            $categories[$term->slug] = $term->name;
+            $categories[$term->slug] = html_entity_decode( $term->name, ENT_QUOTES, 'UTF-8' );
         }
     }
 

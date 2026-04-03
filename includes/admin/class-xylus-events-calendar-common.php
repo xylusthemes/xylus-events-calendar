@@ -495,6 +495,8 @@ class Xylus_Events_Calendar_Common {
             $category = 'event_type';
         }elseif( $post_type == 'event' ){
             $category = 'event-categories';
+        }elseif( $post_type == 'eec_events' ) {
+            $category = 'eec_category';
         }
         return $category;
     }
