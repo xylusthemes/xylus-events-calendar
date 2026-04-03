@@ -568,7 +568,7 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
 
 
 // Register widget
-function easy_events_calendar_register_widget() {
+function easy_events_calendar_register_widget() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
     register_widget( 'Easy_Events_Calendar_Widgets' );
 }
 add_action( 'widgets_init', 'easy_events_calendar_register_widget' );

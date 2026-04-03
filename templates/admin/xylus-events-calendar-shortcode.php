@@ -11,10 +11,10 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$ShortcodeTable = new XYLUSEC_Shortcode_List_Table();
-$ShortcodeTable->prepare_items();
+$Xylusec_ShortcodeTable = new XYLUSEC_Shortcode_List_Table();
+$Xylusec_ShortcodeTable->prepare_items();
 
 ?>
 <div>
-    <?php $ShortcodeTable->display(); ?>
+    <?php $Xylusec_ShortcodeTable->display(); ?>
 </div>

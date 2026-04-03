@@ -87,8 +87,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
                         <?php 
 							global $xylusec_events_calendar;
-                            $plugin_list = array();
-                            $plugin_list = $xylusec_events_calendar->common->xylusec_get_xyuls_themes_plugins();
+                            $xylusec_plugin_list = array();
+                            $xylusec_plugin_list = $xylusec_events_calendar->common->xylusec_get_xyuls_themes_plugins();
                         ?>
                         <div class="" style="margin-top: 20px;">
                             <h3 class="setting_bar"><?php esc_html_e( 'Plugins you should try','xylus-events-calendar' ); ?></h3>
@@ -97,67 +97,67 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                                 <div class="xylusec-support-features2">
                                 
                                     <?php 
-                                        if( !empty( $plugin_list ) ){
-                                            foreach ( $plugin_list as $key => $plugin ) {
+                                        if( !empty( $xylusec_plugin_list ) ){
+                                            foreach ( $xylusec_plugin_list as $xylusec_key => $xylusec_plugin ) {
 
-                                                $plugin_slug = ucwords( str_replace( '-', ' ', $key ) );
-                                                $plugin_name =  $plugin['plugin_name'];
-                                                $plugin_description =  $plugin['description'];
-                                                if( $key == 'wp-event-aggregator' ){
-                                                    $plugin_icon = 'https://ps.w.org/'.$key.'/assets/icon-256x256.jpg';
-                                                } elseif( $key == 'xt-feed-for-linkedin' ) {
-                                                    $plugin_icon = 'https://ps.w.org/'.$key.'/assets/icon-256x256.gif';
+                                                $xylusec_plugin_slug = ucwords( str_replace( '-', ' ', $xylusec_key ) );
+                                                $xylusec_plugin_name =  $xylusec_plugin['plugin_name'];
+                                                $xylusec_plugin_description =  $xylusec_plugin['description'];
+                                                if( $xylusec_key == 'wp-event-aggregator' ){
+                                                    $xylusec_plugin_icon = 'https://ps.w.org/'.$xylusec_key.'/assets/icon-256x256.jpg';
+                                                } elseif( $xylusec_key == 'xt-feed-for-linkedin' ) {
+                                                    $xylusec_plugin_icon = 'https://ps.w.org/'.$xylusec_key.'/assets/icon-256x256.gif';
                                                 } else {
-                                                    $plugin_icon = 'https://ps.w.org/'.$key.'/assets/icon-256x256.png';
+                                                    $xylusec_plugin_icon = 'https://ps.w.org/'.$xylusec_key.'/assets/icon-256x256.png';
                                                 }
 
                                                 // Check if the plugin is installed
-                                                $plugin_installed = false;
-                                                $plugin_active = false;
+                                                $xylusec_plugin_installed = false;
+                                                $xylusec_plugin_active = false;
                                                 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-                                                $all_plugins = get_plugins();
-                                                $plugin_path = $key . '/' . $key . '.php';
+                                                $xylusec_all_plugins = get_plugins();
+                                                $xylusec_plugin_path = $xylusec_key . '/' . $xylusec_key . '.php';
 
-                                                if ( isset( $all_plugins[$plugin_path] ) ) {
-                                                    $plugin_installed = true;
-                                                    $plugin_active = is_plugin_active( $plugin_path );
+                                                if ( isset( $xylusec_all_plugins[$xylusec_plugin_path] ) ) {
+                                                    $xylusec_plugin_installed = true;
+                                                    $xylusec_plugin_active = is_plugin_active( $xylusec_plugin_path );
                                                 }
 
                                                 // Determine the status text
-                                                $status_text = 'Not Installed';
-                                                if ( $plugin_installed ) {
-                                                    $status_text = $plugin_active ? 'Active' : 'Installed (Inactive)';
+                                                $xylusec_status_text = 'Not Installed';
+                                                if ( $xylusec_plugin_installed ) {
+                                                    $xylusec_status_text = $xylusec_plugin_active ? 'Active' : 'Installed (Inactive)';
                                                 }
                                                 
                                                 ?>
                                                 <div class="xylusec-support-features-card2 xylusec-plugin">
                                                     <div class="xylusec-plugin-main">
                                                         <div>
-                                                            <img alt="<?php esc_attr( $plugin_slug . ' Image' ); ?>" src="<?php echo esc_url( $plugin_icon ); ?>">
+                                                            <img alt="<?php esc_attr( $xylusec_plugin_slug . ' Image' ); ?>" src="<?php echo esc_url( $xylusec_plugin_icon ); ?>">
                                                         </div>
                                                         <div>
-                                                            <div class="xylusec-main-name"><?php echo esc_attr( $plugin_slug ); ?></div>
-                                                            <div><?php echo esc_attr( $plugin_description ); ?></div>
+                                                            <div class="xylusec-main-name"><?php echo esc_attr( $xylusec_plugin_slug ); ?></div>
+                                                            <div><?php echo esc_attr( $xylusec_plugin_description ); ?></div>
                                                         </div>
                                                     </div>
                                                     <div class="xylusec-plugin-footer">
                                                         <div class="xylusec-footer-status">
                                                             <div class="xylusec-footer-status-label"><?php esc_html_e( 'Status : ', 'xylus-events-calendar' ); ?></div>
-                                                            <div class="xylusec-footer-status xylusec-footer-status-<?php echo esc_attr( strtolower( str_replace(' ', '-', $status_text ) ) ); ?>">
-                                                                <span <?php echo ( $status_text == 'Active' ) ? 'style="color:green;"' : ''; ?>>
-                                                                    <?php echo esc_attr( $status_text ); ?>
+                                                            <div class="xylusec-footer-status xylusec-footer-status-<?php echo esc_attr( strtolower( str_replace(' ', '-', $xylusec_status_text ) ) ); ?>">
+                                                                <span <?php echo ( $xylusec_status_text == 'Active' ) ? 'style="color:green;"' : ''; ?>>
+                                                                    <?php echo esc_attr( $xylusec_status_text ); ?>
                                                                 </span>
                                                             </div>
                                                         </div>
                                                         <div class="xylusec-footer-action">
-                                                            <?php if ( !$plugin_installed ): ?>
+                                                            <?php if ( !$xylusec_plugin_installed ): ?>
                                                                 <a href="<?php echo esc_url( admin_url( 'plugin-install.php?s=xylus&tab=search&type=term' ) ); ?>" type="button" class="button button-primary"><?php esc_attr_e( 'Install Free Plugin', 'xylus-events-calendar' ); ?></a>
-                                                            <?php elseif ( !$plugin_active ): ?>
+                                                            <?php elseif ( !$xylusec_plugin_active ): ?>
                                                                 <?php 
-                                                                    $activate_nonce = wp_create_nonce('activate_plugin_' . $plugin_slug); 
-                                                                    $activation_url = add_query_arg(array( 'action' => 'activate_plugin', 'plugin_slug' => $plugin_slug, 'nonce' => $activate_nonce, ), admin_url('admin.php?page=delete_all_actions&tab=by_support_help'));
+                                                                    $xylusec_activate_nonce = wp_create_nonce('activate_plugin_' . $xylusec_plugin_slug); 
+                                                                    $xylusec_activation_url = add_query_arg(array( 'action' => 'activate_plugin', 'plugin_slug' => $xylusec_plugin_slug, 'nonce' => $xylusec_activate_nonce, ), admin_url('admin.php?page=delete_all_actions&tab=by_support_help'));
                                                                 ?>
-                                                                <a href="<?php echo esc_url( admin_url( 'plugins.php?s='. $plugin_name ) ); ?>" class="button button-primary"><?php esc_attr_e( 'Activate Plugin', 'xylus-events-calendar' ); ?></a>
+                                                                <a href="<?php echo esc_url( admin_url( 'plugins.php?s='. $xylusec_plugin_name ) ); ?>" class="button button-primary"><?php esc_attr_e( 'Activate Plugin', 'xylus-events-calendar' ); ?></a>
                                                             <?php endif; ?>
                                                         </div>
                                                     </div>

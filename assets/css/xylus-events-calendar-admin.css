@@ -748,3 +748,110 @@ html:not([data-scroll="0"]) .xylusec-header {
     padding: 0;
 }
 /* setting css end */
+
+.vc_ui-panel .eec_datepicker .ui-datepicker-inline {
+  display: none !important;
+}
+
+/* Modern Recurrence UI - Optimized for Sidebar */
+.eec_recurrence_ui {
+    background: #fdfdfd;
+    border: 1px solid #e2e4e7;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 5px;
+}
+
+.eec_recurrence_ui .eec_form_row {
+    margin-bottom: 15px;
+}
+
+.eec_recurrence_ui label {
+    font-weight: 500;
+    color: #1d2327;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 13px;
+}
+
+.eec-day-picker {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.eec-day-button {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c3c4c7;
+    border-radius: 50%;
+    background: #fff;
+    color: #50575e;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.eec-day-button:hover {
+    border-color: #005ae0;
+    color: #005ae0;
+}
+
+.eec-day-button.active {
+    background: #005ae0;
+    border-color: #005ae0;
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 90, 224, 0.2);
+}
+
+.eec-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.eec-input-group input[type="number"], 
+.eec-input-group input[type="text"] {
+    margin: 0 !important;
+    padding: 4px 8px !important;
+    border-radius: 3px !important;
+    height: 30px !important;
+    font-size: 13px !important;
+}
+
+.eec-radio-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.eec-radio-stack .radio-item {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.eec-radio-stack label {
+    margin: 0;
+    font-weight: normal;
+    cursor: pointer;
+    line-height: 20px;
+}
+
+.eec-radio-stack input[type="radio"] {
+    margin: 4px 0 0 0;
+}
+
+.date-input-wrap, .count-input-wrap {
+    width: 100%;
+    margin-top: 5px;
+    margin-left: 24px;
+}

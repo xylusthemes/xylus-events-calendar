@@ -33,7 +33,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		 * Xylus_Events_Calendar The one true Xylus_Events_Calendar.
 		 */
 		private static $instance;
-		public $common, $xylusec_events_calendar, $admin, $ajax_handler, $widgets;
+		public $common, $xylusec_events_calendar, $admin, $ajax_handler, $widgets, $cpt, $template_loader, $recurrence;
 
 		/**
 		 * Main Xylus Events Calendar Instance.
@@ -60,10 +60,13 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 				register_activation_hook( __FILE__, array( self::$instance, 'xylusec_plugin_set_activation_flag' ) );
 
 				self::$instance->includes();
-				self::$instance->common       = new Xylus_Events_Calendar_Common();
-				self::$instance->admin        = new Xylus_Events_Calendar_Admin();
-				self::$instance->ajax_handler = new Xylus_Events_Calendar_Ajax_Handler();
-				self::$instance->widgets      = new Easy_Events_Calendar_Widgets();
+				self::$instance->common          = new Xylus_Events_Calendar_Common();
+				self::$instance->cpt             = new Xylus_Events_Calendar_CPT();
+				self::$instance->admin           = new Xylus_Events_Calendar_Admin();
+				self::$instance->ajax_handler    = new Xylus_Events_Calendar_Ajax_Handler();
+				self::$instance->widgets         = new Easy_Events_Calendar_Widgets();
+				self::$instance->template_loader = new Xylus_Events_Calendar_Template_Loader();
+				self::$instance->recurrence      = new Xylus_Events_Calendar_Recurrence();
 
 			}
 			return self::$instance;
@@ -161,10 +164,13 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		private function includes() {
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/xylus-events-calendar-scripts.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-common.php';
+			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-cpt.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-admin.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-ajax-function.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-list-table.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-widgets.php';
+			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-template-loader.php';
+			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-recurrence.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/easy-events-calendar-shortcode.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/elementor/register-elementor-widget.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/easy-events-calendar-blocks/block.php';
@@ -205,6 +211,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			$css_dir = XYLUSEC_PLUGIN_URL . 'assets/css/';
 			wp_enqueue_style('xylus-events-calendar-css', $css_dir . 'xylus-events-calendar.css', false, XYLUSEC_VERSION );
 			wp_enqueue_style('xylus-events-calendar-widget-css', $css_dir . 'xylus-events-calendar-widget.css', false, XYLUSEC_VERSION );
+			wp_enqueue_style('xylus-events-calendar-template-css', $css_dir . 'xylus-events-calendar-template.css', false, XYLUSEC_VERSION );
 			
 			$xylusec_options = get_option( XYLUSEC_WIDGET_OPTIONS, [] );
 			$custom_css = ":root {";
