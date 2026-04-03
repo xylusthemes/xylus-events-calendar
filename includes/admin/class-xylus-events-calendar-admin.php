@@ -142,7 +142,6 @@ class Xylus_Events_Calendar_Admin {
 			}
 		}
 		
-		$today  = current_time('Y-m-d');
 		$now_ts = current_time('timestamp');
 		
 		$args = array(
@@ -154,21 +153,8 @@ class Xylus_Events_Calendar_Admin {
 			'meta_key'       => 'start_ts', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'order'          => 'ASC',
 			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-				'relation' => 'OR',
 				array(
-					'key'     => 'event_start_date',
-					'value'   => $today,
-					'compare' => '>=',
-					'type'    => 'DATE'
-				),
-				array(
-					'key'     => 'event_date',
-					'value'   => $today,
-					'compare' => '>=',
-					'type'    => 'DATE'
-				),
-				array(
-					'key'     => 'start_ts',
+					'key'     => 'end_ts',
 					'value'   => $now_ts,
 					'compare' => '>=',
 					'type'    => 'NUMERIC'
@@ -189,13 +175,7 @@ class Xylus_Events_Calendar_Admin {
 			$query = new WP_Query($args);
 		}
 
-		// Fallback 2: If STILL no upcoming events, just show recent published events as a last resort
-		if (!$query->have_posts()) {
-			unset($args['meta_query']);
-			$args['orderby'] = 'date';
-			$args['order']   = 'DESC';
-			$query = new WP_Query($args);
-		}
+		// Fallback 2 removed to strictly show only upcoming events.
 
 		if (!$query->have_posts()) return '';
 		

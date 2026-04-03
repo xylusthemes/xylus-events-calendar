@@ -383,6 +383,18 @@ class Xylus_Events_Calendar_CPT {
 		$end_minute     = get_post_meta( $post->ID, 'event_end_minute', true );
 		$end_meridian   = get_post_meta( $post->ID, 'event_end_meridian', true );
 
+		$start_date     = get_post_meta( $post->ID, 'event_start_date', true );
+		$end_date       = get_post_meta( $post->ID, 'event_end_date', true );
+		$today          = current_time( 'Y-m-d' );
+
+		// Set today's date as default if empty
+		if ( empty( $start_date ) ) {
+			$start_date = $today;
+		}
+		if ( empty( $end_date ) ) {
+			$end_date = $today;
+		}
+
 		$recurrence_type     = get_post_meta( $post->ID, 'event_recurrence_type', true );
 		$recurrence_interval = get_post_meta( $post->ID, 'event_recurrence_interval', true );
 		$recurrence_end_type = get_post_meta( $post->ID, 'event_recurrence_end_type', true );
@@ -402,7 +414,7 @@ class Xylus_Events_Calendar_CPT {
 			<div class="eec_form_row">
 				<label for="event_start_date"><?php esc_attr_e( 'Start Date & Time', 'xylus-events-calendar' ); ?>:</label>
 				<div class="eec_form_input_group">
-					<input type="text" name="event_start_date" class="xt_datepicker" id="event_start_date" value="<?php echo esc_attr( get_post_meta( $post->ID, 'event_start_date', true ) ); ?>" /> @ 
+					<input type="text" name="event_start_date" class="xt_datepicker" id="event_start_date" value="<?php echo esc_attr( $start_date ); ?>" /> @ 
 					<?php
 						$this->generate_dropdown( 'event_start', 'hour', $start_hour );
 						$this->generate_dropdown( 'event_start', 'minute', $start_minute );
@@ -414,7 +426,7 @@ class Xylus_Events_Calendar_CPT {
 			<div class="eec_form_row">
 				<label for="event_end_date"><?php esc_attr_e( 'End Date & Time', 'xylus-events-calendar' ); ?>:</label>
 				<div class="eec_form_input_group">
-					<input type="text" name="event_end_date" class="xt_datepicker" id="event_end_date" value="<?php echo esc_attr( get_post_meta( $post->ID, 'event_end_date', true ) ); ?>" /> @ 
+					<input type="text" name="event_end_date" class="xt_datepicker" id="event_end_date" value="<?php echo esc_attr( $end_date ); ?>" /> @ 
 					<?php
 						$this->generate_dropdown( 'event_end', 'hour', $end_hour );
 						$this->generate_dropdown( 'event_end', 'minute', $end_minute );
@@ -601,6 +613,15 @@ class Xylus_Events_Calendar_CPT {
 		// Event Date & time Details
 		$event_start_date     = isset( $_POST['event_start_date'] ) ? sanitize_text_field( wp_unslash( $_POST['event_start_date'] ) ) : '';
 		$event_end_date       = isset( $_POST['event_end_date'] ) ? sanitize_text_field( wp_unslash( $_POST['event_end_date'] ) ) : '';
+
+		// Fallback to today's date if empty on save
+		$today = current_time( 'Y-m-d' );
+		if ( empty( $event_start_date ) ) {
+			$event_start_date = $today;
+		}
+		if ( empty( $event_end_date ) ) {
+			$event_end_date = $today;
+		}
 		$event_start_hour     = isset( $_POST['event_start_hour'] ) ? sanitize_text_field( wp_unslash( $_POST['event_start_hour'] ) ) : '';
 		$event_start_minute   = isset( $_POST['event_start_minute'] ) ? sanitize_text_field( wp_unslash( $_POST['event_start_minute'] ) ) : '';
 		$event_start_meridian = isset( $_POST['event_start_meridian'] ) ? sanitize_text_field( wp_unslash( $_POST['event_start_meridian'] ) ) : '';
