@@ -51,7 +51,7 @@ function easy_events_calendar_gutenberg_shortcode( $atts ) {
                     'type'    => $type,
                 ],
             ],
-            'meta_key'       => $start_key,
+            'meta_key'       => $start_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
         );
 
         $events_query = new WP_Query( $args );

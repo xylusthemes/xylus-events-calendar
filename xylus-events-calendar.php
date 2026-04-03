@@ -57,7 +57,6 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 				add_action( 'wp_enqueue_scripts', array( self::$instance, 'xylusec_enqueue_style' ) );
 				add_action( 'wp_enqueue_scripts', array( self::$instance, 'xylusec_enqueue_script' ) );
 				add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array( self::$instance, 'xylusec_setting_doc_links' ) );
-				register_activation_hook( __FILE__, array( self::$instance, 'xylusec_plugin_set_activation_flag' ) );
 
 				self::$instance->includes();
 				self::$instance->common          = new Xylus_Events_Calendar_Common();
@@ -102,11 +101,6 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		 */
 		public function __wakeup() {
 			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'xylus-events-calendar' ), '1.0.3' );
-		}
-
-
-		public function xylusec_plugin_set_activation_flag() {
-			update_option( 'xylusec_plugin_activated', true );
 		}
 
 
@@ -294,3 +288,31 @@ global $xylusec_errors, $xylusec_success_msg, $xylusec_warnings, $xylusec_info_m
 $xylusec_events_calendar = xylusec_xt_events_calendar();
 $xylusec_errors = $xylusec_warnings = $xylusec_success_msg = $xylusec_info_msg = array();
 
+
+/**
+ * The code that runs during plugin activation.
+ *
+ * @since 1.1.0
+ */
+function xylusec_plugin_activate() {
+    $plugin = xylusec_xt_events_calendar();
+
+    if ( isset( $plugin->cpt ) ) {
+        $plugin->cpt->register_event_post_type();
+        $plugin->cpt->register_event_taxonomy();
+    
+        if ( method_exists( $plugin->cpt, 'eec_add_custom_rewrite_rules' ) ) {
+            $plugin->cpt->eec_add_custom_rewrite_rules();
+        }
+    }
+    flush_rewrite_rules();
+    
+    update_option( 'xylusec_plugin_activated', true );
+}
+register_activation_hook( __FILE__, 'xylusec_plugin_activate' );
+
+
+function xylusec_plugin_deactivate() {
+	flush_rewrite_rules();
+}
+register_deactivation_hook( __FILE__, 'xylusec_plugin_deactivate' );
