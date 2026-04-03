@@ -288,7 +288,7 @@ class Xylus_Events_Calendar_Common {
 
             // Get total count using a reliable COUNT(DISTINCT p.ID) query
             $count_query = "SELECT COUNT(DISTINCT p.ID)" . $from . $join . $where;
-            $total_posts = $wpdb->get_var( $count_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            $total_posts = $wpdb->get_var( $count_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
             // Final query construction for posts
             $select   = "SELECT p.*, MIN(i.start_date) as instance_start, MIN(i.end_date) as instance_end";

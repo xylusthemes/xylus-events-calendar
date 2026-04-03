@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class Elementor_Easy_Events_Calendar_Widget extends \Elementor\Widget_Base {
+class Elementor_Easy_Events_Calendar_Widget extends \Elementor\Widget_Base { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
     public function get_name() { return 'easy_events_calendar_elementor'; }
     public function get_title() { return __( 'Easy Events Calendar', 'xylus-events-calendar' ); }

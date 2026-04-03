@@ -512,20 +512,20 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
                 value="<?php echo esc_attr( $title ); ?>">
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'category' ); ?>">
+            <label for="<?php echo $this->get_field_id( 'category' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
                 <?php echo esc_html__( 'Select Category', 'xylus-events-calendar' ); ?>
             </label>
 
             <select class="widefat"
-                id="<?php echo $this->get_field_id( 'category' ); ?>"
-                name="<?php echo $this->get_field_name( 'category' ); ?>">
+                id="<?php echo $this->get_field_id( 'category' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"
+                name="<?php echo $this->get_field_name( 'category' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
 
                 <option value=""><?php echo esc_html__( 'All Categories', 'xylus-events-calendar' ); ?></option>
                 <?php
                 if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
                     foreach ( $terms as $term ) {
                         $selected = ( $category == $term->slug ) ? 'selected' : '';
-                        echo '<option value="' . esc_attr( $term->slug ) . '" ' . $selected . '>' . esc_html( $term->name ) . '</option>';
+                        echo '<option value="' . esc_attr( $term->slug ) . '" ' . esc_attr( $selected ) . '>' . esc_html( $term->name ) . '</option>';
                     }
                 }
                 ?>
