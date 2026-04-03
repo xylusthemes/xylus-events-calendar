@@ -41,6 +41,7 @@ msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-admin.php:69
 #: includes/admin/class-xylus-events-calendar-admin.php:71
+#: includes/elementor/class-eec-elementor-widget.php:7
 msgid "Easy Events Calendar"
 msgstr ""
 
@@ -90,7 +91,7 @@ msgid "Support"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-common.php:72
-#: xylus-events-calendar.php:186
+#: xylus-events-calendar.php:190
 msgid "Docs"
 msgstr ""
 
@@ -207,6 +208,18 @@ msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-widgets.php:552
 msgid "Style 10 Image Overlay"
+msgstr ""
+
+#: includes/elementor/class-eec-elementor-widget.php:14
+msgid "Settings"
+msgstr ""
+
+#: includes/elementor/class-eec-elementor-widget.php:20
+msgid "Style"
+msgstr ""
+
+#: includes/elementor/class-eec-elementor-widget.php:41
+msgid "Events Limit"
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-general.php:26
@@ -356,6 +369,31 @@ msgstr ""
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: xylus-events-calendar.php:181
+#: xylus-events-calendar.php:185
 msgid "Setting"
+msgstr ""
+
+#: includes/easy-events-calendar-blocks/block.json
+msgctxt "block title"
+msgid "Easy Events Calendar"
+msgstr ""
+
+#: includes/easy-events-calendar-blocks/block.json
+msgctxt "block description"
+msgid "Display upcoming events."
+msgstr ""
+
+#: includes/easy-events-calendar-blocks/block.json
+msgctxt "block keyword"
+msgid "event"
+msgstr ""
+
+#: includes/easy-events-calendar-blocks/block.json
+msgctxt "block keyword"
+msgid "calendar"
+msgstr ""
+
+#: includes/easy-events-calendar-blocks/block.json
+msgctxt "block keyword"
+msgid "easy"
 msgstr ""
