@@ -624,6 +624,8 @@ class Xylus_Events_Calendar_Admin {
 				$event_source = 'facebook_events';
 			} elseif ( is_plugin_active( 'wp-event-aggregator/wp-event-aggregator.php' ) ) {
 				$event_source = 'wp_events';
+			}else{
+				$event_source = 'eec_events';
 			}
 
 			// Save default options only if not already set

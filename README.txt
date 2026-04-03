@@ -2,96 +2,175 @@
 Contributors: xylus, Rajat1192  
 Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
-Tested up to: 6.9
+Tested up to: 7.0 
 Requires PHP: 8.0 
-Stable tag: 1.0.3  
+Stable tag: 1.1.0  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
-Display upcoming events from multiple sources in a responsive calendar with customizable layouts like grid, row, calendar, and masonry.
-
 == Description ==
 
-**Easy Events Calendar** is a lightweight yet powerful solution to showcase all your upcoming events—no matter the source—on a beautiful and responsive calendar interface. Whether you're importing events from Meetup, Eventbrite, Facebook, or WP Event Aggregator, this plugin displays them cleanly with multiple layout choices and easy settings.
+✨ Easy Events Calendar is a powerful, modern, and flexible event management plugin for WordPress.
+
+Create, manage, and display events with ease — whether they are internal events or imported from platforms like Eventbrite, Meetup, or Facebook.
+
+⚡ Includes advanced recurring events + real-time AJAX event discovery for a premium user experience.
 
 📖 [Documentation](http://docs.xylusthemes.com/docs/easy-events-calendar/)  | 🔗 [Plugin Website](https://xylusthemes.com/plugins/easy-events-calendar/)
 
 ---
 
-### ✅ Supported Event Sources
+== 🚀 Why Choose Easy Events Calendar? ==
 
-Easy Events Calendar works seamlessly with the following third-party plugins:
-
-- [Import Eventbrite Events](https://wordpress.org/plugins/import-eventbrite-events/)
-- [Import Social Events](https://wordpress.org/plugins/import-facebook-events/)
-- [Import Meetup Events](https://wordpress.org/plugins/import-meetup-events/)
-- [WP Event Aggregator](https://wordpress.org/plugins/wp-event-aggregator/)
-- [EventON](https://wordpress.org/plugins/eventon-lite/)
-- [Events Manager](https://wordpress.org/plugins/events-manager/)
-
-> These plugins handle event importing — Easy Events Calendar focuses on **displaying** them beautifully.
+✔ No coding required  
+⚡ Fast and performance optimized  
+🔗 Supports internal + external events  
+📱 Fully responsive design  
+🔍 Advanced AJAX filtering system  
 
 ---
 
-### 🎨 Available Views
+== 🚀 Core Features ==
 
-- **Calendar View** – Traditional calendar layout with highlighted event dates.
-- **Grid View** – Stylish grid/card layout for upcoming events.
-- **Row View** – Clean, readable row-style event listing.
-- **Staggered View (Masonry)** – Pinterest-style staggered layout for modern look.
+=== 🗂️ Internal Event Management ===
+* Create and manage events using custom post type (eec_events)
+* Clean and user-friendly admin interface
+* No dependency on third-party tools
+
+=== 🔁 Advanced Recurring Events ===
+* Supports Daily, Weekly, Monthly, and Yearly schedules
+* Automatically generates future event instances
+* Ideal for classes, webinars, and recurring events
+
+=== 🔍 Smart Event Discovery (AJAX Powered) ===
+* Real-time event filtering without page reload
+* Filter by Category, Tag, Venue, and Organizer
+* Fast and smooth user experience
+
+👉 Shortcode:
+**[eec_events_discovery]**
+
+=== 🏷️ Event Organization ===
+* Categories and Tags support
+* Venue management 📍
+* Organizer management 👤
+* Dedicated archive pages
+
+=== 🎨 Modern UI Design ===
+* Clean and professional layouts
+* Smooth animations and transitions
+* Modern glass-style interface
+
+=== ⚡ High Performance ===
+* Optimized SQL queries
+* Handles large event data efficiently
+* Fast pagination system
+
+=== 📱 Fully Responsive ===
+* Mobile-friendly layouts
+* Compact pagination for small screens
+* Works perfectly on all devices
 
 ---
 
-### 🌟 Key Features
+== 🎨 Available Views ==
 
-- Display events from multiple event import plugins.
-- Multiple layout options: Calendar, Grid, Row, Masonry.
-- Fully responsive and mobile-friendly design.
-- Load more functionality with adjustable pagination.
-- Customise button text, background colour, and text colour.
-- Simple and intuitive settings panel in the admin area.
-- Use anywhere with the `[easy_events_calendar]` shortcode.
-
----
-
-== Installation ==
-
-1. Upload the plugin folder to `/wp-content/plugins/` or install via WordPress dashboard.
-2. Activate **Easy Events Calendar** from the Plugins menu.
-3. Go to **Settings > Easy Events Calendar** to configure display and styling options.
-4. Make sure at least one of the supported event import plugins is active and importing upcoming events.
-5. Use the shortcode `[easy_events_calendar]` anywhere to show the calendar (page, post, widget, or block).
+📅 Calendar View – Full month layout  
+🧱 Grid View – Card-based modern layout  
+📋 List View – Clean listing format  
+🧩 Staggered (Masonry) – Dynamic layout  
+🎞️ Slider View – Interactive event slider  
 
 ---
 
 == Frequently Asked Questions ==
 
-= Which plugins are required to fetch events? =  
-You’ll need at least one of these plugins to import events:
-- Import Eventbrite Events  
-- Import Social Events  
-- Import Meetup Events  
-- WP Event Aggregator  
+= 🔁 Does this support recurring events? =
+Yes. You can create events that repeat daily, weekly, monthly, or yearly. The system automatically generates future occurrences.
 
-= Can I customise the calendar’s look? =  
-Yes! You can customise button text, button background colour, text colour, number of events shown before "Load More", and more through the settings panel.
+= ⚡ How does the discovery shortcode work? =
+The [eec_events_discovery] shortcode provides a real-time AJAX filtering interface. Users can filter events instantly without page reload.
 
-= How do I display the calendar on a page? =  
-Use the shortcode `<code>[easy_events_calendar]</code>` on any post, page, or widget area.
+= 📱 Is it mobile-friendly? =
+Yes. All layouts are fully responsive and optimized for mobile devices.
+
+= 🧑‍💻 Can I create events manually inside WordPress? =
+Yes. You can create and manage events directly using the built-in "Easy Events" custom post type without relying on external sources.
+
+= 🔌 Can I import events from other platforms? =
+Yes. The plugin supports integration with Eventbrite, Facebook Events, Meetup, and other popular event plugins.
+
+= 🎨 Can I change the layout or design of events? =
+Yes. You can choose from multiple layouts like Calendar, Grid, List, Masonry, and Slider to match your website design.
+
+= ⚡ Will it slow down my website? =
+No. The plugin is optimized with efficient SQL queries and AJAX loading to ensure fast performance even with a large number of events.
+
+= 🏷️ Can I filter events by category or organizer? =
+Yes. Users can filter events by Category, Tag, Venue, and Organizer using the AJAX-powered discovery system.
+
+== 🔗 Supported External Sources ==
+
+Easy Events Calendar also works seamlessly with the following third-party plugins:
+
+* [Import Eventbrite Events](https://wordpress.org/plugins/import-eventbrite-events/)
+* [Import Social Events](https://wordpress.org/plugins/import-facebook-events/)
+* [Import Meetup Events](https://wordpress.org/plugins/import-meetup-events/)
+* [WP Event Aggregator](https://wordpress.org/plugins/wp-event-aggregator/)
+* [EventON](https://wordpress.org/plugins/eventon-lite/)
+* [Events Manager](https://wordpress.org/plugins/events-manager/)
+
+---
+
+== ⚙️ Installation ==
+
+1. Upload the plugin folder to /wp-content/plugins/ or install via dashboard  
+2. Activate the plugin  
+3. Go to Settings > Easy Events Calendar  
+4. Start creating events from "Easy Events" menu  
+
+📌 Shortcodes:
+
+Use the following shortcodes to display events on your website:
+
+**[eec_events_discovery]** – Displays AJAX-powered event discovery with filters.
+**[easy_events_calendar]** – Shows the classic events calendar view. 
 
 ---
 
 == Screenshots ==
 
-1. Calendar view showing upcoming events  
-2. Grid layout view  
-3. Row list layout  
-4. Masonry (Staggered) view  
-5. Settings panel with full customisation options  
+1. Calendar View – Browse upcoming events in an interactive calendar layout.
+2. Grid View – Display events in a modern and visually appealing grid format.
+3. List View – View events in a simple and easy-to-read list layout.
+4. Masonry View – Showcase events in a dynamic staggered grid design.
+5. Slider View – Highlight events using a smooth carousel slider.
+6. Settings Panel – Customize layouts, styles, and event display options easily.
+7. Event Discovery Grid – Search and explore events in a grid-based layout.
+8. Event Discovery List – Find events quickly with a clean list-style search view.
+9. Event Widget Backend – Configure event widgets with flexible backend options.
+10. Event Widget Frontend – Display selected events beautifully on your website.
+11. Gutenberg Block – Add and manage event layouts directly in the block editor. 
 
 ---
 
-== Changelog ==
+== 📜 Changelog ==
+
+= 1.1.0 =
+* ADDED: New "Related Events" support with term-based matching (Category, Tag, Venue, Organizer) to automatically display related events.
+* ADDED: Advanced "Upcoming Events" widget with 10 unique styles (Timeline, Masonry, List, Card Grid, Badge, etc.), fully customizable from the admin panel.
+* ADDED: AJAX filtering and layout toggle in [eec_events_discovery] shortcode with live search and Grid/List view switching.
+* ADDED: Custom post type for internal events.
+* ADDED: Custom taxonomies — Category, Tag, Organizer, and Venue.
+* ADDED: Full support for recurring events with instance-based date handling.
+* ADDED: Randomized professional placeholder images for events without featured images.
+* ADDED: Design customization settings including Colors, Typography, and Header visibility controls.
+* FIXED: Tooltip positioning and visibility issues.
+* FIXED: Security and input sanitization improvements across all inputs.
+* IMPROVEMENTS: Enhanced metadata support including venue addresses, Google Maps (latitude/longitude), and organizer contact details.
+* IMPROVEMENTS: Organizer taxonomy changed to hierarchical for better admin experience.
+* IMPROVEMENTS: Unified event data retrieval logic for improved performance.
+* IMPROVEMENTS: Added compatibility support for WordPress 7.0.
 
 = 1.0.3 =
 * ADDED: New slider layout.
@@ -117,9 +196,7 @@ Use the shortcode `<code>[easy_events_calendar]</code>` on any post, page, or wi
 
 ---
 
-== Upgrade Notice ==
+== 🚀 Upgrade Notice ==
 
-= 1.0.0 =
-First release with support for multiple import plugins and fully responsive calendar layouts.
-
-
+= 1.1.0 =
+Major update with Internal Events, Recurring System, and AJAX Event Discovery.
