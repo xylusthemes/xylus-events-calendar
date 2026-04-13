@@ -694,4 +694,22 @@ class Xylus_Events_Calendar_Common {
 
         return $organizers;
     }
+
+    /**
+     * Get Past Events Header HTML
+     * 
+     * @since 1.2.0
+     * @return string
+     */
+    public function xylusec_get_past_header_html() {
+        ob_start();
+        ?>
+        <div class="xylusec-past-events-header">
+            <span>
+                <?php esc_html_e( 'Past Events', 'xylus-events-calendar' ); ?>
+            </span>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
 }

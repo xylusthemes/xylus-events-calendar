@@ -317,7 +317,8 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color        = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts );
+		$past               = isset( $_POST['past'] ) && $_POST['past'] == 1;
+		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts, $past );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';
@@ -392,7 +393,8 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		$selected_post_type = isset( $this->xylusec_options['xylusec_event_source'] ) ? $this->xylusec_options['xylusec_event_source'] : '';
 		$pagination_count   = isset( $this->xylusec_options['xylusec_events_per_page'] ) ? $this->xylusec_options['xylusec_events_per_page'] : 12;
 		$title_color        = isset( $this->xylusec_options['xylusec_event_title_color'] ) ? $this->xylusec_options['xylusec_event_title_color'] : '#60606e';
-		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts );
+		$past               = isset( $_POST['past'] ) && $_POST['past'] == 1;
+		$query              = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, $paged, $keyword, $pagination_count, $shortcode_atts, $past );
 
 		if( $selected_post_type == 'ajde_events' ){
 			$start_key = 'evcal_srow';

@@ -28,6 +28,7 @@ $xylusec_is_header_hide = isset( $xylusec_options['xylusec_hide_header'] ) ? $xy
     </div>
     <div id="xylusec-calendar"></div>
     <div id="xylusec-grid-view-container" class="custom-grid-view" style="display: none;">
+        <?php echo wp_kses_post( $xylusec_events_calendar->common->xylusec_get_past_header_html() ); ?>
         <div class="xylusec-inner-main-container">
             <div class="xylusec-event-grid-container"></div>
             <div class="xylusec-load-more-wrap">
@@ -43,6 +44,7 @@ $xylusec_is_header_hide = isset( $xylusec_options['xylusec_hide_header'] ) ? $xy
     </div>
 
     <div id="xylusec-row-view-container" class="custom-row-view" style="display: none;">
+        <?php echo wp_kses_post( $xylusec_events_calendar->common->xylusec_get_past_header_html() ); ?>
         <div class="xylusec-inner-main-container">
             <div class="xylusec-event-row-container"></div>
             <div class="xylusec-load-more-wrap">
@@ -58,6 +60,7 @@ $xylusec_is_header_hide = isset( $xylusec_options['xylusec_hide_header'] ) ? $xy
     </div>
 
     <div id="xylusec-grid-staggered-view-container" class="xylusec-custom-grid-staggered-view" style="display: none;">
+        <?php echo wp_kses_post( $xylusec_events_calendar->common->xylusec_get_past_header_html() ); ?>
         <div class="xylusec-inner-main-container">
             <div class="xylusec-event-grid-staggered-container"></div>
             <div class="xylusec-load-more-wrap">
@@ -72,6 +75,9 @@ $xylusec_is_header_hide = isset( $xylusec_options['xylusec_hide_header'] ) ? $xy
         </div>
     </div>
 
+    <div id="xylusec-slider-past-header" style="display: none;">
+        <?php echo wp_kses_post( $xylusec_events_calendar->common->xylusec_get_past_header_html() ); ?>
+    </div>
     <div id="xylusec-slider-view-container"  class="xylusec-slider-view" style="display: none;">
         <div class="xylusec-inner-main-container">
             <div class="xylusec-event-slider-container xylusec-slider-slider" style="display: block;"></div>

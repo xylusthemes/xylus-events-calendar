@@ -1,0 +1,54 @@
+/**
+ * Past Events Fallback Styles
+ */
+
+.xylusec-past-events-header {
+    display: none; /* Controlled via JS: .css('display', 'flex') */
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0 40px 0;
+    width: 100%;
+    clear: both;
+    grid-column: 1 / -1;
+}
+
+.xylusec-past-events-header::before,
+.xylusec-past-events-header::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.xylusec-past-events-header span {
+    padding: 0 25px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    white-space: nowrap;
+}
+
+/* Icon style if we add one later */
+.xylusec-past-events-header span svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+/* Staggered view masonry fix */
+.xylusec-event-grid-staggered-container .xylusec-past-events-header {
+    width: 100% !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .xylusec-past-events-header {
+        margin: 30px 0 20px 0;
+    }
+    .xylusec-past-events-header span {
+        font-size: 11px;
+        padding: 0 15px;
+    }
+}
