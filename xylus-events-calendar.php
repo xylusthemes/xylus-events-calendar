@@ -208,6 +208,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			wp_enqueue_style('xylus-events-calendar-css', $css_dir . 'xylus-events-calendar.css', false, XYLUSEC_VERSION );
 			wp_enqueue_style('xylus-events-calendar-widget-css', $css_dir . 'xylus-events-calendar-widget.css', false, XYLUSEC_VERSION );
 			wp_enqueue_style('xylus-events-calendar-template-css', $css_dir . 'xylus-events-calendar-template.css', false, XYLUSEC_VERSION );
+			wp_enqueue_style('xylus-events-calendar-past-events-css', $css_dir . 'xylus-events-calendar-past-events.css', false, XYLUSEC_VERSION );
 			
 			$xylusec_options = get_option( XYLUSEC_WIDGET_OPTIONS, [] );
 			$custom_css = ":root {";

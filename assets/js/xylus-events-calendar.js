@@ -348,6 +348,7 @@
 		let gridKeyword = '';
 		let isLoading = false;
 		let triedPastEvents = false;
+        let isPastMode = false;
 
 		function fetchEvents(reset = false, past = false) {
 			if (isLoading) return;
@@ -365,12 +366,19 @@
 					keyword: gridKeyword,
 					nonce: xylusec_ajax.nonce,
 					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
-					past: past ? 1 : 0 // extra param for past events
+					past: (past || isPastMode) ? 1 : 0 // extra param for past events
 				},
 				success: function(response) {
 					if (reset) {
 						$('.xylusec-event-grid-container').html(response);
 						rowPage = 2;
+                        // Handle header display
+                        if (past) {
+                            gridWrapper.find('.xylusec-past-events-header').css('display', 'flex');
+                            isPastMode = true;
+                        } else {
+                            gridWrapper.find('.xylusec-past-events-header').hide();
+                        }
 					} else {
 						$('.xylusec-event-grid-container').append(response);
 						rowPage++;
@@ -379,6 +387,7 @@
 					if (!response.trim()) {
 						if (!past && !triedPastEvents) {
 							triedPastEvents = true;
+                            isLoading = false; // Reset lock to allow the fallback request
 							fetchEvents(true, true);
 						} else {
 							$('#load-more-events').hide();
@@ -408,22 +417,26 @@
 			if ($('.fc-button-grid').hasClass('fc-active')) {
 				gridKeyword = $('#xylusec-search').val().trim();
 				triedPastEvents = false;
+                isPastMode = false;
+                gridWrapper.find('.xylusec-past-events-header').hide();
 				fetchEvents(true);
 			}
 		});
 
 		// Show Row View
 		$('.fc-button-grid').on('click', function() {
-			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
+			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container, #xylusec-slider-past-header').hide();
 			gridWrapper.show();
 			gridKeyword = $('#xylusec-search').val().trim();
 			triedPastEvents = false;
+            isPastMode = false;
+            gridWrapper.find('.xylusec-past-events-header').hide();
 			fetchEvents(true);
 		});
 
 		// Back to Month View
 		$('.fc-button-month').on('click', function() {
-			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
+			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container, #xylusec-slider-past-header').hide();
 			calendarWrapper.show();
 		});
 	});
@@ -438,8 +451,10 @@
 		let rowPage = 1;
 		let rowKeyword = '';
 		let isLoading = false;
+        let triedPastEvents = false;
+        let isPastMode = false;
 
-		function fetchRowEvents(reset = false) {
+		function fetchRowEvents(reset = false, past = false) {
 			if (isLoading) return;
 			
 			isLoading = true;
@@ -454,20 +469,33 @@
 					paged: reset ? 1 : rowPage,
 					keyword: rowKeyword,
 					nonce: xylusec_ajax.nonce,
-					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+                    past: (past || isPastMode) ? 1 : 0
 				},
 				success: function(response) {
 					if (reset) {
 						$('.xylusec-event-row-container').html(response);
 						rowPage = 2; // Set to page 2 after reset
+                        if (past) {
+                            rowWrapper.find('.xylusec-past-events-header').css('display', 'flex');
+                            isPastMode = true;
+                        } else {
+                            rowWrapper.find('.xylusec-past-events-header').hide();
+                        }
 					} else {
 						$('.xylusec-event-row-container').append(response);
 						rowPage++;
 					}
 
 					if (!response.trim()) {
-						$('#load-more-row-events').hide();
-						$('.xylusec-no-events').show();
+						if (!past && !triedPastEvents) {
+                            triedPastEvents = true;
+                            isLoading = false; // Reset lock to allow the fallback request
+                            fetchRowEvents(true, true);
+                        } else {
+                            $('#load-more-row-events').hide();
+						    $('.xylusec-no-events').show();
+                        }
 					} else {
 						$('#load-more-row-events').show();
 						$('.xylusec-no-events').hide();
@@ -480,6 +508,7 @@
 
 		// Load more row events
 		$('#load-more-row-events').on('click', function() {
+            triedPastEvents = isPastMode;
 			fetchRowEvents(false);
 		});
 
@@ -487,21 +516,27 @@
 		$('#xylusec-search-events').on('click', function() {
 			if ($('.fc-button-row').hasClass('fc-active')) {
 				rowKeyword = $('#xylusec-search').val().trim();
+                triedPastEvents = false;
+                isPastMode = false;
+                rowWrapper.find('.xylusec-past-events-header').hide();
 				fetchRowEvents(true);
 			}
 		});
 
 		// Show Row View
 		$('.fc-button-row').on('click', function() {
-			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
+			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container, #xylusec-slider-past-header').hide();
 			rowWrapper.show();
 			rowKeyword = $('#xylusec-search').val().trim();
+            triedPastEvents = false;
+            isPastMode = false;
+            rowWrapper.find('.xylusec-past-events-header').hide();
 			fetchRowEvents(true); // This will reset to page 1
 		});
 
 		// Back to Month View
 		$('.fc-button-month').on('click', function() {
-			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container' ).hide();
+			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container, #xylusec-slider-past-header' ).hide();
 			calendarWrapper.show();
 		});
 	});
@@ -515,13 +550,15 @@
 		let staggeredPage = 1;
 		let staggeredKeyword = '';
 		let isLoadingStaggered = false;
+        let triedPastEvents = false;
+        let isPastMode = false;
 
 		var $grid = $('.xylusec-event-grid-staggered-container').masonry({
 			itemSelector: '.xylusec-event-card-staggered',
 			percentPosition: true
 		});
 
-		function fetchStaggeredEvents(reset = false) {
+		function fetchStaggeredEvents(reset = false, past = false) {
 			if (isLoadingStaggered) return;
 
 			isLoadingStaggered = true;
@@ -536,13 +573,20 @@
 					paged: reset ? 1 : staggeredPage,
 					keyword: staggeredKeyword,
 					nonce: xylusec_ajax.nonce,
-					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+                    past: (past || isPastMode) ? 1 : 0
 				},
 				success: function(response) {
 					if (reset) {
 						$('.xylusec-event-grid-staggered-container').html(response);
 						$grid.masonry('reloadItems').masonry();
 						staggeredPage = 2;
+                        if (past) {
+                            staggeredWrapper.find('.xylusec-past-events-header').css('display', 'flex');
+                            isPastMode = true;
+                        } else {
+                            staggeredWrapper.find('.xylusec-past-events-header').hide();
+                        }
 					} else {
 						var $items = $(response);
 						$('.xylusec-event-grid-staggered-container').append($items);
@@ -551,8 +595,14 @@
 					}
 
 					if (!response.trim()) {
-						$('#load-more-grid-staggered-events').hide();
-						$('.xylusec-no-events').show();
+						if (!past && !triedPastEvents) {
+                            triedPastEvents = true;
+                            isLoadingStaggered = false; // Reset lock to allow the fallback request
+                            fetchStaggeredEvents(true, true);
+                        } else {
+                            $('#load-more-grid-staggered-events').hide();
+						    $('.xylusec-no-events').show();
+                        }
 					} else {
 						$('#load-more-grid-staggered-events').show();
 						$('.xylusec-no-events').hide();
@@ -565,6 +615,7 @@
 
 		// Load more
 		$('#load-more-grid-staggered-events').on('click', function() {
+            triedPastEvents = isPastMode;
 			fetchStaggeredEvents(false);
 		});
 
@@ -572,21 +623,27 @@
 		$('#xylusec-search-events').on('click', function() {
 			if ($('.fc-button-staggered').hasClass('fc-active')) {
 				staggeredKeyword = $('#xylusec-search').val().trim();
+                triedPastEvents = false;
+                isPastMode = false;
+                staggeredWrapper.find('.xylusec-past-events-header').hide();
 				fetchStaggeredEvents(true);
 			}
 		});
 
 		// Show Staggered View
 		$('.fc-button-staggered').on('click', function() {
-			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-slider-view-container').hide();
+			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-slider-view-container, #xylusec-slider-past-header').hide();
 			staggeredWrapper.show();
 			staggeredKeyword = $('#xylusec-search').val().trim();
+            triedPastEvents = false;
+            isPastMode = false;
+            staggeredWrapper.find('.xylusec-past-events-header').hide();
 			fetchStaggeredEvents(true);
 		});
 
 		// Month View
 		$('.fc-button-month').on('click', function() {
-			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-slider-view-container, #xylusec-grid-staggered-view-container').hide();
+			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-slider-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-past-header').hide();
 			calendarWrapper.show();
 		});
 	});
@@ -601,9 +658,11 @@
 		let isLoading = false;
 		let noMoreEvents = false; 
 		let sliderKeyword = ($('#xylusec-search').val() || '').trim();
+        let triedPastEvents = false;
+        let isPastMode = false;
 
 		// Load events by AJAX
-		function fetchSlides(reset = false){
+		function fetchSlides(reset = false, past = false){
 			if (isLoading) return;
 			isLoading = true;
 			if ( reset ) {
@@ -620,7 +679,8 @@
 					paged  : (reset ? 1 : page),
 					keyword: sliderKeyword,
 					nonce  : xylusec_ajax.nonce,
-					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+                    past   : (past || isPastMode) ? 1 : 0
 				},
 				success: function(resp){
 					const trimmed = $.trim(resp);
@@ -631,6 +691,12 @@
 							slideIndex = 0;
 							page = 2;
 							noMoreEvents = false;
+                            if (past) {
+                                $('#xylusec-slider-past-header, #xylusec-slider-past-header .xylusec-past-events-header').css('display', 'flex');
+                                isPastMode = true;
+                            } else {
+                                $('#xylusec-slider-past-header, #xylusec-slider-past-header .xylusec-past-events-header').hide();
+                            }
 
 							wrapper.find('.xylusec-slider-slide')
 								.removeClass('active')
@@ -640,6 +706,12 @@
 							$('.xylusec-event-slider-container').show();
 							$('.xylusec-slider-arrow-main').show();
 						} else {
+                            if (!past && !triedPastEvents) {
+                                triedPastEvents = true;
+                                isLoading = false; // Allow second request
+                                fetchSlides(true, true);
+                                return;
+                            }
 							wrapper.html('');
 							page = 1;
 							noMoreEvents = true;
@@ -703,6 +775,9 @@
 			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container').hide();
 			sliderContainer.show();
 			sliderKeyword = $('#xylusec-search').val().trim();
+            triedPastEvents = false;
+            isPastMode = false;
+            $('#xylusec-slider-past-header, #xylusec-slider-past-header .xylusec-past-events-header').hide();
 			fetchSlides(true);
 		});
 
@@ -710,6 +785,9 @@
 		$('#xylusec-search-events').on('click', function() {
 			if ($('.fc-button-slider').hasClass('fc-active')) {
 				sliderKeyword = $('#xylusec-search').val().trim();
+                triedPastEvents = false;
+                isPastMode = false;
+                $('#xylusec-slider-past-header, #xylusec-slider-past-header .xylusec-past-events-header').hide();
 				fetchSlides(true);
 			}
 		});
@@ -717,6 +795,7 @@
 		// Back to month view
 		$('.fc-button-month').on('click', function(){
 			sliderContainer.hide();
+            $('#xylusec-slider-past-header').hide();
 			$('#xylusec-calendar').show();
 		});
 	});
