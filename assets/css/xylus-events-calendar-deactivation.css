@@ -1,0 +1,166 @@
+#xylus-events-calendar-deactivate-dialog {
+    display: none;
+}
+
+.xylus-events-calendar-deactivate-dialog.ui-dialog {
+    border: none !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+    overflow: hidden;
+}
+.xylus-events-calendar-deactivate-dialog .ui-dialog-titlebar {
+    display: none;
+}
+.xylus-events-calendar-deactivate-dialog .ui-dialog-content {
+    padding: 30px !important;
+    background: #fff;
+}
+.xylus-events-calendar-deactivate-dialog .ui-dialog-buttonpane {
+    padding: 15px !important;
+    background: #fff !important;
+    border-top: 1px solid #f0f0f1 !important;
+    margin: 0 !important;
+    text-align: center !important;
+}
+.xylus-events-calendar-deactivate-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 12px;
+    align-items: center;
+}
+.xec-dialog-header {
+    margin-bottom: 25px;
+    position: relative;
+}
+.xec-dialog-close-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    font-size: 20px;
+    color: #8c8f94;
+    cursor: pointer;
+    line-height: normal;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+    font-size: 2em !important;
+}
+.xec-dialog-close-btn:hover {
+    background: #fff;
+    color: #1d2327;
+    border-color: #2c3e50;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.xec-dialog-header h2 {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    margin: 0 0 10px 0 !important;
+    color: #1d2327;
+}
+.xec-dialog-header p {
+    font-size: 15px;
+    color: #646970;
+    line-height: 1.5;
+    margin: 0;
+}
+.xec-reasons-list {
+    margin-bottom: 20px;
+}
+.xec-reason-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.xec-reason-item:hover {
+    border-color: #2c3e50;
+    background: #f0f6fb;
+}
+.xec-reason-item.active {
+    border-color: #2c3e50;
+    background: #eff6ff;
+    box-shadow: 0 0 0 1px #2c3e50;
+}
+.xec-reason-item input[type="radio"] {
+    margin: 0 12px 0 0 !important;
+    pointer-events: none;
+}
+.xec-reason-item span {
+    font-size: 15px;
+    color: #1d2327;
+    font-weight: 500;
+}
+.xec-feedback-textarea-wrap {
+    margin-top: 20px;
+    display: none;
+}
+.xec-feedback-textarea-wrap textarea {
+    width: 100%;
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+    min-height: 100px;
+}
+.xec-feedback-textarea-wrap textarea:focus {
+    border-color: #2c3e50;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+    outline: none;
+}
+.xec-modern-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    padding: 0 24px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+}
+.xec-submit-btn {
+    background: #2c3e50 !important;
+    border-color: #2c3e50 !important;
+    color: #fff !important;
+}
+.xec-submit-btn:hover {
+    background: #1a252f !important;
+    border-color: #1a252f !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.xec-skip-btn {
+    background: transparent !important;
+    border: 1px solid #dcdcde !important;
+    color: #646970 !important;
+    margin: 0 !important;
+}
+.xec-skip-btn:hover {
+    background: #f6f7f7 !important;
+    color: #1d2327 !important;
+}
+.xec-footer-notice {
+    font-size: 12px;
+    color: #8c8f94;
+    margin-top: 15px;
+    text-align: center;
+}

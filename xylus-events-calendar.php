@@ -33,7 +33,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 		 * Xylus_Events_Calendar The one true Xylus_Events_Calendar.
 		 */
 		private static $instance;
-		public $common, $xylusec_events_calendar, $admin, $ajax_handler, $widgets, $cpt, $template_loader, $recurrence, $events_list;
+		public $common, $xylusec_events_calendar, $admin, $ajax_handler, $widgets, $cpt, $template_loader, $recurrence, $events_list, $deactivation;
 
 		/**
 		 * Main Xylus Events Calendar Instance.
@@ -67,6 +67,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 				self::$instance->template_loader = new Xylus_Events_Calendar_Template_Loader();
 				self::$instance->recurrence      = new Xylus_Events_Calendar_Recurrence();
 				self::$instance->events_list     = new Xylus_Events_Calendar_Events_List();
+				self::$instance->deactivation  = new Xylus_Events_Calendar_Deactivation();
 
 			}
 			return self::$instance;
@@ -171,6 +172,7 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/elementor/register-elementor-widget.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/easy-events-calendar-blocks/block.php';
 			require_once XYLUSEC_PLUGIN_DIR . 'includes/easy-events-calendar-blocks/easy-events-calendar-gutenberg-shortcode.php';
+			require_once XYLUSEC_PLUGIN_DIR . 'includes/admin/class-xylus-events-calendar-deactivation.php';
 		}
 
 		/**
