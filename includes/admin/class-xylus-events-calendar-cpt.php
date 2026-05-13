@@ -55,8 +55,10 @@ class Xylus_Events_Calendar_CPT {
         add_filter( 'query_vars', array( $this, 'eec_add_query_vars' ) );
         add_action( 'add_meta_boxes', array( $this, 'add_event_meta_boxes' ) );
 		add_action( 'save_post', array( $this, 'save_event_meta_boxes' ), 10, 2 );
-        
-        
+
+		// AJAX for instant occurrence deletion
+		add_action( 'wp_ajax_eec_delete_occurrence', array( $this, 'ajax_delete_occurrence' ) );
+		add_action( 'wp_ajax_eec_add_occurrence', array( $this, 'ajax_add_occurrence' ) );
 	}
 
     /**
@@ -449,6 +451,7 @@ class Xylus_Events_Calendar_CPT {
 							<option value="weekly" <?php selected( $recurrence_type, 'weekly' ); ?>><?php esc_attr_e( 'Weekly', 'xylus-events-calendar' ); ?></option>
 							<option value="monthly" <?php selected( $recurrence_type, 'monthly' ); ?>><?php esc_attr_e( 'Monthly', 'xylus-events-calendar' ); ?></option>
 							<option value="yearly" <?php selected( $recurrence_type, 'yearly' ); ?>><?php esc_attr_e( 'Yearly', 'xylus-events-calendar' ); ?></option>
+							<option value="custom" <?php selected( $recurrence_type, 'custom' ); ?>><?php esc_attr_e( 'Custom (Eventbrite Series)', 'xylus-events-calendar' ); ?></option>
 						</select>
 					</div>
 				</div>
@@ -517,6 +520,84 @@ class Xylus_Events_Calendar_CPT {
 							</div>
 						</div>
 					</div>
+				</div>
+
+				<div class="eec_custom_recurrence_list" style="<?php echo ($recurrence_type === 'custom') ? '' : 'display:none;'; ?>; margin-top: 20px;">
+					<h4><?php esc_attr_e( 'Custom Occurrences', 'xylus-events-calendar' ); ?></h4>
+					<p class="description"><?php esc_attr_e( 'These are the individual dates for this series. You can edit or remove specific occurrences below.', 'xylus-events-calendar' ); ?></p>
+					<table class="wp-list-table widefat fixed striped" style="margin-top: 10px;">
+						<thead>
+							<tr>
+								<th><?php esc_attr_e( 'Start Date & Time', 'xylus-events-calendar' ); ?></th>
+								<th><?php esc_attr_e( 'End Date & Time', 'xylus-events-calendar' ); ?></th>
+								<th style="width: 80px;"><?php esc_attr_e( 'Actions', 'xylus-events-calendar' ); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							global $wpdb;
+							$table_name = $wpdb->prefix . 'eec_event_instances';
+							$instances = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name WHERE event_id = %d ORDER BY start_date ASC", $post->ID ) );
+
+							if ( ! empty( $instances ) ) {
+								foreach ( $instances as $instance ) {
+									?>
+									<tr class="eec-instance-row" data-instance-id="<?php echo esc_attr( $instance->id ); ?>">
+										<td>
+											<?php 
+											// Convert database Y-m-d H:i:s to Y-m-d\TH:i for datetime-local input
+											$start_val = str_replace(' ', 'T', substr($instance->start_date, 0, 16));
+											?>
+											<input type="datetime-local" name="eec_instance_start[<?php echo esc_attr( $instance->id ); ?>]" value="<?php echo esc_attr( $start_val ); ?>" step="1" style="width: 100%;" />
+										</td>
+										<td>
+											<?php 
+											$end_val = str_replace(' ', 'T', substr($instance->end_date, 0, 16));
+											?>
+											<input type="datetime-local" name="eec_instance_end[<?php echo esc_attr( $instance->id ); ?>]" value="<?php echo esc_attr( $end_val ); ?>" step="1" style="width: 100%;" />
+										</td>
+										<td>
+											<button type="button" class="components-button editor-post-trash is-next-40px-default-size is-secondary is-destructive eec-remove-instance" title="<?php esc_attr_e( 'Remove this occurrence', 'xylus-events-calendar' ); ?>">
+												<?php esc_attr_e( 'Delete', 'xylus-events-calendar' ); ?>
+											</button>
+											<input type="hidden" name="eec_instance_delete[<?php echo esc_attr( $instance->id ); ?>]" class="eec-delete-flag" value="0" />
+										</td>
+									</tr>
+									<?php
+								}
+							}
+							?>
+							<!-- Template for New Occurrences -->
+							<tr class="eec-instance-row-template" style="display:none;">
+								<td>
+									<input type="datetime-local" name="eec_new_instance_start[]" value="" step="1" style="width: 100%;" />
+								</td>
+								<td>
+									<input type="datetime-local" name="eec_new_instance_end[]" value="" step="1" style="width: 100%;" />
+								</td>
+								<td>
+									<button type="button" class="components-button is-primary eec-save-new-instance" style="margin-right: 5px;">
+										<?php esc_attr_e( 'Save', 'xylus-events-calendar' ); ?>
+									</button>
+									<button type="button" class="components-button editor-post-trash is-next-40px-default-size is-secondary is-destructive eec-remove-new-instance" title="<?php esc_attr_e( 'Cancel', 'xylus-events-calendar' ); ?>">
+										<?php esc_attr_e( 'Delete', 'xylus-events-calendar' ); ?>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="3" style="padding: 10px 0;">
+									<button type="button" id="eec_add_new_occurrence" class="button button-secondary">
+										<span class="dashicons dashicons-plus" style="margin-top: 4px; font-size: 16px;"></span>
+										<?php esc_attr_e( 'Add New Occurrence', 'xylus-events-calendar' ); ?>
+									</button>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					<input type="hidden" id="eec_ajax_nonce" value="<?php echo esc_attr( wp_create_nonce( 'eec_event_metabox_nonce' ) ); ?>" />
+					<input type="hidden" id="eec_post_id" value="<?php echo esc_attr( $post->ID ); ?>" />
 				</div>
 			</div>
 		</div>
@@ -672,8 +753,142 @@ class Xylus_Events_Calendar_CPT {
 
 		// Sync Instances
 		if ( function_exists( 'xylusec_xt_events_calendar' ) ) {
-			xylusec_xt_events_calendar()->recurrence->sync_event_instances( $post_id );
+			$recurrence = xylusec_xt_events_calendar()->recurrence;
+			
+			// Handle manual updates for Custom (Eventbrite) instances
+			if ( $event_recurrence_type === 'custom' ) {
+				global $wpdb;
+				$table_name = $wpdb->prefix . 'eec_event_instances';
+				
+				$starts  = isset( $_POST['eec_instance_start'] ) ? (array) $_POST['eec_instance_start'] : array();
+				$ends    = isset( $_POST['eec_instance_end'] ) ? (array) $_POST['eec_instance_end'] : array();
+				$deletes = isset( $_POST['eec_instance_delete'] ) ? (array) $_POST['eec_instance_delete'] : array();
+				
+				foreach ( $starts as $instance_id => $start_date ) {
+					$instance_id = absint( $instance_id );
+					
+					// Handle deletion
+					if ( isset( $deletes[$instance_id] ) && $deletes[$instance_id] == '1' ) {
+						$wpdb->delete( $table_name, array( 'id' => $instance_id, 'event_id' => $post_id ), array( '%d', '%d' ) );
+						continue;
+					}
+					
+					// Handle updates
+					$end_date = isset( $ends[$instance_id] ) ? $ends[$instance_id] : $start_date;
+					
+					// Convert 'T' from datetime-local to space for MySQL
+					$start_date = str_replace( 'T', ' ', sanitize_text_field( $start_date ) );
+					$end_date   = str_replace( 'T', ' ', sanitize_text_field( $end_date ) );
+					
+					$wpdb->update(
+						$table_name,
+						array(
+							'start_date' => $start_date,
+							'end_date'   => $end_date,
+						),
+						array( 'id' => $instance_id, 'event_id' => $post_id ),
+						array( '%s', '%s' ),
+						array( '%d', '%d' )
+					);
+				}
+
+				// Handle New instances
+				$new_starts = isset( $_POST['eec_new_instance_start'] ) ? (array) $_POST['eec_new_instance_start'] : array();
+				$new_ends   = isset( $_POST['eec_new_instance_end'] ) ? (array) $_POST['eec_new_instance_end'] : array();
+				
+				foreach ( $new_starts as $index => $start_date ) {
+					if ( empty( $start_date ) ) continue;
+					
+					$end_date = isset( $new_ends[$index] ) ? $new_ends[$index] : $start_date;
+					if ( empty( $end_date ) ) $end_date = $start_date;
+
+					// Convert 'T' from datetime-local to space for MySQL
+					$start_date = str_replace( 'T', ' ', sanitize_text_field( $start_date ) );
+					$end_date   = str_replace( 'T', ' ', sanitize_text_field( $end_date ) );
+
+					$wpdb->insert(
+						$table_name,
+						array(
+							'event_id'   => $post_id,
+							'start_date' => $start_date,
+							'end_date'   => $end_date,
+						),
+						array( '%d', '%s', '%s' )
+					);
+				}
+			} else {
+				// Standard recurrence sync for daily/weekly/etc.
+				$recurrence->sync_event_instances( $post_id );
+			}
 		}
+	}
+
+	/**
+	 * AJAX handler for deleting an occurrence instantly.
+	 */
+	public function ajax_delete_occurrence() {
+		check_ajax_referer( 'eec_event_metabox_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'xylus-events-calendar' ) ) );
+		}
+
+		$instance_id = isset( $_POST['instance_id'] ) ? absint( $_POST['instance_id'] ) : 0;
+		$event_id    = isset( $_POST['event_id'] ) ? absint( $_POST['event_id'] ) : 0;
+
+		if ( $instance_id && $event_id ) {
+			global $wpdb;
+			$table_name = $wpdb->prefix . 'eec_event_instances';
+			$deleted = $wpdb->delete( $table_name, array( 'id' => $instance_id, 'event_id' => $event_id ), array( '%d', '%d' ) );
+
+			if ( $deleted ) {
+				wp_send_json_success();
+			}
+		}
+
+		wp_send_json_error( array( 'message' => __( 'Failed to delete occurrence.', 'xylus-events-calendar' ) ) );
+	}
+
+	/**
+	 * AJAX handler for adding a new occurrence instantly.
+	 */
+	public function ajax_add_occurrence() {
+		check_ajax_referer( 'eec_event_metabox_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'xylus-events-calendar' ) ) );
+		}
+
+		$event_id   = isset( $_POST['event_id'] ) ? absint( $_POST['event_id'] ) : 0;
+		$start_date = isset( $_POST['start_date'] ) ? sanitize_text_field( $_POST['start_date'] ) : '';
+		$end_date   = isset( $_POST['end_date'] ) ? sanitize_text_field( $_POST['end_date'] ) : '';
+
+		if ( $event_id && $start_date ) {
+			if ( empty( $end_date ) ) $end_date = $start_date;
+
+			// Convert 'T' from datetime-local to space for MySQL
+			$start_date = str_replace( 'T', ' ', $start_date );
+			$end_date   = str_replace( 'T', ' ', $end_date );
+
+			global $wpdb;
+			$table_name = $wpdb->prefix . 'eec_event_instances';
+			
+			$inserted = $wpdb->insert(
+				$table_name,
+				array(
+					'event_id'   => $event_id,
+					'start_date' => $start_date,
+					'end_date'   => $end_date,
+				),
+				array( '%d', '%s', '%s' )
+			);
+
+			if ( $inserted ) {
+				wp_send_json_success( array( 'instance_id' => $wpdb->insert_id ) );
+			}
+		}
+
+		wp_send_json_error( array( 'message' => __( 'Failed to add occurrence.', 'xylus-events-calendar' ) ) );
 	}
 
     public function register_venue_meta_hooks() {

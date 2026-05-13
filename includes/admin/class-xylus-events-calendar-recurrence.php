@@ -59,11 +59,16 @@ class Xylus_Events_Calendar_Recurrence {
 	public function sync_event_instances( $event_id ) {
 		global $wpdb;
 
-		// Clear existing instances
-		$wpdb->delete( $this->table_name, array( 'event_id' => $event_id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-
 		$recurrence_type = get_post_meta( $event_id, 'event_recurrence_type', true );
 		
+		// If custom recurrence (like Eventbrite series), do not clear or regenerate.
+		// These instances are managed externally or manually.
+		if ( $recurrence_type === 'custom' ) {
+			return;
+		}
+
+		// Clear existing instances
+		$wpdb->delete( $this->table_name, array( 'event_id' => $event_id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		// If no recurrence, just add the base instance
 		if ( empty( $recurrence_type ) || $recurrence_type === 'none' ) {
 			$this->add_base_instance( $event_id );
