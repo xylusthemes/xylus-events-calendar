@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-13T07:49:46+00:00\n"
+"POT-Creation-Date: 2026-07-02T09:41:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: xylus-events-calendar\n"
@@ -39,58 +39,67 @@ msgstr ""
 msgid "https://xylusthemes.com"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:107
+#: includes/admin/class-xylus-events-calendar-admin.php:143
 msgid "Related Events"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:277
-#: templates/archive-eec_events.php:61
+#: includes/admin/class-xylus-events-calendar-admin.php:324
+#: templates/archive-eec_events.php:63
 msgid "Search events..."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:282
-#: includes/admin/class-xylus-events-calendar-cpt.php:228
+#: includes/admin/class-xylus-events-calendar-admin.php:330
+#: includes/admin/class-xylus-events-calendar-cpt.php:246
 #: includes/admin/class-xylus-events-calendar-widgets.php:523
-#: templates/archive-eec_events.php:66
+#: includes/admin/class-xylus-events-calendar-widgets.php:659
+#: templates/archive-eec_events.php:68
 msgid "All Categories"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:291
-#: includes/admin/class-xylus-events-calendar-cpt.php:307
-#: templates/archive-eec_events.php:75
+#: includes/admin/class-xylus-events-calendar-admin.php:339
+#: includes/admin/class-xylus-events-calendar-cpt.php:397
+#: includes/admin/class-xylus-events-calendar-widgets.php:678
+#: templates/archive-eec_events.php:77
+msgid "All Collections"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-admin.php:348
+#: includes/admin/class-xylus-events-calendar-cpt.php:325
+#: templates/archive-eec_events.php:86
 msgid "All Venues"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:300
-#: includes/admin/class-xylus-events-calendar-cpt.php:342
-#: templates/archive-eec_events.php:84
+#: includes/admin/class-xylus-events-calendar-admin.php:357
+#: includes/admin/class-xylus-events-calendar-cpt.php:360
+#: templates/archive-eec_events.php:95
 msgid "All Organizers"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:307
-#: templates/archive-eec_events.php:91
+#: includes/admin/class-xylus-events-calendar-admin.php:365
+#: templates/archive-eec_events.php:102
 msgid "Filter"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:311
-#: templates/archive-eec_events.php:95
+#: includes/admin/class-xylus-events-calendar-admin.php:370
+#: templates/archive-eec_events.php:106
 msgid "Grid View"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:316
-#: templates/archive-eec_events.php:100
+#: includes/admin/class-xylus-events-calendar-admin.php:378
+#: templates/archive-eec_events.php:111
 msgid "List View"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:324
-#: templates/archive-eec_events.php:120
+#: includes/admin/class-xylus-events-calendar-admin.php:389
+#: templates/archive-eec_events.php:133
 msgid "Reset"
 msgstr ""
 
 #. translators: %d: number of events found
-#: includes/admin/class-xylus-events-calendar-admin.php:345
-#: templates/archive-eec_events.php:130
+#: includes/admin/class-xylus-events-calendar-admin.php:412
+#: templates/archive-eec_events.php:143
 #: templates/taxonomy-eec_category.php:42
+#: templates/taxonomy-eec_collection.php:37
 #: templates/taxonomy-eec_organizer.php:71
 #: templates/taxonomy-eec_tag.php:42
 #: templates/taxonomy-eec_venue.php:71
@@ -100,43 +109,52 @@ msgid_plural "%d events found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:372
-#: includes/admin/class-xylus-events-calendar-admin.php:374
+#: includes/admin/class-xylus-events-calendar-admin.php:441
+#: includes/admin/class-xylus-events-calendar-admin.php:443
 #: includes/elementor/class-eec-elementor-widget.php:7
 msgid "Easy Events Calendar"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:375
-#: includes/admin/class-xylus-events-calendar-admin.php:419
+#: includes/admin/class-xylus-events-calendar-admin.php:444
+#: includes/admin/class-xylus-events-calendar-admin.php:493
 msgid "Widget Appearance"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:376
-#: includes/admin/class-xylus-events-calendar-admin.php:422
+#: includes/admin/class-xylus-events-calendar-admin.php:445
+#: includes/admin/class-xylus-events-calendar-admin.php:498
 #: includes/admin/class-xylus-events-calendar-list-table.php:53
 msgid "Shortcode"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:377
-#: includes/admin/class-xylus-events-calendar-admin.php:425
+#: includes/admin/class-xylus-events-calendar-admin.php:446
+#: includes/admin/class-xylus-events-calendar-admin.php:503
 msgid "Support & Help"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:416
+#: includes/admin/class-xylus-events-calendar-admin.php:488
 msgid "General"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:509
+#: includes/admin/class-xylus-events-calendar-admin.php:602
 msgid "Settings saved successfully."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:511
-#: includes/admin/class-xylus-events-calendar-admin.php:544
+#: includes/admin/class-xylus-events-calendar-admin.php:604
+#: includes/admin/class-xylus-events-calendar-admin.php:647
 msgid "No changes made or something went wrong."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-admin.php:542
+#: includes/admin/class-xylus-events-calendar-admin.php:640
+msgid "Widget color settings reset to defaults successfully."
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-admin.php:645
 msgid "Widget Settings saved successfully."
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-ajax-function.php:514
+#, php-format
+msgid "Organizer: %s"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-common.php:58
@@ -165,7 +183,7 @@ msgid "WP Bulk Delete"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-common.php:134
-#: templates/admin/xylus-events-calendar-general.php:43
+#: templates/admin/xylus-events-calendar-general.php:44
 msgid "Import Eventbrite Events"
 msgstr ""
 
@@ -174,12 +192,12 @@ msgid "Import Social Events"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-common.php:136
-#: templates/admin/xylus-events-calendar-general.php:45
+#: templates/admin/xylus-events-calendar-general.php:46
 msgid "Import Meetup Events"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-common.php:137
-#: templates/admin/xylus-events-calendar-general.php:42
+#: templates/admin/xylus-events-calendar-general.php:43
 msgid "WP Event Aggregator"
 msgstr ""
 
@@ -195,477 +213,535 @@ msgstr ""
 msgid "XT Feed for LinkedIn"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:153
+#: includes/admin/class-xylus-events-calendar-cpt.php:171
 msgctxt "Post Type General Name"
 msgid "Easy Events Calendar Events"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:154
+#: includes/admin/class-xylus-events-calendar-cpt.php:172
 msgctxt "Post Type Singular Name"
 msgid "Easy Events Calendar Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:155
-#: includes/admin/class-xylus-events-calendar-cpt.php:159
+#: includes/admin/class-xylus-events-calendar-cpt.php:173
+#: includes/admin/class-xylus-events-calendar-cpt.php:177
 msgid "Easy Events Calendar Events"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:156
-#: includes/admin/class-xylus-events-calendar-cpt.php:187
+#: includes/admin/class-xylus-events-calendar-cpt.php:174
+#: includes/admin/class-xylus-events-calendar-cpt.php:205
 msgid "Easy Events Calendar Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:157
+#: includes/admin/class-xylus-events-calendar-cpt.php:175
 msgid "Event Archives"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:158
+#: includes/admin/class-xylus-events-calendar-cpt.php:176
 msgid "Parent Event:"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:160
+#: includes/admin/class-xylus-events-calendar-cpt.php:178
 msgid "Add New Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:161
+#: includes/admin/class-xylus-events-calendar-cpt.php:179
 msgid "Add New"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:162
+#: includes/admin/class-xylus-events-calendar-cpt.php:180
 msgid "New Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:163
+#: includes/admin/class-xylus-events-calendar-cpt.php:181
 msgid "Edit Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:164
+#: includes/admin/class-xylus-events-calendar-cpt.php:182
 msgid "Update Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:165
+#: includes/admin/class-xylus-events-calendar-cpt.php:183
 msgid "View Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:166
+#: includes/admin/class-xylus-events-calendar-cpt.php:184
 msgid "Search Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:167
+#: includes/admin/class-xylus-events-calendar-cpt.php:185
 msgid "Not found"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:168
+#: includes/admin/class-xylus-events-calendar-cpt.php:186
 msgid "Not found in Trash"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:169
+#: includes/admin/class-xylus-events-calendar-cpt.php:187
 msgid "Featured Image"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:170
+#: includes/admin/class-xylus-events-calendar-cpt.php:188
 msgid "Set featured image"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:171
+#: includes/admin/class-xylus-events-calendar-cpt.php:189
 msgid "Remove featured image"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:172
+#: includes/admin/class-xylus-events-calendar-cpt.php:190
 msgid "Use as featured image"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:173
+#: includes/admin/class-xylus-events-calendar-cpt.php:191
 msgid "Insert into Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:174
+#: includes/admin/class-xylus-events-calendar-cpt.php:192
 msgid "Uploaded to this Event"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:175
+#: includes/admin/class-xylus-events-calendar-cpt.php:193
 msgid "Event Items list"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:176
+#: includes/admin/class-xylus-events-calendar-cpt.php:194
 msgid "Event Items list navigation"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:177
+#: includes/admin/class-xylus-events-calendar-cpt.php:195
 msgid "Filter Event items list"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:188
+#: includes/admin/class-xylus-events-calendar-cpt.php:206
 msgid "Post type for Events"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:222
-#: includes/admin/class-xylus-events-calendar-cpt.php:224
+#: includes/admin/class-xylus-events-calendar-cpt.php:240
+#: includes/admin/class-xylus-events-calendar-cpt.php:242
 msgid "Event Categories"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:223
-#: includes/admin/class-xylus-events-calendar-cpt.php:225
+#: includes/admin/class-xylus-events-calendar-cpt.php:241
+#: includes/admin/class-xylus-events-calendar-cpt.php:243
+#: templates/admin/xylus-events-calendar-template.php:114
 msgid "Event Category"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:226
+#: includes/admin/class-xylus-events-calendar-cpt.php:244
 msgid "Search Categories"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:227
+#: includes/admin/class-xylus-events-calendar-cpt.php:245
 msgid "Popular Categories"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:229
+#: includes/admin/class-xylus-events-calendar-cpt.php:247
 msgid "Edit Category"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:230
+#: includes/admin/class-xylus-events-calendar-cpt.php:248
 msgid "View Category"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:231
+#: includes/admin/class-xylus-events-calendar-cpt.php:249
 msgid "Update Category"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:232
+#: includes/admin/class-xylus-events-calendar-cpt.php:250
 msgid "Add New Category"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:233
+#: includes/admin/class-xylus-events-calendar-cpt.php:251
 msgid "New Category Name"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:262
-#: includes/admin/class-xylus-events-calendar-cpt.php:264
+#: includes/admin/class-xylus-events-calendar-cpt.php:280
+#: includes/admin/class-xylus-events-calendar-cpt.php:282
 msgid "Event Tags"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:263
-#: includes/admin/class-xylus-events-calendar-cpt.php:265
+#: includes/admin/class-xylus-events-calendar-cpt.php:281
+#: includes/admin/class-xylus-events-calendar-cpt.php:283
 msgid "Event Tag"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:266
+#: includes/admin/class-xylus-events-calendar-cpt.php:284
 msgid "Search Tags"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:267
+#: includes/admin/class-xylus-events-calendar-cpt.php:285
 msgid "Popular Tags"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:268
+#: includes/admin/class-xylus-events-calendar-cpt.php:286
 msgid "All Tags"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:269
+#: includes/admin/class-xylus-events-calendar-cpt.php:287
 msgid "Edit Tag"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:270
+#: includes/admin/class-xylus-events-calendar-cpt.php:288
 msgid "View Tag"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:271
+#: includes/admin/class-xylus-events-calendar-cpt.php:289
 msgid "Update Tag"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:272
+#: includes/admin/class-xylus-events-calendar-cpt.php:290
 msgid "Add New Tag"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:273
+#: includes/admin/class-xylus-events-calendar-cpt.php:291
 msgid "New Tag Name"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:274
+#: includes/admin/class-xylus-events-calendar-cpt.php:292
 msgid "Separate tags with commas"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:275
+#: includes/admin/class-xylus-events-calendar-cpt.php:293
 msgid "Add or remove tags"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:276
+#: includes/admin/class-xylus-events-calendar-cpt.php:294
 msgid "Choose from the most used tags"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:277
+#: includes/admin/class-xylus-events-calendar-cpt.php:295
 msgid "No tags found"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:302
-#: includes/admin/class-xylus-events-calendar-cpt.php:304
+#: includes/admin/class-xylus-events-calendar-cpt.php:320
+#: includes/admin/class-xylus-events-calendar-cpt.php:322
 msgid "Event Venues"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:303
-#: includes/admin/class-xylus-events-calendar-cpt.php:305
+#: includes/admin/class-xylus-events-calendar-cpt.php:321
+#: includes/admin/class-xylus-events-calendar-cpt.php:323
 msgid "Event Venue"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:306
+#: includes/admin/class-xylus-events-calendar-cpt.php:324
 msgid "Search Event Venues"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:308
+#: includes/admin/class-xylus-events-calendar-cpt.php:326
 msgid "Parent Venue"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:309
+#: includes/admin/class-xylus-events-calendar-cpt.php:327
 msgid "Parent Venue:"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:310
+#: includes/admin/class-xylus-events-calendar-cpt.php:328
 msgid "Edit Venue"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:311
+#: includes/admin/class-xylus-events-calendar-cpt.php:329
 msgid "View Venue"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:312
+#: includes/admin/class-xylus-events-calendar-cpt.php:330
 msgid "Update Venue"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:313
+#: includes/admin/class-xylus-events-calendar-cpt.php:331
 msgid "Add New Venue"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:314
+#: includes/admin/class-xylus-events-calendar-cpt.php:332
 msgid "New Venue Name"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:337
-#: includes/admin/class-xylus-events-calendar-cpt.php:339
+#: includes/admin/class-xylus-events-calendar-cpt.php:355
+#: includes/admin/class-xylus-events-calendar-cpt.php:357
 msgid "Event Organizers"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:338
-#: includes/admin/class-xylus-events-calendar-cpt.php:340
+#: includes/admin/class-xylus-events-calendar-cpt.php:356
+#: includes/admin/class-xylus-events-calendar-cpt.php:358
 msgid "Event Organizer"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:341
+#: includes/admin/class-xylus-events-calendar-cpt.php:359
 msgid "Search Event Organizers"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:343
+#: includes/admin/class-xylus-events-calendar-cpt.php:361
 msgid "Edit Organizer"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:344
+#: includes/admin/class-xylus-events-calendar-cpt.php:362
 msgid "View Organizer"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:345
+#: includes/admin/class-xylus-events-calendar-cpt.php:363
 msgid "Update Organizer"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:346
+#: includes/admin/class-xylus-events-calendar-cpt.php:364
 msgid "Add New Organizer"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:347
+#: includes/admin/class-xylus-events-calendar-cpt.php:365
 msgid "New Organizer Name"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:348
+#: includes/admin/class-xylus-events-calendar-cpt.php:366
 msgid "Separate organizers with commas"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:349
+#: includes/admin/class-xylus-events-calendar-cpt.php:367
 msgid "Add or remove organizers"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:350
+#: includes/admin/class-xylus-events-calendar-cpt.php:368
 msgid "Choose from the most used organizers"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:351
+#: includes/admin/class-xylus-events-calendar-cpt.php:369
 msgid "No organizers found"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:364
-msgid "Events Details"
+#: includes/admin/class-xylus-events-calendar-cpt.php:392
+#: includes/admin/class-xylus-events-calendar-cpt.php:394
+msgid "Event Collections"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:409
-msgid "Source Link"
+#: includes/admin/class-xylus-events-calendar-cpt.php:393
+#: includes/admin/class-xylus-events-calendar-cpt.php:395
+msgid "Event Collection"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:414
-msgid "Time & Date"
+#: includes/admin/class-xylus-events-calendar-cpt.php:396
+msgid "Search Event Collections"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:398
+msgid "Parent Collection"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:399
+msgid "Parent Collection:"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:400
+msgid "Edit Collection"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:401
+msgid "View Collection"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:402
+msgid "Update Collection"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:403
+msgid "Add New Collection"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:404
+msgid "New Collection Name"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-cpt.php:417
-#: includes/admin/class-xylus-events-calendar-cpt.php:531
+msgid "Events Details"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:462
+msgid "Source Link"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:467
+msgid "Time & Date"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-cpt.php:470
+#: includes/admin/class-xylus-events-calendar-cpt.php:584
 msgid "Start Date & Time"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:429
-#: includes/admin/class-xylus-events-calendar-cpt.php:532
+#: includes/admin/class-xylus-events-calendar-cpt.php:482
+#: includes/admin/class-xylus-events-calendar-cpt.php:585
 msgid "End Date & Time"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:442
+#: includes/admin/class-xylus-events-calendar-cpt.php:495
 msgid "Recurrence"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:446
+#: includes/admin/class-xylus-events-calendar-cpt.php:499
 msgid "Repeat Frequency"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:449
+#: includes/admin/class-xylus-events-calendar-cpt.php:502
 msgid "None (One-time event)"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:450
+#: includes/admin/class-xylus-events-calendar-cpt.php:503
 msgid "Daily"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:451
+#: includes/admin/class-xylus-events-calendar-cpt.php:504
 msgid "Weekly"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:452
+#: includes/admin/class-xylus-events-calendar-cpt.php:505
 msgid "Monthly"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:453
+#: includes/admin/class-xylus-events-calendar-cpt.php:506
 msgid "Yearly"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:454
+#: includes/admin/class-xylus-events-calendar-cpt.php:507
 msgid "Custom (Eventbrite Series)"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:461
+#: includes/admin/class-xylus-events-calendar-cpt.php:514
 msgid "Repeat Every"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:469
+#: includes/admin/class-xylus-events-calendar-cpt.php:522
 msgid "Repeat On"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:473
-#: includes/admin/class-xylus-events-calendar-cpt.php:479
+#: includes/admin/class-xylus-events-calendar-cpt.php:526
+#: includes/admin/class-xylus-events-calendar-cpt.php:532
 msgid "S"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:474
+#: includes/admin/class-xylus-events-calendar-cpt.php:527
 msgid "M"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:475
-#: includes/admin/class-xylus-events-calendar-cpt.php:477
+#: includes/admin/class-xylus-events-calendar-cpt.php:528
+#: includes/admin/class-xylus-events-calendar-cpt.php:530
 msgid "T"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:476
+#: includes/admin/class-xylus-events-calendar-cpt.php:529
 msgid "W"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:478
+#: includes/admin/class-xylus-events-calendar-cpt.php:531
 msgid "F"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:482
+#: includes/admin/class-xylus-events-calendar-cpt.php:535
+#: templates/admin/xylus-events-calendar-template.php:297
+#: templates/admin/xylus-events-calendar-template.php:298
 msgid "Sunday"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:483
+#: includes/admin/class-xylus-events-calendar-cpt.php:536
+#: templates/admin/xylus-events-calendar-template.php:279
+#: templates/admin/xylus-events-calendar-template.php:280
 msgid "Monday"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:484
+#: includes/admin/class-xylus-events-calendar-cpt.php:537
+#: templates/admin/xylus-events-calendar-template.php:282
+#: templates/admin/xylus-events-calendar-template.php:283
 msgid "Tuesday"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:485
+#: includes/admin/class-xylus-events-calendar-cpt.php:538
+#: templates/admin/xylus-events-calendar-template.php:285
+#: templates/admin/xylus-events-calendar-template.php:286
 msgid "Wednesday"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:486
+#: includes/admin/class-xylus-events-calendar-cpt.php:539
+#: templates/admin/xylus-events-calendar-template.php:288
+#: templates/admin/xylus-events-calendar-template.php:289
 msgid "Thursday"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:487
+#: includes/admin/class-xylus-events-calendar-cpt.php:540
+#: templates/admin/xylus-events-calendar-template.php:291
+#: templates/admin/xylus-events-calendar-template.php:292
 msgid "Friday"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:488
+#: includes/admin/class-xylus-events-calendar-cpt.php:541
+#: templates/admin/xylus-events-calendar-template.php:294
+#: templates/admin/xylus-events-calendar-template.php:295
 msgid "Saturday"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:500
+#: includes/admin/class-xylus-events-calendar-cpt.php:553
 msgid "End Condition"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:504
+#: includes/admin/class-xylus-events-calendar-cpt.php:557
 msgid "Never ends"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:508
+#: includes/admin/class-xylus-events-calendar-cpt.php:561
 msgid "Ends on"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:515
+#: includes/admin/class-xylus-events-calendar-cpt.php:568
 msgid "Ends after"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:518
+#: includes/admin/class-xylus-events-calendar-cpt.php:571
 msgid "occurrences"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:526
+#: includes/admin/class-xylus-events-calendar-cpt.php:579
 msgid "Custom Occurrences"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:527
+#: includes/admin/class-xylus-events-calendar-cpt.php:580
 msgid "These are the individual dates for this series. You can edit or remove specific occurrences below."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:533
+#: includes/admin/class-xylus-events-calendar-cpt.php:586
 msgid "Actions"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:560
+#: includes/admin/class-xylus-events-calendar-cpt.php:613
 msgid "Remove this occurrence"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:561
-#: includes/admin/class-xylus-events-calendar-cpt.php:583
+#: includes/admin/class-xylus-events-calendar-cpt.php:614
+#: includes/admin/class-xylus-events-calendar-cpt.php:636
 msgid "Delete"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:580
+#: includes/admin/class-xylus-events-calendar-cpt.php:633
 msgid "Save"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:582
+#: includes/admin/class-xylus-events-calendar-cpt.php:635
+#: templates/admin/xylus-events-calendar-widget.php:88
 msgid "Cancel"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:593
+#: includes/admin/class-xylus-events-calendar-cpt.php:646
 msgid "Add New Occurrence"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:606
+#: includes/admin/class-xylus-events-calendar-cpt.php:659
 msgid "Event Source Link"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:833
-#: includes/admin/class-xylus-events-calendar-cpt.php:859
+#: includes/admin/class-xylus-events-calendar-cpt.php:886
+#: includes/admin/class-xylus-events-calendar-cpt.php:912
 msgid "Permission denied."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:849
+#: includes/admin/class-xylus-events-calendar-cpt.php:902
 msgid "Failed to delete occurrence."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-cpt.php:891
+#: includes/admin/class-xylus-events-calendar-cpt.php:944
 msgid "Failed to add occurrence."
 msgstr ""
 
@@ -690,10 +766,12 @@ msgid "No upcoming events found."
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-widgets.php:509
+#: includes/admin/class-xylus-events-calendar-widgets.php:647
 msgid "Title:"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-widgets.php:516
+#: includes/admin/class-xylus-events-calendar-widgets.php:654
 msgid "Select Category"
 msgstr ""
 
@@ -745,6 +823,26 @@ msgstr ""
 msgid "Style 10 Image Overlay"
 msgstr ""
 
+#: includes/admin/class-xylus-events-calendar-widgets.php:673
+msgid "Select Collection"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:690
+msgid "Show Event Image"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:694
+msgid "Show Location"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:698
+msgid "Show Event Date"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-widgets.php:702
+msgid "Show Event Organizer"
+msgstr ""
+
 #: includes/elementor/class-eec-elementor-widget.php:14
 msgid "Settings"
 msgstr ""
@@ -765,143 +863,485 @@ msgstr ""
 msgid "Select Event Source"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:40
-msgid "Choose..."
+#: templates/admin/xylus-events-calendar-general.php:37
+msgid "Choose the primary source to query and display events on your calendar views."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-general.php:41
+msgid "Choose..."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:42
 msgid "Easy Event Calnder"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:44
+#: templates/admin/xylus-events-calendar-general.php:45
 msgid "Import Facebook Events"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:46
+#: templates/admin/xylus-events-calendar-general.php:47
 msgid "EventOn"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:47
+#: templates/admin/xylus-events-calendar-general.php:48
 msgid "Events Manager"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:54
+#: templates/admin/xylus-events-calendar-general.php:56
 msgid "Default Calendar View"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:70
-msgid "Hide Header"
+#: templates/admin/xylus-events-calendar-general.php:57
+msgid "Set the default view rendered when the events calendar loads on the page."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-general.php:74
-msgid "Check to hide the header, including the search box and view buttons."
+msgid "Hide Header"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:75
+msgid "Hide the entire calendar header section, including navigation buttons and search options."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-general.php:80
+msgid "Hide Calendar Header"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:92
+#: templates/admin/xylus-events-calendar-general.php:98
+msgid "Show Filters Bar"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:93
+msgid "Display the multi-select dynamic filters bar above the calendar grid on the frontend."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:110
+msgid "Filter Bar Fields"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:111
+msgid "Choose which filter options will be rendered in the filters bar."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:117
+msgid "Category Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:118
+msgid "Tag Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:119
+msgid "Venue Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:120
+msgid "Organizer Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:121
+msgid "Collection Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:122
+msgid "Day Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:123
+msgid "Time Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:124
+msgid "Date From Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:125
+msgid "Date To Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:149
 msgid "Events Per Page"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:88
+#: templates/admin/xylus-events-calendar-general.php:150
+msgid "The default number of events shown in grid, row, staggered, or list calendar formats."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:160
 msgid "Load More Button Text"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:96
-#: templates/loop/events-list.php:131
-msgid "View Details"
+#: templates/admin/xylus-events-calendar-general.php:161
+msgid "Specify the text shown on the Load More pagination button."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:104
+#: templates/admin/xylus-events-calendar-general.php:171
+msgid "View Details Button Text"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:172
+msgid "Specify the text shown on the individual event details button."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:182
 msgid "Week Starts On"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:139
-#: templates/admin/xylus-events-calendar-widget.php:62
+#: templates/admin/xylus-events-calendar-general.php:183
+msgid "Choose which day of the week is displayed in the first column of the month view."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:200
+msgid "Appearance Colors"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:201
+msgid "Customize primary button background, text, and title colors across your events calendar views."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:207
+msgid "Primary Brand Color"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:208
+msgid "Button Background Color"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:209
+msgid "Button Text Color"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:210
+msgid "Event Title Color"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:237
+#: templates/admin/xylus-events-calendar-widget.php:75
 msgid "Save Settings"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:33
-#: templates/admin/xylus-events-calendar-support.php:36
-msgid "Looking for Something?"
+#: templates/admin/xylus-events-calendar-mini-template.php:20
+msgid "Select a date on the calendar to see events."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:37
-msgid "We have documentation of how to delete data in bulk."
+#: templates/admin/xylus-events-calendar-shortcode.php:22
+msgid "Primary Calendar Shortcodes"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:32
+msgid "Default Event Calendar"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:33
+msgid "Explore upcoming events in various layouts, including a calendar, grid, list, and more."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:46
+msgid "Filter Events by Category"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:47
+msgid "Display events belonging to a specific category."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:60
+msgid "Filter Events by Collection"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:61
+msgid "Display events belonging to a specific collection."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:74
+msgid "Event Discovery Archive"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:75
+msgid "Display the events discovery/archive layout with filters and search options."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:95
+msgid "Mini Calendar Shortcodes"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:105
+msgid "Mini Calendar (Default)"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:106
+msgid "Display the premium mini calendar with event list sidebar using default settings."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:119
+msgid "Mini Calendar Category Filter"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:120
+msgid "Limit the mini calendar and sidebar to events under a specific category."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:133
+msgid "Mini Calendar without Images"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:134
+msgid "Display the mini calendar and sidebar list with event images hidden."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:147
+msgid "Mini Calendar without Locations"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:148
+msgid "Hide venue/location names on all event cards in the sidebar."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:161
+msgid "Mini Calendar without Dates"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:162
+msgid "Hide event start dates and times in the sidebar list."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:175
+msgid "Mini Calendar with Organizers"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:176
+msgid "Display the event organizer details on each card in the sidebar list."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-support.php:24
+msgid "Help & Resources"
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-support.php:38
+msgid "Looking for Something?"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-support.php:39
+msgid "We have documentation of how to delete data in bulk."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-support.php:42
 msgid "Plugin Documentation"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:44
-#: templates/admin/xylus-events-calendar-support.php:47
+#: templates/admin/xylus-events-calendar-support.php:52
 msgid "Need Any Assistance?"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:48
+#: templates/admin/xylus-events-calendar-support.php:53
 msgid "Our EXPERT Support Team is always ready to help you out."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:49
+#: templates/admin/xylus-events-calendar-support.php:56
 msgid "Contact Support"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:55
-#: templates/admin/xylus-events-calendar-support.php:58
+#: templates/admin/xylus-events-calendar-support.php:66
 msgid "Found Any Bugs?"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:59
+#: templates/admin/xylus-events-calendar-support.php:67
 msgid "Report any Bug that you Discovered, and get Instant Solutions."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:60
+#: templates/admin/xylus-events-calendar-support.php:70
 msgid "Report to GitHub"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:66
-#: templates/admin/xylus-events-calendar-support.php:69
+#: templates/admin/xylus-events-calendar-support.php:80
 msgid "Require Customization?"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:70
+#: templates/admin/xylus-events-calendar-support.php:81
 msgid "We would love to hear your Integration and Customization Ideas."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:71
+#: templates/admin/xylus-events-calendar-support.php:84
 msgid "Connect Our Service"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:77
-#: templates/admin/xylus-events-calendar-support.php:80
+#: templates/admin/xylus-events-calendar-support.php:94
 msgid "Like The Plugin?"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:81
+#: templates/admin/xylus-events-calendar-support.php:95
 msgid "Your Review is very important to us as it helps us to grow more."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:82
+#: templates/admin/xylus-events-calendar-support.php:98
 msgid "Review Us on WP.org"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:94
+#: templates/admin/xylus-events-calendar-support.php:115
 msgid "Plugins you should try"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:145
-msgid "Status : "
+#: templates/admin/xylus-events-calendar-support.php:160
+msgid "Status:"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:154
+#: templates/admin/xylus-events-calendar-support.php:180
 msgid "Install Free Plugin"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-support.php:160
+#: templates/admin/xylus-events-calendar-support.php:182
 msgid "Activate Plugin"
 msgstr ""
 
+#: templates/admin/xylus-events-calendar-support.php:184
+msgid "Active & Ready"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:122
+msgid "Search Category..."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:146
+#: templates/taxonomy-eec_tag.php:25
+msgid "Tag"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:153
+msgid "Search Tag..."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:177
+#: templates/single-eec_events.php:383
+#: templates/taxonomy-eec_venue.php:29
+msgid "Venue"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:185
+msgid "Search Venue..."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:209
+#: templates/single-eec_events.php:317
+#: templates/taxonomy-eec_organizer.php:28
+msgid "Organizer"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:217
+msgid "Search Organizer..."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:241
+#: templates/single-eec_events.php:290
+#: templates/taxonomy-eec_collection.php:25
+msgid "Collection"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:249
+msgid "Search Collection..."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:271
+msgid "Day"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:308
+msgid "Time"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:316
+msgid "Morning"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:317
+msgid "Morning (6am - 12pm)"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:319
+msgid "Afternoon"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:320
+msgid "Afternoon (12pm - 5pm)"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:322
+msgid "Evening"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:323
+msgid "Evening (5pm - 9pm)"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:325
+msgid "Night"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:326
+msgid "Night (9pm - 6am)"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:336
+msgid "Date From"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:352
+msgid "Date To"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-template.php:366
+msgid "CLEAR"
+msgstr ""
+
 #: templates/admin/xylus-events-calendar-widget.php:26
-msgid "Widget Settings"
+msgid "Widget Appearance Settings"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:35
+msgid "Widget Colors"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:36
+msgid "Customize styling colors for widgets like list views and calendar sidebars."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:42
+msgid "Widget Background"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:43
+msgid "Widget Hover Background"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:44
+msgid "Widget Title Color"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:45
+msgid "Widget Title Hover Color"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:46
+msgid "Widget Date Color"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:47
+msgid "Widget Border Color"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:76
+msgid "Reset to Defaults"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:85
+msgid "Reset Widget Colors?"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:86
+msgid "This will reset all widget color settings back to their default values. This action cannot be undone."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-widget.php:89
+msgid "Yes, Reset"
 msgstr ""
 
 #: templates/archive-eec_events.php:23
@@ -941,6 +1381,10 @@ msgstr ""
 msgid "Try refining your search or filters to find what you're looking for."
 msgstr ""
 
+#: templates/loop/events-list.php:131
+msgid "View Details"
+msgstr ""
+
 #: templates/loop/events-list.php:154
 msgid "Prev"
 msgstr ""
@@ -949,84 +1393,70 @@ msgstr ""
 msgid "No events found."
 msgstr ""
 
-#: templates/single-eec_events.php:61
+#: templates/single-eec_events.php:62
 msgid "Past Event"
 msgstr ""
 
-#: templates/single-eec_events.php:61
+#: templates/single-eec_events.php:62
 msgid "Upcoming"
 msgstr ""
 
-#: templates/single-eec_events.php:181
+#: templates/single-eec_events.php:182
 msgid "About This Event"
 msgstr ""
 
-#: templates/single-eec_events.php:189
-#: templates/single-eec_events.php:325
+#: templates/single-eec_events.php:191
+#: templates/single-eec_events.php:354
 msgid "Tags"
 msgstr ""
 
-#: templates/single-eec_events.php:207
+#: templates/single-eec_events.php:209
 msgid "Event Details"
 msgstr ""
 
-#: templates/single-eec_events.php:218
+#: templates/single-eec_events.php:220
 msgid "Start Date"
 msgstr ""
 
-#: templates/single-eec_events.php:239
+#: templates/single-eec_events.php:241
 msgid "End Date"
 msgstr ""
 
-#: templates/single-eec_events.php:261
+#: templates/single-eec_events.php:263
 #: templates/taxonomy-eec_category.php:25
 msgid "Category"
 msgstr ""
 
-#: templates/single-eec_events.php:288
-#: templates/taxonomy-eec_organizer.php:28
-msgid "Organizer"
-msgstr ""
-
-#: templates/single-eec_events.php:354
-#: templates/taxonomy-eec_venue.php:29
-msgid "Venue"
-msgstr ""
-
-#: templates/single-eec_events.php:377
+#: templates/single-eec_events.php:406
 msgid "Register Now"
 msgstr ""
 
-#: templates/single-eec_events.php:388
+#: templates/single-eec_events.php:417
 msgid "Share This Event"
 msgstr ""
 
-#: templates/single-eec_events.php:394
+#: templates/single-eec_events.php:423
 msgid "Share on Facebook"
 msgstr ""
 
-#: templates/single-eec_events.php:397
-msgid "Share on Twitter"
+#: templates/single-eec_events.php:426
+msgid "Share on X"
 msgstr ""
 
-#: templates/single-eec_events.php:400
+#: templates/single-eec_events.php:429
 msgid "Share on LinkedIn"
 msgstr ""
 
-#: templates/single-eec_events.php:403
+#: templates/single-eec_events.php:432
 msgid "Share via Email"
 msgstr ""
 
-#: templates/single-eec_events.php:416
+#: templates/single-eec_events.php:445
 msgid "Event Location"
 msgstr ""
 
-#: templates/single-eec_events.php:435
+#: templates/single-eec_events.php:464
 msgid "Event Location Map"
-msgstr ""
-
-#: templates/taxonomy-eec_tag.php:25
-msgid "Tag"
 msgstr ""
 
 #: templates/taxonomy-eec_venue.php:56
