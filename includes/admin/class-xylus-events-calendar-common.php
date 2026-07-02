@@ -207,12 +207,18 @@ class Xylus_Events_Calendar_Common {
         // Decode shortcode attributes if they are passed as a JSON string
         $atts = $shortcode_atts;
         if ( is_string( $shortcode_atts ) ) {
-            $atts = json_decode( $shortcode_atts, true );
+            $atts = json_decode( stripslashes( $shortcode_atts ), true );
         }
 
-        $category  = isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '';
-        $venue     = isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '';
-        $organizer = isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '';
+        $category   = isset( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '' );
+        $collection = isset( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? sanitize_text_field( $atts['collection'] ) : '' );
+        $venue      = isset( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '' );
+        $organizer  = isset( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '' );
+        $tag        = isset( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? sanitize_text_field( $atts['tag'] ) : '' );
+        $day        = isset( $_REQUEST['day'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['day'] ) ) : '';
+        $time       = isset( $_REQUEST['time'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['time'] ) ) : '';
+        $date_from  = isset( $_REQUEST['date_from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_from'] ) ) : '';
+        $date_to    = isset( $_REQUEST['date_to'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_to'] ) ) : '';
 
         $current_time_mysql = current_time( 'mysql' );
         $current_time_ts    = current_time( 'timestamp' );
@@ -264,26 +270,85 @@ class Xylus_Events_Calendar_Common {
                 $where .= $wpdb->prepare( " AND (p.post_title LIKE %s OR p.post_content LIKE %s)", '%' . $wpdb->esc_like( $keyword ) . '%', '%' . $wpdb->esc_like( $keyword ) . '%' );
             }
 
-            // Apply Taxonomy Filters (Category, Venue, Organizer)
+            // Apply Taxonomy Filters (Category, Venue, Organizer, Collection, Tag)
             $tax_filters = array(
-                'eec_category'  => $category,
-                'eec_venue'     => $venue,
-                'eec_organizer' => $organizer,
+                'eec_category'   => $category,
+                'eec_collection' => $collection,
+                'eec_venue'      => $venue,
+                'eec_organizer'  => $organizer,
+                'eec_tag'        => $tag,
             );
 
             foreach ( $tax_filters as $tax => $slug ) {
                 if ( ! empty( $slug ) ) {
                     $slugs = array_map( 'trim', explode( ',', $slug ) );
                     $terms = get_terms( array(
-                        'taxonomy' => $tax,
-                        'slug'     => $slugs,
-                        'fields'   => 'all',
+                        'taxonomy'   => $tax,
+                        'slug'       => $slugs,
+                        'fields'     => 'all',
+                        'hide_empty' => false,
                     ) );
                     if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
                         $tt_ids = wp_list_pluck( $terms, 'term_taxonomy_id' );
                         $where .= " AND p.ID IN (SELECT object_id FROM $wpdb->term_relationships WHERE term_taxonomy_id IN (" . implode( ',', array_map( 'intval', $tt_ids ) ) . "))";
+                    } else {
+                        $where .= " AND 1=0";
                     }
                 }
+            }
+
+            // Apply Day Filter
+            if ( ! empty( $day ) ) {
+                $day_array = array_map( 'trim', explode( ',', $day ) );
+                $day_nums = array();
+                $day_map = array(
+                    'sunday'    => 1, 'sun' => 1, 'su' => 1,
+                    'monday'    => 2, 'mon' => 2, 'mo' => 2,
+                    'tuesday'   => 3, 'tue' => 3, 'tu' => 3,
+                    'wednesday' => 4, 'wed' => 4, 'we' => 4,
+                    'thursday'  => 5, 'thu' => 5, 'th' => 5,
+                    'friday'    => 6, 'fri' => 6, 'fr' => 6,
+                    'saturday'  => 7, 'sat' => 7, 'sa' => 7,
+                );
+                foreach ( $day_array as $d ) {
+                    $d_lower = strtolower( $d );
+                    if ( isset( $day_map[ $d_lower ] ) ) {
+                        $day_nums[] = $day_map[ $d_lower ];
+                    } elseif ( is_numeric( $d ) ) {
+                        $day_nums[] = intval( $d );
+                    }
+                }
+                if ( ! empty( $day_nums ) ) {
+                    $where .= " AND DAYOFWEEK(i.start_date) IN (" . implode( ',', array_map( 'intval', $day_nums ) ) . ")";
+                }
+            }
+
+            // Apply Time Filter
+            if ( ! empty( $time ) ) {
+                $time_array = array_map( 'trim', explode( ',', strtolower( $time ) ) );
+                $time_clauses = array();
+                foreach ( $time_array as $t ) {
+                    if ( $t === 'morning' ) {
+                        $time_clauses[] = "HOUR(i.start_date) BETWEEN 6 AND 11";
+                    } elseif ( $t === 'afternoon' ) {
+                        $time_clauses[] = "HOUR(i.start_date) BETWEEN 12 AND 16";
+                    } elseif ( $t === 'evening' ) {
+                        $time_clauses[] = "HOUR(i.start_date) BETWEEN 17 AND 20";
+                    } elseif ( $t === 'night' ) {
+                        $time_clauses[] = "(HOUR(i.start_date) >= 21 OR HOUR(i.start_date) < 6)";
+                    }
+                }
+                if ( ! empty( $time_clauses ) ) {
+                    $where .= " AND (" . implode( " OR ", $time_clauses ) . ")";
+                }
+            }
+
+            // Apply Date From & To
+            if ( ! empty( $date_from ) ) {
+                $where .= $wpdb->prepare( " AND i.start_date >= %s", $date_from . ' 00:00:00' );
+            }
+            if ( ! empty( $date_to ) ) {
+                $where .= $wpdb->prepare( " AND i.end_date <= %s", $date_to . ' 23:59:59' );
             }
 
             // Get total count using a reliable COUNT(DISTINCT p.ID) query
@@ -360,6 +425,22 @@ class Xylus_Events_Calendar_Common {
                 'taxonomy' => 'eec_organizer',
                 'field'    => 'slug',
                 'terms'    => array_map( 'trim', explode( ',', $organizer ) )
+            );
+		}
+
+        if ( ! empty( $tag ) ) {
+			$tax_query[] = array(
+                'taxonomy' => 'eec_tag',
+                'field'    => 'slug',
+                'terms'    => array_map( 'trim', explode( ',', $tag ) )
+            );
+		}
+
+        if ( ! empty( $collection ) ) {
+			$tax_query[] = array(
+                'taxonomy' => 'eec_collection',
+                'field'    => 'slug',
+                'terms'    => array_map( 'trim', explode( ',', $collection ) )
             );
 		}
 
@@ -693,5 +774,109 @@ class Xylus_Events_Calendar_Common {
         }
 
         return $organizers;
+    }
+
+    /**
+     * Get event collections
+     *
+     * @since 1.2.0
+     * @param int $event_id Event ID.
+     * @return array Event collections.
+     */
+    public function xylusec_get_event_collections( $event_id = 0 ) {
+
+        if ( empty( $event_id ) ) {
+            return array();
+        }
+
+        $terms = get_the_terms( $event_id, 'eec_collection' );
+
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+            return array();
+        }
+
+        $collections = array();
+
+        foreach ( $terms as $collection ) {
+            $term_id = (int) $collection->term_id;
+            $collections[] = array(
+                'name'           => $collection->name,
+                'description'    => $collection->description,
+                'slug'           => $collection->slug,
+                'collection_id'  => get_term_meta( $term_id, 'collection_id', true ),
+                'organizer_id'   => get_term_meta( $term_id, 'organizer_id', true ),
+                'collection_url' => get_term_meta( $term_id, 'collection_url', true ),
+                'image_url'      => get_term_meta( $term_id, 'image_url', true ),
+            );
+        }
+
+        return $collections;
+    }
+
+    /**
+     * Detect and return the active theme's primary brand color.
+     *
+     * @since 1.2.0
+     * @return string HEX color code.
+     */
+    public function xylusec_get_theme_primary_color() {
+        // 1. Try to get color from block theme palette (theme.json)
+        if ( function_exists( 'wp_get_global_settings' ) ) {
+            $theme_palette = wp_get_global_settings( array( 'color', 'palette', 'theme' ) );
+            if ( ! empty( $theme_palette ) && is_array( $theme_palette ) ) {
+                foreach ( $theme_palette as $color ) {
+                    if ( isset( $color['slug'] ) && in_array( $color['slug'], array( 'primary', 'accent', 'primary-color', 'brand' ) ) ) {
+                        return $color['color'];
+                    }
+                }
+                // If there's an active palette, the first color is usually primary
+                if ( isset( $theme_palette[0]['color'] ) ) {
+                    return $theme_palette[0]['color'];
+                }
+            }
+        }
+
+        // 2. Check common theme mods (Astra, OceanWP, etc.)
+        $theme_mods = get_theme_mods();
+        if ( ! empty( $theme_mods ) && is_array( $theme_mods ) ) {
+            $common_keys = array(
+                'primary_color',
+                'accent_color',
+                'link_color',
+                'primary-color',
+                'accent-color',
+                'ocean_primary_color',
+                'storefront_accent_color'
+            );
+            foreach ( $common_keys as $key ) {
+                if ( ! empty( $theme_mods[$key] ) && is_string( $theme_mods[$key] ) && preg_match( '/^#[a-fA-F0-9]{3,6}$/', $theme_mods[$key] ) ) {
+                    return $theme_mods[$key];
+                }
+            }
+        }
+
+        // 3. Astra Theme option check
+        $astra_settings = get_option( 'astra-settings' );
+        if ( is_array( $astra_settings ) ) {
+            if ( ! empty( $astra_settings['theme-color-1'] ) ) {
+                return $astra_settings['theme-color-1'];
+            }
+            if ( ! empty( $astra_settings['link-color'] ) ) {
+                return $astra_settings['link-color'];
+            }
+        }
+
+        // 4. GeneratePress option check
+        $gp_settings = get_option( 'generate_settings' );
+        if ( is_array( $gp_settings ) && ! empty( $gp_settings['global_colors'] ) && is_array( $gp_settings['global_colors'] ) ) {
+            foreach ( $gp_settings['global_colors'] as $gcolor ) {
+                if ( ! empty( $gcolor['color'] ) ) {
+                    return $gcolor['color'];
+                }
+            }
+        }
+
+        // 5. Fallback to default modern blue
+        return '#005AE0';
     }
 }

@@ -1,5 +1,18 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
+
+	var activeFilters = {
+		category: [],
+		tag: [],
+		venue: [],
+		organizer: [],
+		collection: [],
+		day: [],
+		time: [],
+		date_from: '',
+		date_to: ''
+	};
+	var calendar;
 
 	/**
 	 * All of the code for your admin-facing JavaScript source
@@ -29,15 +42,15 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-	jQuery(document).ready(function($) {
+	jQuery(document).ready(function ($) {
 		var calendarEl = document.getElementById('xylusec-calendar');
 		const defaultView = xylusec_ajax?.xylusec_options?.xylusec_default_view || 'month';
 		const weekStart = parseInt(xylusec_ajax?.xylusec_options?.xylusec_week_start ?? 0);
 		const fullCalendarViews = { month: 'dayGridMonth', week: 'timeGridWeek', day: 'timeGridDay', list: 'listMonth', };
 
 		if (calendarEl) {
-	
-			var calendar = new FullCalendar.Calendar(calendarEl, {
+
+			calendar = new FullCalendar.Calendar(calendarEl, {
 				initialView: fullCalendarViews[defaultView] || 'dayGridMonth',
 				firstDay: weekStart,
 				eventDisplay: 'auto',
@@ -47,22 +60,22 @@
 					right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
 				},
 				height: 'auto',
-    			contentHeight : 'auto',
+				contentHeight: 'auto',
 				fixedWeekCount: false,
 				views: {
-					dayGridMonth: { 
+					dayGridMonth: {
 						buttonText: 'Month',
 						dayMaxEventRows: true,
 					},
-					timeGridWeek: { 
+					timeGridWeek: {
 						buttonText: 'Week',
 						allDaySlot: false
 					},
-					timeGridDay: { 
+					timeGridDay: {
 						buttonText: 'Day',
 						allDaySlot: false
 					},
-					listMonth: { 
+					listMonth: {
 						buttonText: 'List',
 						noEventsContent: 'No events to display'
 					}
@@ -72,7 +85,7 @@
 					minute: '2-digit',
 					meridiem: 'short'
 				},
-				events: function(fetchInfo, successCallback, failureCallback) {
+				events: function (fetchInfo, successCallback, failureCallback) {
 					const startTimestamp = Math.floor(fetchInfo.start.getTime() / 1000);
 					const endTimestamp = Math.floor((fetchInfo.end.getTime() - 1) / 1000);
 					$.ajax({
@@ -82,18 +95,27 @@
 							start: startTimestamp,
 							end: endTimestamp,
 							nonce: xylusec_ajax.nonce,
-							shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+							shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+							category: activeFilters.category.join(','),
+							tag: activeFilters.tag.join(','),
+							venue: activeFilters.venue.join(','),
+							organizer: activeFilters.organizer.join(','),
+							collection: activeFilters.collection.join(','),
+							day: activeFilters.day.join(','),
+							time: activeFilters.time.join(','),
+							date_from: activeFilters.date_from,
+							date_to: activeFilters.date_to
 						},
 						type: 'GET',
-						success: function(response) {
+						success: function (response) {
 							successCallback(response);
 						},
-						error: function(error) {
+						error: function (error) {
 							failureCallback(error);
 						}
 					});
 				},
-				eventDidMount: function(info) {
+				eventDidMount: function (info) {
 					const dotEl = info.el.querySelector('.fc-daygrid-event-dot');
 					if (dotEl) {
 						dotEl.remove();
@@ -114,7 +136,7 @@
 						${imageUrl && info.event.url ? `<a href="${info.event.url}" target="_blank"><img src="${imageUrl}" alt="${info.event.title}"></a>` : (imageUrl ? `<img src="${imageUrl}" alt="${info.event.title}">` : '')}
 						<div class="xylusec-event-date">${info.event.extendedProps.formattedDate || ''}</div>
 						${info.event.url ? `<h4 class="tooltip-title-click"><a href="${info.event.url}" target="_blank">${info.event.title}</a></h4>` : `<h4 class="tooltip-title-click">${info.event.title}</h4>`}
-						<p>${(info.event.extendedProps.description || 'No additional details provided.').substring(0, 150)}${info.event.extendedProps.description?.length > 150 ? '…' : ''}</p>
+						<p>${(info.event.extendedProps.description || 'No additional details provided.').substring(0, 150)}${info.event.extendedProps.description && info.event.extendedProps.description.length > 150 ? '…' : ''}</p>
 					`;
 					document.body.appendChild(tooltip);
 
@@ -139,18 +161,18 @@
 
 					const showTooltip = () => {
 						const rect = info.el.getBoundingClientRect();
-						
+
 						// Temporarily show to calculate dimensions
-						tooltip.style.display    = 'block';
+						tooltip.style.display = 'block';
 						tooltip.style.visibility = 'hidden';
-						tooltip.style.opacity    = '0';
-						
+						tooltip.style.opacity = '0';
+
 						const ttHeight = tooltip.offsetHeight;
-						const ttWidth  = tooltip.offsetWidth;
-						const padding  = 15;
-						
+						const ttWidth = tooltip.offsetWidth;
+						const padding = 15;
+
 						const viewport = {
-							width:  window.innerWidth,
+							width: window.innerWidth,
 							height: window.innerHeight,
 							scrollY: window.scrollY || window.pageYOffset
 						};
@@ -158,9 +180,9 @@
 						// Space analysis
 						const space = {
 							bottom: viewport.height - rect.bottom,
-							top:    rect.top,
-							right:  viewport.width - rect.right,
-							left:   rect.left
+							top: rect.top,
+							right: viewport.width - rect.right,
+							left: rect.left
 						};
 
 						let pos = { top: 0, left: 0 };
@@ -187,18 +209,18 @@
 						// Coordinate calculation
 						if (placement === 'bottom' || placement === 'top') {
 							pos.left = rect.left + (rect.width / 2) - (ttWidth / 2);
-							pos.top  = (placement === 'bottom') ? (rect.bottom + viewport.scrollY + 10) : (rect.top + viewport.scrollY - ttHeight - 10);
+							pos.top = (placement === 'bottom') ? (rect.bottom + viewport.scrollY + 10) : (rect.top + viewport.scrollY - ttHeight - 10);
 						} else {
-							pos.top  = rect.top + viewport.scrollY + (rect.height / 2) - (ttHeight / 2);
+							pos.top = rect.top + viewport.scrollY + (rect.height / 2) - (ttHeight / 2);
 							pos.left = (placement === 'right') ? (rect.right + 10) : (rect.left - ttWidth - 10);
 						}
 
 						// Viewport containment: Clamp to screen edges
 						pos.left = Math.max(padding, Math.min(pos.left, viewport.width - ttWidth - padding));
-						pos.top  = Math.max(viewport.scrollY + padding, Math.min(pos.top, viewport.scrollY + viewport.height - ttHeight - padding));
-						
+						pos.top = Math.max(viewport.scrollY + padding, Math.min(pos.top, viewport.scrollY + viewport.height - ttHeight - padding));
+
 						tooltip.style.left = `${pos.left}px`;
-						tooltip.style.top  = `${pos.top}px`;
+						tooltip.style.top = `${pos.top}px`;
 						tooltip.style.visibility = 'visible';
 						tooltip.style.opacity = '1';
 					};
@@ -227,7 +249,7 @@
 						setTimeout(hideTooltip, 100); // small delay
 					});
 				},
-				eventClick: function(info) {
+				eventClick: function (info) {
 					info.jsEvent.preventDefault();
 					if (info.event.url) {
 						window.open(info.event.url, '_blank');
@@ -241,9 +263,9 @@
 					if (customButton) customButton.click();
 				}, 100); // slight delay to ensure buttons are rendered
 			}
-			
+
 			calendar.render();
-			
+
 			document.getElementById('xylusec-search-events').addEventListener('click', function () {
 				const searchTerm = document.getElementById('xylusec-search').value.toLowerCase();
 				const events = document.querySelectorAll('.fc-event');
@@ -261,7 +283,7 @@
 			});
 		}
 
-		const buttonBgColor   = xylusec_ajax?.xylusec_options?.xylusec_button_color || '#2c3e50';
+		const buttonBgColor = xylusec_ajax?.xylusec_options?.xylusec_button_color || '#2c3e50';
 		const buttonTextColor = xylusec_ajax?.xylusec_options?.xylusec_text_color || '#FFFFFF';
 
 		setTimeout(() => {
@@ -273,7 +295,7 @@
 
 				// Update SVG fill color inside the button
 				btn.querySelectorAll('svg').forEach(svg => {
-				svg.style.fill = buttonTextColor;
+					svg.style.fill = buttonTextColor;
 				});
 			});
 
@@ -287,7 +309,7 @@
 
 				// If it contains SVG icons, update fill as well
 				searchBtn.querySelectorAll('svg').forEach(svg => {
-				svg.style.fill = buttonTextColor;
+					svg.style.fill = buttonTextColor;
 				});
 			}
 
@@ -321,7 +343,7 @@
 			});
 			document.documentElement.style.setProperty('--spinner-color', `${buttonBgColor}80`);
 
-			const activeBgColor = buttonBgColor.replace(/#(\w\w)(\w\w)(\w\w)/, (_, r, g, b) => 
+			const activeBgColor = buttonBgColor.replace(/#(\w\w)(\w\w)(\w\w)/, (_, r, g, b) =>
 				`#${Math.round(parseInt(r, 16) * 0.7).toString(16).padStart(2, '0')}${Math.round(parseInt(g, 16) * 0.7).toString(16).padStart(2, '0')}${Math.round(parseInt(b, 16) * 0.7).toString(16).padStart(2, '0')}`
 			);
 
@@ -332,18 +354,183 @@
 					background-color: ${activeBgColor} !important;
 					border-color: ${activeBgColor} !important;
 				}
+				.xylusec-filter-pill-btn.has-selections {
+					background-color: ${buttonBgColor} !important;
+					color: ${buttonTextColor} !important;
+					border-color: ${buttonBgColor} !important;
+				}
+				.xylusec-filter-pill-btn.has-selections svg {
+					fill: ${buttonTextColor} !important;
+				}
 			`;
 			document.head.appendChild(style);
 
 		}, 100);
+
+		// 1. Click on a filter pill to toggle its dropdown
+		$(document).on('click', '.xylusec-filter-pill-btn', function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			var $wrap = $(this).closest('.xylusec-filter-pill-wrap');
+			var $dropdown = $wrap.find('.xylusec-filter-dropdown');
+
+			// Close all other dropdowns
+			$('.xylusec-filter-dropdown').not($dropdown).hide();
+			$('.xylusec-filter-pill-wrap').not($wrap).removeClass('is-open');
+
+			// Toggle current dropdown
+			$dropdown.toggle();
+			$wrap.toggleClass('is-open');
+		});
+
+		// Close dropdowns when clicking outside
+		$(document).on('click', function (e) {
+			if (!$(e.target).closest('.xylusec-filter-pill-wrap').length) {
+				$('.xylusec-filter-dropdown').hide();
+				$('.xylusec-filter-pill-wrap').removeClass('is-open');
+			}
+		});
+
+		// Prevent closing dropdown when clicking inside it
+		$(document).on('click', '.xylusec-filter-dropdown', function (e) {
+			e.stopPropagation();
+		});
+
+		// 2. Search inside dropdown
+		$(document).on('keyup input', '.xylusec-dropdown-search', function () {
+			var query = $(this).val().toLowerCase();
+			var $options = $(this).closest('.xylusec-filter-dropdown').find('.xylusec-dropdown-option');
+			$options.each(function () {
+				var text = $(this).text().toLowerCase();
+				if (text.indexOf(query) > -1) {
+					$(this).removeClass('hidden');
+				} else {
+					$(this).addClass('hidden');
+				}
+			});
+		});
+
+		// 3. Option selection changed
+		$(document).on('change', '.xylusec-dropdown-option input[type="checkbox"]', function () {
+			var $checkbox = $(this);
+			var name = $checkbox.attr('name'); // category, tag, venue, organizer, collection, day, time
+			var $wrap = $checkbox.closest('.xylusec-filter-pill-wrap');
+
+			// Recalculate values for this name
+			var selectedVals = [];
+			var selectedLabels = [];
+			$wrap.find('input[type="checkbox"]:checked').each(function () {
+				selectedVals.push($(this).val());
+				selectedLabels.push($(this).data('label') || $(this).val());
+			});
+
+			activeFilters[name] = selectedVals;
+
+			// Update Pill text / label styling
+			var $labelSpan = $wrap.find('.pill-label');
+			var originalLabel = $labelSpan.data('original-label') || $labelSpan.text();
+			if (!$labelSpan.data('original-label')) {
+				$labelSpan.data('original-label', originalLabel);
+			}
+
+			if (selectedVals.length > 0) {
+				$wrap.find('.xylusec-filter-pill-btn').addClass('has-selections');
+				if (selectedVals.length === 1) {
+					$labelSpan.text(selectedLabels[0]);
+				} else {
+					$labelSpan.text(originalLabel + ' (' + selectedVals.length + ')');
+				}
+			} else {
+				$wrap.find('.xylusec-filter-pill-btn').removeClass('has-selections');
+				$labelSpan.text(originalLabel);
+			}
+
+			// Trigger reload
+			triggerFilterReload();
+		});
+
+		// 4. Custom date input changed
+		$(document).on('change', '.xylusec-date-input', function () {
+			var name = $(this).attr('name'); // date_from or date_to
+			var val = $(this).val();
+			var $wrap = $(this).closest('.xylusec-filter-pill-wrap');
+
+			activeFilters[name] = val;
+
+			var $labelSpan = $wrap.find('.pill-label');
+			var originalLabel = $labelSpan.data('original-label') || $labelSpan.text();
+			if (!$labelSpan.data('original-label')) {
+				$labelSpan.data('original-label', originalLabel);
+			}
+
+			if (val) {
+				$wrap.find('.xylusec-filter-pill-btn').addClass('has-selections');
+				$labelSpan.text(val);
+			} else {
+				$wrap.find('.xylusec-filter-pill-btn').removeClass('has-selections');
+				$labelSpan.text(originalLabel);
+			}
+
+			// Trigger reload
+			triggerFilterReload();
+		});
+
+		// 5. Clear button click
+		$(document).on('click', '.xylusec-filter-clear-btn', function (e) {
+			e.preventDefault();
+
+			// Clear activeFilters object
+			activeFilters = {
+				category: [],
+				tag: [],
+				venue: [],
+				organizer: [],
+				collection: [],
+				day: [],
+				time: [],
+				date_from: '',
+				date_to: ''
+			};
+
+			// Uncheck all checkboxes and clear search boxes
+			$('.xylusec-filter-dropdown input[type="checkbox"]').prop('checked', false);
+			$('.xylusec-dropdown-search').val('');
+			$('.xylusec-dropdown-option').removeClass('hidden');
+
+			// Reset date inputs
+			$('.xylusec-date-input').val('');
+
+			// Reset all labels & classes
+			$('.xylusec-filter-pill-wrap').each(function () {
+				var $wrap = $(this);
+				$wrap.find('.xylusec-filter-pill-btn').removeClass('has-selections');
+				var $labelSpan = $wrap.find('.pill-label');
+				var originalLabel = $labelSpan.data('original-label');
+				if (originalLabel) {
+					$labelSpan.text(originalLabel);
+				}
+			});
+
+			// Trigger reload
+			triggerFilterReload();
+		});
+
+		function triggerFilterReload() {
+			// Refetch/reload FullCalendar
+			if (calendar) {
+				calendar.refetchEvents();
+			}
+			// Trigger grid/row/staggered/slider reloads
+			$(document).trigger('xylusec_collection_changed');
+		}
 	});
 
 
 	/** grid view js start */
-	jQuery(document).ready(function($) {
+	jQuery(document).ready(function ($) {
 		const calendarWrapper = $('#xylusec-calendar');
 		const gridWrapper = $('#xylusec-grid-view-container');
-		
+
 		let rowPage = 1;
 		let gridKeyword = '';
 		let isLoading = false;
@@ -351,7 +538,7 @@
 
 		function fetchEvents(reset = false, past = false) {
 			if (isLoading) return;
-			
+
 			isLoading = true;
 			$('#load-more-events').hide();
 			$('.xylusec-load-spinner').show();
@@ -365,9 +552,18 @@
 					keyword: gridKeyword,
 					nonce: xylusec_ajax.nonce,
 					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
-					past: past ? 1 : 0 // extra param for past events
+					past: past ? 1 : 0, // extra param for past events
+					category: activeFilters.category.join(','),
+					tag: activeFilters.tag.join(','),
+					venue: activeFilters.venue.join(','),
+					organizer: activeFilters.organizer.join(','),
+					collection: activeFilters.collection.join(','),
+					day: activeFilters.day.join(','),
+					time: activeFilters.time.join(','),
+					date_from: activeFilters.date_from,
+					date_to: activeFilters.date_to
 				},
-				success: function(response) {
+				success: function (response) {
 					if (reset) {
 						$('.xylusec-event-grid-container').html(response);
 						rowPage = 2;
@@ -396,7 +592,7 @@
 		}
 
 		// Load more row events
-		$('#load-more-events').on('click', function() {
+		$('#load-more-events').on('click', function () {
 			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			gridWrapper.show();
 			triedPastEvents = false; // reset when user clicks load more
@@ -404,7 +600,7 @@
 		});
 
 		// Search row events
-		$('#xylusec-search-events').on('click', function() {
+		$('#xylusec-search-events').on('click', function () {
 			if ($('.fc-button-grid').hasClass('fc-active')) {
 				gridKeyword = $('#xylusec-search').val().trim();
 				triedPastEvents = false;
@@ -413,7 +609,7 @@
 		});
 
 		// Show Row View
-		$('.fc-button-grid').on('click', function() {
+		$('.fc-button-grid').on('click', function () {
 			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			gridWrapper.show();
 			gridKeyword = $('#xylusec-search').val().trim();
@@ -422,26 +618,33 @@
 		});
 
 		// Back to Month View
-		$('.fc-button-month').on('click', function() {
+		$('.fc-button-month').on('click', function () {
 			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			calendarWrapper.show();
+		});
+
+		$(document).on('xylusec_collection_changed', function (e, col) {
+			if (gridWrapper.is(':visible')) {
+				triedPastEvents = false;
+				fetchEvents(true);
+			}
 		});
 	});
 	/** grid view js end */
 
 
 	/** row view js start */
-	jQuery(document).ready(function($) {
+	jQuery(document).ready(function ($) {
 		const calendarWrapper = $('#xylusec-calendar');
 		const rowWrapper = $('#xylusec-row-view-container');
-		
+
 		let rowPage = 1;
 		let rowKeyword = '';
 		let isLoading = false;
 
 		function fetchRowEvents(reset = false) {
 			if (isLoading) return;
-			
+
 			isLoading = true;
 			$('#load-more-row-events').hide();
 			$('.xylusec-load-spinner').show();
@@ -454,9 +657,18 @@
 					paged: reset ? 1 : rowPage,
 					keyword: rowKeyword,
 					nonce: xylusec_ajax.nonce,
-					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+					category: activeFilters.category.join(','),
+					tag: activeFilters.tag.join(','),
+					venue: activeFilters.venue.join(','),
+					organizer: activeFilters.organizer.join(','),
+					collection: activeFilters.collection.join(','),
+					day: activeFilters.day.join(','),
+					time: activeFilters.time.join(','),
+					date_from: activeFilters.date_from,
+					date_to: activeFilters.date_to
 				},
-				success: function(response) {
+				success: function (response) {
 					if (reset) {
 						$('.xylusec-event-row-container').html(response);
 						rowPage = 2; // Set to page 2 after reset
@@ -479,12 +691,12 @@
 		}
 
 		// Load more row events
-		$('#load-more-row-events').on('click', function() {
+		$('#load-more-row-events').on('click', function () {
 			fetchRowEvents(false);
 		});
 
 		// Search row events
-		$('#xylusec-search-events').on('click', function() {
+		$('#xylusec-search-events').on('click', function () {
 			if ($('.fc-button-row').hasClass('fc-active')) {
 				rowKeyword = $('#xylusec-search').val().trim();
 				fetchRowEvents(true);
@@ -492,7 +704,7 @@
 		});
 
 		// Show Row View
-		$('.fc-button-row').on('click', function() {
+		$('.fc-button-row').on('click', function () {
 			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			rowWrapper.show();
 			rowKeyword = $('#xylusec-search').val().trim();
@@ -500,15 +712,157 @@
 		});
 
 		// Back to Month View
-		$('.fc-button-month').on('click', function() {
-			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container' ).hide();
+		$('.fc-button-month').on('click', function () {
+			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
 			calendarWrapper.show();
+		});
+
+		$(document).on('xylusec_collection_changed', function (e, col) {
+			if (rowWrapper.is(':visible')) {
+				fetchRowEvents(true);
+			}
+		});
+
+		// Mini Calendar Widget initialization
+		const miniCalendarEl = document.getElementById('xylusec-mini-calendar-widget');
+		if (miniCalendarEl) {
+			const weekStart = parseInt(xylusec_ajax?.xylusec_options?.xylusec_week_start ?? 0);
+			var miniCalendar = new FullCalendar.Calendar(miniCalendarEl, {
+				initialView: 'dayGridMonth',
+				firstDay: weekStart,
+				eventDisplay: 'auto',
+				headerToolbar: {
+					left: 'prev',
+					center: 'title',
+					right: 'next'
+				},
+				height: 'auto',
+				fixedWeekCount: false,
+				dayHeaderContent: function (arg) {
+					return arg.text.substring(0, 2);
+				},
+				events: function (fetchInfo, successCallback, failureCallback) {
+					const startTimestamp = Math.floor(fetchInfo.start.getTime() / 1000);
+					const endTimestamp = Math.floor((fetchInfo.end.getTime() - 1) / 1000);
+					$.ajax({
+						url: xylusec_ajax.ajaxurl,
+						data: {
+							action: 'xylusec_get_events',
+							start: startTimestamp,
+							end: endTimestamp,
+							nonce: xylusec_ajax.nonce,
+							shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+						},
+						type: 'GET',
+						success: function (response) {
+							successCallback(response);
+						},
+						error: function (error) {
+							failureCallback(error);
+						}
+					});
+				},
+				dateClick: function (info) {
+					// Highlight selected date
+					$('#xylusec-mini-calendar-widget .fc-daygrid-day').removeClass('xylusec-active-date');
+					$(info.dayEl).addClass('xylusec-active-date');
+
+					// Fetch events for this specific date
+					fetchMiniEvents(info.dateStr, info.dateStr, false);
+				},
+				datesSet: function (info) {
+					const activeDate = info.view.currentStart;
+					const now = new Date();
+
+					const isActiveMonthCurrent = (activeDate.getFullYear() === now.getFullYear() && activeDate.getMonth() === now.getMonth());
+
+					let dateFromStr, dateToStr;
+
+					if (isActiveMonthCurrent) {
+						const year = now.getFullYear();
+						const month = String(now.getMonth() + 1).padStart(2, '0');
+						const day = String(now.getDate()).padStart(2, '0');
+						dateFromStr = `${year}-${month}-${day}`;
+
+						const lastDayDate = new Date(year, now.getMonth() + 1, 0);
+						dateToStr = `${lastDayDate.getFullYear()}-${String(lastDayDate.getMonth() + 1).padStart(2, '0')}-${String(lastDayDate.getDate()).padStart(2, '0')}`;
+					} else {
+						const year = activeDate.getFullYear();
+						const month = String(activeDate.getMonth() + 1).padStart(2, '0');
+						dateFromStr = `${year}-${month}-01`;
+
+						const lastDayDate = new Date(year, activeDate.getMonth() + 1, 0);
+						dateToStr = `${lastDayDate.getFullYear()}-${String(lastDayDate.getMonth() + 1).padStart(2, '0')}-${String(lastDayDate.getDate()).padStart(2, '0')}`;
+					}
+
+					fetchMiniEvents(dateFromStr, dateToStr, true);
+				}
+			});
+			miniCalendar.render();
+		}
+
+		function fetchMiniEvents(dateFrom, dateTo, isMonthLoad = false) {
+			const container = $('.xylusec-mini-event-row-container');
+			const spinner = $('.xylusec-mini-spinner-main');
+			const noEvents = $('.xylusec-mini-no-events');
+
+			spinner.show();
+			noEvents.hide();
+
+			if (isMonthLoad) {
+				container.html('<div class="xylusec-mini-placeholder-message">Loading events for this month...</div>');
+			} else {
+				container.html('<div class="xylusec-mini-placeholder-message">Loading events for ' + dateFrom + '...</div>');
+			}
+
+			$.ajax({
+				url: xylusec_ajax.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'xylusec_load_more_row_events',
+					paged: 1,
+					nonce: xylusec_ajax.nonce,
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+					date_from: dateFrom,
+					date_to: dateTo
+				},
+				success: function (response) {
+					spinner.hide();
+					if (response.trim()) {
+						container.html(response);
+						container.find('.xylusec-load-more-wrap').hide();
+					} else {
+						container.html('');
+						if (isMonthLoad) {
+							noEvents.text('No events scheduled for this month.');
+						} else {
+							noEvents.text('No events scheduled for this day.');
+						}
+						noEvents.show();
+					}
+				},
+				error: function () {
+					spinner.hide();
+					container.html('<div class="xylusec-mini-placeholder-message">Error loading events. Please try again.</div>');
+				}
+			});
+		}
+
+		// Make entire mini event row card clickable
+		$(document).on('click', '.xylusec-mini-events-list .xylusec-event-row', function (e) {
+			if ($(e.target).is('a') || $(e.target).closest('a').length) {
+				return;
+			}
+			const link = $(this).find('.xylusec-event-title a').attr('href');
+			if (link) {
+				window.location.href = link;
+			}
 		});
 	});
 	/** row view js end */
 
 	/** staggered view start */
-	jQuery(document).ready(function($) {
+	jQuery(document).ready(function ($) {
 		const staggeredWrapper = $('#xylusec-grid-staggered-view-container');
 		const calendarWrapper = $('#xylusec-calendar');
 
@@ -536,9 +890,18 @@
 					paged: reset ? 1 : staggeredPage,
 					keyword: staggeredKeyword,
 					nonce: xylusec_ajax.nonce,
-					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+					category: activeFilters.category.join(','),
+					tag: activeFilters.tag.join(','),
+					venue: activeFilters.venue.join(','),
+					organizer: activeFilters.organizer.join(','),
+					collection: activeFilters.collection.join(','),
+					day: activeFilters.day.join(','),
+					time: activeFilters.time.join(','),
+					date_from: activeFilters.date_from,
+					date_to: activeFilters.date_to
 				},
-				success: function(response) {
+				success: function (response) {
 					if (reset) {
 						$('.xylusec-event-grid-staggered-container').html(response);
 						$grid.masonry('reloadItems').masonry();
@@ -564,12 +927,12 @@
 		}
 
 		// Load more
-		$('#load-more-grid-staggered-events').on('click', function() {
+		$('#load-more-grid-staggered-events').on('click', function () {
 			fetchStaggeredEvents(false);
 		});
 
 		// Search
-		$('#xylusec-search-events').on('click', function() {
+		$('#xylusec-search-events').on('click', function () {
 			if ($('.fc-button-staggered').hasClass('fc-active')) {
 				staggeredKeyword = $('#xylusec-search').val().trim();
 				fetchStaggeredEvents(true);
@@ -577,7 +940,7 @@
 		});
 
 		// Show Staggered View
-		$('.fc-button-staggered').on('click', function() {
+		$('.fc-button-staggered').on('click', function () {
 			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-slider-view-container').hide();
 			staggeredWrapper.show();
 			staggeredKeyword = $('#xylusec-search').val().trim();
@@ -585,48 +948,63 @@
 		});
 
 		// Month View
-		$('.fc-button-month').on('click', function() {
+		$('.fc-button-month').on('click', function () {
 			$('#xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-slider-view-container, #xylusec-grid-staggered-view-container').hide();
 			calendarWrapper.show();
+		});
+
+		$(document).on('xylusec_collection_changed', function (e, col) {
+			if (staggeredWrapper.is(':visible')) {
+				fetchStaggeredEvents(true);
+			}
 		});
 	});
 	/** staggered view end */
 
 	/** slider view start */
-	jQuery(document).ready(function($){
+	jQuery(document).ready(function ($) {
 		const wrapper = $('.xylusec-event-slider-container');
 		const sliderContainer = $('#xylusec-slider-view-container');
 		let slideIndex = 0;
 		let page = 1;
 		let isLoading = false;
-		let noMoreEvents = false; 
+		let noMoreEvents = false;
 		let sliderKeyword = ($('#xylusec-search').val() || '').trim();
 
 		// Load events by AJAX
-		function fetchSlides(reset = false){
+		function fetchSlides(reset = false) {
 			if (isLoading) return;
 			isLoading = true;
-			if ( reset ) {
+			if (reset) {
 				$('.xylusec-load-spinner').show();
 				$('.xylusec-slider-arrow-main').hide();
 				$('.xylusec-event-slider-container').hide();
 			}
 
 			$.ajax({
-				url   : xylusec_ajax.ajaxurl,
-				type  : 'POST',
-				data  : {
-					action : 'xylusec_load_more_slider_events',
-					paged  : (reset ? 1 : page),
+				url: xylusec_ajax.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'xylusec_load_more_slider_events',
+					paged: (reset ? 1 : page),
 					keyword: sliderKeyword,
-					nonce  : xylusec_ajax.nonce,
-					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts)
+					nonce: xylusec_ajax.nonce,
+					shortcode_atts: JSON.stringify(xylusec_ajax.shortcode_atts),
+					category: activeFilters.category.join(','),
+					tag: activeFilters.tag.join(','),
+					venue: activeFilters.venue.join(','),
+					organizer: activeFilters.organizer.join(','),
+					collection: activeFilters.collection.join(','),
+					day: activeFilters.day.join(','),
+					time: activeFilters.time.join(','),
+					date_from: activeFilters.date_from,
+					date_to: activeFilters.date_to
 				},
-				success: function(resp){
+				success: function (resp) {
 					const trimmed = $.trim(resp);
 
-					if (reset){
-						if(trimmed){
+					if (reset) {
+						if (trimmed) {
 							wrapper.html(trimmed);
 							slideIndex = 0;
 							page = 2;
@@ -636,7 +1014,7 @@
 								.removeClass('active')
 								.eq(0).addClass('active');
 							$('.xylusec-no-events').hide();
-							
+
 							$('.xylusec-event-slider-container').show();
 							$('.xylusec-slider-arrow-main').show();
 						} else {
@@ -646,10 +1024,10 @@
 							$('.xylusec-event-slider-container').hide();
 							$('.xylusec-slider-arrow-main').hide();
 							$('.xylusec-no-events').show();
-							
+
 						}
 					}
-					else if (trimmed){
+					else if (trimmed) {
 						wrapper.append(trimmed);
 						page++;
 					}
@@ -663,15 +1041,15 @@
 		}
 
 		// Show slide by index
-		function showSlide(index){
+		function showSlide(index) {
 			const slides = $('.xylusec-slider-slide');
 			if (!slides.length) return;
 
-			if(index === slides.length - 1 && !noMoreEvents){
+			if (index === slides.length - 1 && !noMoreEvents) {
 				fetchSlides(false);
 			}
 
-			if (index >= slides.length){
+			if (index >= slides.length) {
 				index = 0;
 			}
 			if (index < 0) index = 0;
@@ -684,8 +1062,8 @@
 		if (!$('.xylusec-slider-arrow').length) {
 			sliderContainer.prepend(
 				'<div class="xylusec-slider-arrow-main">' +
-					'<div><span class="xylusec-event-button xylusec-slider-arrow left">&#10094;</span></div>' +
-					'<div><span class="xylusec-event-button xylusec-slider-arrow right">&#10095;</span></div>' +
+				'<div><span class="xylusec-event-button xylusec-slider-arrow left">&#10094;</span></div>' +
+				'<div><span class="xylusec-event-button xylusec-slider-arrow right">&#10095;</span></div>' +
 				'</div>'
 			);
 		}
@@ -693,13 +1071,13 @@
 		// Manual navigation
 		$('.xylusec-slider-arrow.left').on('click', () => showSlide(slideIndex - 1));
 		$('.xylusec-slider-arrow.right').on('click', () => showSlide(slideIndex + 1));
-		
+
 		setInterval(() => {
 			showSlide(slideIndex + 1);
-		}, 5000 );
+		}, 5000);
 
 		// Show slider view
-		$('.fc-button-slider').on('click', function(){
+		$('.fc-button-slider').on('click', function () {
 			$('#xylusec-calendar, #xylusec-grid-view-container, #xylusec-row-view-container, #xylusec-grid-staggered-view-container').hide();
 			sliderContainer.show();
 			sliderKeyword = $('#xylusec-search').val().trim();
@@ -707,7 +1085,7 @@
 		});
 
 		// Search row events
-		$('#xylusec-search-events').on('click', function() {
+		$('#xylusec-search-events').on('click', function () {
 			if ($('.fc-button-slider').hasClass('fc-active')) {
 				sliderKeyword = $('#xylusec-search').val().trim();
 				fetchSlides(true);
@@ -715,14 +1093,20 @@
 		});
 
 		// Back to month view
-		$('.fc-button-month').on('click', function(){
+		$('.fc-button-month').on('click', function () {
 			sliderContainer.hide();
 			$('#xylusec-calendar').show();
+		});
+
+		$(document).on('xylusec_collection_changed', function (e, col) {
+			if (sliderContainer.is(':visible')) {
+				fetchSlides(true);
+			}
 		});
 	});
 	/** slider view end */
 
-	jQuery(document).ready(function($) {
+	jQuery(document).ready(function ($) {
 		$(document).on('click', '.fc-timeGridWeek-button', function () {
 			setTimeout(() => {
 				$('#xylusec-calendar').css({
@@ -734,11 +1118,11 @@
 		});
 	});
 
-	$('.xylusec-c-button').on('click', function() {
-        $('.fc-button').removeClass('fc-active');
-        $(this).addClass('fc-active');
-    });
+	$('.xylusec-c-button').on('click', function () {
+		$('.fc-button').removeClass('fc-active');
+		$(this).addClass('fc-active');
+	});
 
-})( jQuery );
+})(jQuery);
 
 

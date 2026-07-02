@@ -90,6 +90,13 @@ class XYLUSEC_Shortcode_List_Table extends WP_List_Table {
 
 		$data[] = array(
 					'id'            => 3,
+					'how_to_use'    => 'Display events based on collection',
+					'shortcode'     => '<p class="xylusec_short_code">[easy_events_calendar collection="collection-slug"]</p>',
+					'action'     	=> "<button class='xylusec-btn-copy-shortcode button-primary'  data-value='[easy_events_calendar collection=\"collection-slug\"]'>Copy</button>",
+					);
+
+		$data[] = array(
+					'id'            => 4,
 					'how_to_use'    => 'Display the events discovery/archive layout with filters and search',
 					'shortcode'     => '<p class="xylusec_short_code">[eec_events_discovery]</p>',
 					'action'     	=> '<button class="xylusec-btn-copy-shortcode button-primary"  data-value="[eec_events_discovery]">Copy</button>',

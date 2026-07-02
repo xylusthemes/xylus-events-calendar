@@ -66,6 +66,13 @@ class Xylus_Events_Calendar_Template_Loader {
 	private $event_organizer = 'eec_organizer';
 
 	/**
+	 * Event collection taxonomy.
+	 *
+	 * @var string
+	 */
+	private $event_collection = 'eec_collection';
+
+	/**
 	 * Initialize the class and register hooks.
 	 *
 	 * @since 1.1.0
@@ -111,7 +118,7 @@ class Xylus_Events_Calendar_Template_Loader {
 
 		// Only target event archives, custom taxonomies, or our root views.
 		if ( ! is_post_type_archive( $this->event_posttype ) && 
-			 ! is_tax( array( $this->event_category, $this->event_tag, $this->event_venue, $this->event_organizer ) ) &&
+			 ! is_tax( array( $this->event_category, $this->event_tag, $this->event_venue, $this->event_organizer, $this->event_collection ) ) &&
 			 empty( $eec_view ) ) {
 			return;
 		}
@@ -150,6 +157,15 @@ class Xylus_Events_Calendar_Template_Loader {
 			);
 		}
 
+		// 4b. Collection Filter.
+		if ( ! empty( $_GET['eec_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$tax_query[] = array(
+				'taxonomy' => $this->event_collection,
+				'field'    => 'slug',
+				'terms'    => sanitize_text_field( wp_unslash( $_GET['eec_collection'] ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			);
+		}
+
 		if ( count( $tax_query ) > 1 ) {
 			$query->set( 'tax_query', $tax_query );
 		}
@@ -166,6 +182,11 @@ class Xylus_Events_Calendar_Template_Loader {
 		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'meta_key', 'start_ts' );
 		$query->set( 'order', 'ASC' );
+
+		// Set posts per page from plugin options.
+		$options  = get_option( XYLUSEC_OPTIONS, [] );
+		$per_page = ! empty( $options['xylusec_events_per_page'] ) ? intval( $options['xylusec_events_per_page'] ) : 12;
+		$query->set( 'posts_per_page', $per_page );
 	}
 
 	/**
@@ -207,6 +228,14 @@ class Xylus_Events_Calendar_Template_Loader {
 
 		// Category Root Archive.
 		if ( $eec_view === 'category_root' ) {
+			$located = $this->xylusec_locate_template( 'archive-eec_events.php' );
+			if ( $located ) {
+				return $located;
+			}
+		}
+
+		// Collection Root Archive.
+		if ( $eec_view === 'collection_root' ) {
 			$located = $this->xylusec_locate_template( 'archive-eec_events.php' );
 			if ( $located ) {
 				return $located;
@@ -256,6 +285,14 @@ class Xylus_Events_Calendar_Template_Loader {
 		// Event organizer taxonomy archive.
 		if ( is_tax( $this->event_organizer ) ) {
 			$located = $this->xylusec_locate_template( 'taxonomy-eec_organizer.php' );
+			if ( $located ) {
+				return $located;
+			}
+		}
+
+		// Event collection taxonomy archive.
+		if ( is_tax( $this->event_collection ) ) {
+			$located = $this->xylusec_locate_template( 'taxonomy-eec_collection.php' );
 			if ( $located ) {
 				return $located;
 			}
@@ -320,9 +357,10 @@ class Xylus_Events_Calendar_Template_Loader {
 		$per_page = ! empty( $options['xylusec_events_per_page'] ) ? intval( $options['xylusec_events_per_page'] ) : 12;
 		
 		$shortcode_atts = wp_json_encode( array(
-			'category'  => isset( $_POST['eec_category'] ) ? sanitize_text_field( wp_unslash( $_POST['eec_category'] ) ) : '',
-			'venue'     => isset( $_POST['eec_venue'] ) ? sanitize_text_field( wp_unslash( $_POST['eec_venue'] ) ) : '',
-			'organizer' => isset( $_POST['eec_organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['eec_organizer'] ) ) : '',
+			'category'   => isset( $_POST['eec_category'] ) ? sanitize_text_field( wp_unslash( $_POST['eec_category'] ) ) : '',
+			'collection' => isset( $_POST['eec_collection'] ) ? sanitize_text_field( wp_unslash( $_POST['eec_collection'] ) ) : '',
+			'venue'      => isset( $_POST['eec_venue'] ) ? sanitize_text_field( wp_unslash( $_POST['eec_venue'] ) ) : '',
+			'organizer'  => isset( $_POST['eec_organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['eec_organizer'] ) ) : '',
 		) );
 
 		$search = isset( $_POST['eec_search'] ) ? sanitize_text_field( wp_unslash( $_POST['eec_search'] ) ) : '';

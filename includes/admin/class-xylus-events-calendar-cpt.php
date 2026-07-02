@@ -33,6 +33,9 @@ class Xylus_Events_Calendar_CPT {
 	// Event Organizer Texonomy.
 	protected $event_organizer;
 
+	// Event Collection Texonomy.
+	protected $event_collection;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -46,11 +49,13 @@ class Xylus_Events_Calendar_CPT {
 		$this->event_tag       = 'eec_tag';
 		$this->event_vanue     = 'eec_venue';
 		$this->event_organizer = 'eec_organizer';
+		$this->event_collection = 'eec_collection';
 
         add_action( 'init', array( $this, 'register_event_post_type' ) );
         add_action( 'init', array( $this, 'register_event_taxonomy' ) );
         add_action( 'init', array( $this, 'register_venue_meta_hooks' ) );
         add_action( 'init', array( $this, 'register_organizer_meta_hooks' ) );
+        add_action( 'init', array( $this, 'register_collection_meta_hooks' ) );
         add_action( 'init', array( $this, 'eec_add_custom_rewrite_rules' ) );
         add_filter( 'query_vars', array( $this, 'eec_add_query_vars' ) );
         add_action( 'add_meta_boxes', array( $this, 'add_event_meta_boxes' ) );
@@ -82,6 +87,10 @@ class Xylus_Events_Calendar_CPT {
         // Tag
         add_rewrite_rule( '^eec-tag/?$', 'index.php?post_type=eec_events&eec_view=tag_root', 'top' );
         add_rewrite_rule( '^eec_tag/?$', 'index.php?post_type=eec_events&eec_view=tag_root', 'top' );
+
+        // Collection
+			add_rewrite_rule( '^eec-collection/?$', 'index.php?post_type=eec_events&eec_view=collection_root', 'top' );
+			add_rewrite_rule( '^eec_collection/?$', 'index.php?post_type=eec_events&eec_view=collection_root', 'top' );
     }
 
     /**
@@ -140,6 +149,15 @@ class Xylus_Events_Calendar_CPT {
 	}
 
 	/**
+	 * get events collection taxonomy
+	 *
+	 * @since    1.2.0
+	 */
+	public function get_event_collection_taxonomy() {
+		return $this->event_collection;
+	}
+
+	/**
 	 * Register Events Post type
 	 *
 	 * @since    1.0.0
@@ -188,7 +206,7 @@ class Xylus_Events_Calendar_CPT {
 			'description'         => __( 'Post type for Events', 'xylus-events-calendar' ),
 			'labels'              => $event_labels,
 			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions' ),
-			'taxonomies'          => array( $this->event_category, $this->event_tag ),
+			'taxonomies'          => array( $this->event_category, $this->event_tag, $this->event_collection ),
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -349,6 +367,41 @@ class Xylus_Events_Calendar_CPT {
                     'add_or_remove_items'        => __( 'Add or remove organizers', 'xylus-events-calendar' ),
                     'choose_from_most_used'      => __( 'Choose from the most used organizers', 'xylus-events-calendar' ),
                     'not_found'                  => __( 'No organizers found', 'xylus-events-calendar' ),
+                ),
+            )
+        );
+
+        /**
+         * Register Event Collection taxonomy
+         *
+         * @since 1.2.0
+         */
+        register_taxonomy(
+            $this->event_collection,
+            array( $this->event_posttype ),
+            array(
+                'public'            => true,
+                'show_ui'           => true,
+                'show_in_nav_menus' => true,
+                'show_admin_column' => true,
+                'hierarchical'      => true,
+                'query_var'         => true,
+                'show_in_rest'      => true, // Gutenberg
+                'rewrite'           => array( 'slug' => 'eec-collection' ),
+                'labels'            => array(
+                    'name'              => __( 'Event Collections', 'xylus-events-calendar' ),
+                    'singular_name'     => __( 'Event Collection', 'xylus-events-calendar' ),
+                    'menu_name'         => __( 'Event Collections', 'xylus-events-calendar' ),
+                    'name_admin_bar'    => __( 'Event Collection', 'xylus-events-calendar' ),
+                    'search_items'      => __( 'Search Event Collections', 'xylus-events-calendar' ),
+                    'all_items'         => __( 'All Collections', 'xylus-events-calendar' ),
+                    'parent_item'       => __( 'Parent Collection', 'xylus-events-calendar' ),
+                    'parent_item_colon' => __( 'Parent Collection:', 'xylus-events-calendar' ),
+                    'edit_item'         => __( 'Edit Collection', 'xylus-events-calendar' ),
+                    'view_item'         => __( 'View Collection', 'xylus-events-calendar' ),
+                    'update_item'       => __( 'Update Collection', 'xylus-events-calendar' ),
+                    'add_new_item'      => __( 'Add New Collection', 'xylus-events-calendar' ),
+                    'new_item_name'     => __( 'New Collection Name', 'xylus-events-calendar' ),
                 ),
             )
         );
@@ -1071,6 +1124,80 @@ class Xylus_Events_Calendar_CPT {
 
         if ( isset( $_POST['organizer_phone'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             update_term_meta( $term_id, 'organizer_phone', sanitize_text_field( $_POST['organizer_phone'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+        }
+    }
+
+    public function register_collection_meta_hooks() {
+        add_action( 'eec_collection_add_form_fields', array( $this, 'add_collection_fields' ) );
+        add_action( 'eec_collection_edit_form_fields', array( $this, 'edit_collection_fields' ) );
+        add_action( 'created_eec_collection', array( $this, 'save_collection_meta' ) );
+        add_action( 'edited_eec_collection', array( $this, 'save_collection_meta' ) );
+    }
+
+    public function add_collection_fields() {
+        ?>
+        <div class="form-field">
+            <label><?php echo esc_attr( 'Collection ID' ); ?></label>
+            <input type="text" name="collection_id">
+        </div>
+
+        <div class="form-field">
+            <label><?php echo esc_attr( 'Organizer ID' ); ?></label>
+            <input type="text" name="organizer_id">
+        </div>
+
+        <div class="form-field">
+            <label><?php echo esc_attr( 'Collection URL' ); ?></label>
+            <input type="text" name="collection_url">
+        </div>
+
+        <div class="form-field">
+            <label><?php echo esc_attr( 'Image URL' ); ?></label>
+            <input type="text" name="image_url">
+        </div>
+        <?php
+    }
+
+    public function edit_collection_fields( $term ) {
+        $collection_id  = get_term_meta( $term->term_id, 'collection_id', true );
+        $organizer_id   = get_term_meta( $term->term_id, 'organizer_id', true );
+        $collection_url = get_term_meta( $term->term_id, 'collection_url', true );
+        $image_url      = get_term_meta( $term->term_id, 'image_url', true );
+        ?>
+        <tr class="form-field">
+            <th><?php echo esc_attr( 'Collection ID' ); ?></th>
+            <td><input type="text" name="collection_id" value="<?php echo esc_attr( $collection_id ); ?>"></td>
+        </tr>
+
+        <tr class="form-field">
+            <th><?php echo esc_attr( 'Organizer ID' ); ?></th>
+            <td><input type="text" name="organizer_id" value="<?php echo esc_attr( $organizer_id ); ?>"></td>
+        </tr>
+
+        <tr class="form-field">
+            <th><?php echo esc_attr( 'Collection URL' ); ?></th>
+            <td><input type="text" name="collection_url" value="<?php echo esc_attr( $collection_url ); ?>"></td>
+        </tr>
+
+        <tr class="form-field">
+            <th><?php echo esc_attr( 'Image URL' ); ?></th>
+            <td><input type="text" name="image_url" value="<?php echo esc_attr( $image_url ); ?>"></td>
+        </tr>
+        <?php
+    }
+
+    public function save_collection_meta( $term_id ) {
+        $fields = array(
+            'collection_id'  => 'sanitize_text_field',
+            'organizer_id'   => 'sanitize_text_field',
+            'collection_url' => 'esc_url_raw',
+            'image_url'      => 'esc_url_raw',
+        );
+
+        foreach ( $fields as $key => $sanitize_callback ) {
+            if ( isset( $_POST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                update_term_meta( $term_id, $key, call_user_func( $sanitize_callback, $_POST[ $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+            }
         }
     }
 }
