@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-02T09:41:56+00:00\n"
+"POT-Creation-Date: 2026-07-06T06:39:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: xylus-events-calendar\n"
@@ -152,7 +152,7 @@ msgstr ""
 msgid "Widget Settings saved successfully."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-ajax-function.php:514
+#: includes/admin/class-xylus-events-calendar-ajax-function.php:521
 #, php-format
 msgid "Organizer: %s"
 msgstr ""
@@ -211,6 +211,10 @@ msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-common.php:140
 msgid "XT Feed for LinkedIn"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-common.php:790
+msgid "Past Events"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-cpt.php:171
@@ -743,6 +747,87 @@ msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-cpt.php:944
 msgid "Failed to add occurrence."
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:59
+msgid "I couldn't understand how to make it work"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:60
+msgid "I found a better plugin"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:61
+msgid "The plugin is great, but I need specific feature that you don't support"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:62
+msgid "Plugin has bugs and it's not working"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:63
+msgid "It's not what I was looking for"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:64
+msgid "Plugin didn't work as expected"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:65
+msgid "It's temporary deactivatation, for debug an issue"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:66
+msgid "Other reasons"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:231
+#: includes/admin/class-xylus-events-calendar-deactivation.php:273
+msgid "Write your query here"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:234
+msgid "Finding it confusing? let us know so that we can improve the interface"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:236
+msgid "Can you let us know the reason for deactivation (Required)"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:239
+msgid "Can you please let us know about the bug/issue in detail?"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:241
+msgid "Can you please let us know which plugin you found helpful"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:243
+msgid "Can you please let us know more about the feature you want"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:245
+msgid "Can you please let us know more about your requirement"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:255
+msgid "Close dialog"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:256
+msgid "Quick Feedback"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:257
+msgid "Could you please share why you are deactivating Easy Events Calendar?"
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:277
+msgid "* By submitting this form, you will also be sending us your email address & website URL."
+msgstr ""
+
+#: includes/admin/class-xylus-events-calendar-deactivation.php:283
+msgid "Submitting your feedback..."
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-events-list.php:51
