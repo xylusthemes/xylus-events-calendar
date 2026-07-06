@@ -602,9 +602,7 @@
 
 		// Load more row events
 		$('#load-more-events').on('click', function () {
-			$('#xylusec-calendar, #xylusec-row-view-container, #xylusec-grid-staggered-view-container, #xylusec-slider-view-container').hide();
-			gridWrapper.show();
-			triedPastEvents = false; // reset when user clicks load more
+            triedPastEvents = isPastMode;
 			fetchEvents(false);
 		});
 
