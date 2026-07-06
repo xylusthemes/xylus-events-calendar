@@ -581,7 +581,7 @@
 					}
 
 					if (!response.trim()) {
-						if (!past && !triedPastEvents) {
+						if (!past && !triedPastEvents && reset) {
 							triedPastEvents = true;
                             isLoading = false; // Reset lock to allow the fallback request
 							fetchEvents(true, true);
@@ -698,7 +698,7 @@
 					}
 
 					if (!response.trim()) {
-						if (!past && !triedPastEvents) {
+						if (!past && !triedPastEvents && reset) {
                             triedPastEvents = true;
                             isLoading = false; // Reset lock to allow the fallback request
                             fetchRowEvents(true, true);
@@ -956,7 +956,7 @@
 					}
 
 					if (!response.trim()) {
-						if (!past && !triedPastEvents) {
+						if (!past && !triedPastEvents && reset) {
                             triedPastEvents = true;
                             isLoadingStaggered = false; // Reset lock to allow the fallback request
                             fetchStaggeredEvents(true, true);
