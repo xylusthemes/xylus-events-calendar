@@ -855,3 +855,296 @@ html:not([data-scroll="0"]) .xylusec-header {
     margin-top: 5px;
     margin-left: 24px;
 }
+
+/* Premium Settings Styling */
+.xylusec-settings-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin: 10px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+.xylusec-setting-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f1f5f9;
+}
+.xylusec-setting-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.xylusec-inner-section-1 {
+    flex: 0 0 240px;
+}
+.xylusec-inner-section-1 label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    display: block;
+    margin-bottom: 4px;
+}
+.xylusec-inner-section-1 .row-desc {
+    font-size: 12px;
+    font-weight: 400;
+    color: #64748b;
+    line-height: 1.5;
+}
+.xylusec-inner-section-2 {
+    flex: 1;
+}
+/* Modern inputs & dropdowns */
+.xylusec-inner-section-2 select,
+.xylusec-inner-section-2 input[type="text"],
+.xylusec-inner-section-2 input[type="number"] {
+    width: 100%;
+    max-width: 480px;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #0f172a;
+    font-size: 13.5px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.xylusec-inner-section-2 select:focus,
+.xylusec-inner-section-2 input[type="text"]:focus,
+.xylusec-inner-section-2 input[type="number"]:focus {
+    border-color: #005AE0;
+    box-shadow: 0 0 0 3px rgba(0, 90, 224, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+/* Custom Toggle Switch layout for admin options */
+.xylusec-filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    max-width: 800px;
+    margin-top: 10px;
+}
+.xylusec-filter-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border: 1px solid #ccd0d4;
+    border-radius: 6px;
+    padding: 10px 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.xylusec-filter-card:hover {
+    border-color: #005AE0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+.xylusec-filter-card.is-active {
+    border-color: #005AE0;
+    background-color: #f0f7ff;
+}
+.xylusec-filter-card-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #334155;
+}
+.xylusec-filter-card.is-active .xylusec-filter-card-label {
+    color: #005AE0;
+}
+/* Custom Switch Toggle */
+.xylusec-switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 20px;
+    flex-shrink: 0;
+}
+.xylusec-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0 !important;
+}
+.xylusec-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: .25s;
+    border-radius: 20px;
+}
+.xylusec-slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .25s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.xylusec-switch input:checked + .xylusec-slider {
+    background-color: #005AE0;
+}
+.xylusec-switch input:checked + .xylusec-slider:before {
+    transform: translateX(18px);
+}
+/* Custom Color Picker layout */
+.xylusec-color-pickers-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 5px;
+}
+.xylusec-color-picker-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.xylusec-color-picker-item label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    width: 200px;
+    margin-bottom: 0;
+}
+.xylusec-color-picker-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.xylusec-color-picker-wrap input[type="color"] {
+    width: 44px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none;
+}
+.xylusec-color-val {
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 12.5px;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    min-width: 72px;
+    text-align: center;
+}
+/* Premium Save button */
+.xylusec_button {
+    font-weight: 600 !important;
+    padding: 12px 26px !important;
+    border-radius: 6px !important;
+    background-color: #005AE0 !important;
+    border: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 90, 224, 0.15), 0 2px 4px -2px rgba(0, 90, 224, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out !important;
+}
+.xylusec_button:hover {
+    background-color: #0045b5 !important;
+    box-shadow: 0 8px 12px -2px rgba(0, 90, 224, 0.25), 0 4px 6px -2px rgba(0, 90, 224, 0.15);
+    transform: translateY(-1px);
+}
+.xylusec_button:active {
+    transform: translateY(0);
+}
+.xylusec_button.secondary {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+}
+.xylusec_button.secondary:hover {
+    background-color: #e2e8f0 !important;
+    color: #1e293b !important;
+    border-color: #94a3b8 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+    transform: translateY(-1px);
+}
+/* Custom Confirm Modal */
+.xylusec-confirm-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999999;
+    align-items: center;
+    justify-content: center;
+}
+.xylusec-confirm-overlay.is-visible {
+    display: flex;
+}
+.xylusec-confirm-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: xylusecModalIn 0.25s ease-out;
+}
+@keyframes xylusecModalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.xylusec-confirm-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #fef3c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 24px;
+}
+.xylusec-confirm-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+.xylusec-confirm-message {
+    font-size: 13.5px;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+.xylusec-confirm-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.xylusec-confirm-actions .xylusec_button {
+    min-width: 110px;
+    text-align: center;
+    font-size: 13px !important;
+    padding: 10px 20px !important;
+}
+.xylusec_button.danger {
+    background-color: #ef4444 !important;
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.15), 0 2px 4px -2px rgba(239, 68, 68, 0.1);
+}
+.xylusec_button.danger:hover {
+    background-color: #dc2626 !important;
+    box-shadow: 0 8px 12px -2px rgba(239, 68, 68, 0.25), 0 4px 6px -2px rgba(239, 68, 68, 0.15);
+}
