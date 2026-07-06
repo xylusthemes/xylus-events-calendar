@@ -364,8 +364,11 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			$end_key   = 'end_ts';
 		}
 
+		$current_post_count = 0;
 		if ($events->have_posts()) :
 			while ($events->have_posts()) : $events->the_post();
+				$current_post_count++;
+				$is_last_page = ($events->max_num_pages <= $paged && $current_post_count === $events->post_count) ? ' xylusec-last-page-item' : '';
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
 				$event_url = get_permalink();
@@ -384,7 +387,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				$location   = get_post_meta( $event_id, 'venue_name', true );
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				?>
-				<div class="xylusec-event-card">
+				<div class="xylusec-event-card<?php echo esc_attr( $is_last_page ); ?>">
 					<div class="xylusec-event-img">
 						<?php if ( has_post_thumbnail() ) : ?>
 							<a href="<?php echo esc_url( $event_url ); ?>" >
@@ -457,8 +460,11 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		$show_date      = isset( $atts['show_date'] ) ? filter_var( $atts['show_date'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE ) ?? true : true;
 		$show_organizer = isset( $atts['show_organizer'] ) ? filter_var( $atts['show_organizer'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE ) ?? false : false;
 
+		$current_post_count = 0;
 		if ($query->have_posts()) :
 			while ($query->have_posts()) : $query->the_post();
+				$current_post_count++;
+				$is_last_page = ($query->max_num_pages <= $paged && $current_post_count === $query->post_count) ? ' xylusec-last-page-item' : '';
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 30 );
 				$event_url = get_permalink();
@@ -485,7 +491,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 					}
 				}
 				?>
-				<div class="xylusec-event-row">
+				<div class="xylusec-event-row<?php echo esc_attr( $is_last_page ); ?>">
 					<div class="xylusec-event-row-content">
 						<?php 
 						$thumb_html = '';
@@ -560,8 +566,11 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			$end_key   = 'end_ts';
 		}
 
+		$current_post_count = 0;
 		if ($query->have_posts()) :
 			while ($query->have_posts()) : $query->the_post();
+				$current_post_count++;
+				$is_last_page = ($query->max_num_pages <= $paged && $current_post_count === $query->post_count) ? ' xylusec-last-page-item' : '';
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
 				$event_url = get_permalink();
@@ -581,7 +590,7 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				$event_date = gmdate( 'D, d M Y h:i A', $start_ts );
 				
 				?>
-				<div class="xylusec-event-card-staggered">
+				<div class="xylusec-event-card-staggered<?php echo esc_attr( $is_last_page ); ?>">
 					<?php if ( has_post_thumbnail() ) : ?>
 						<div class="xylusec-staggered-image">
 							<a href="<?php echo esc_url( $event_url ); ?>" >

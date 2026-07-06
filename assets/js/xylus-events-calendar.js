@@ -591,7 +591,11 @@
 						}
 					} else {
 						$('.xylusec-no-events').hide();
-						$('#load-more-events').show();
+						if (response.indexOf('xylusec-last-page-item') !== -1) {
+							$('#load-more-events').hide();
+						} else {
+							$('#load-more-events').show();
+						}
 					}
 
 					isLoading = false;
@@ -707,8 +711,12 @@
 						    $('.xylusec-no-events').show();
                         }
 					} else {
-						$('#load-more-row-events').show();
 						$('.xylusec-no-events').hide();
+						if (response.indexOf('xylusec-last-page-item') !== -1) {
+							$('#load-more-row-events').hide();
+						} else {
+							$('#load-more-row-events').show();
+						}
 					}
 					isLoading = false;
 					$('.xylusec-load-spinner').hide();
@@ -965,8 +973,12 @@
 						    $('.xylusec-no-events').show();
                         }
 					} else {
-						$('#load-more-grid-staggered-events').show();
 						$('.xylusec-no-events').hide();
+						if (response.indexOf('xylusec-last-page-item') !== -1) {
+							$('#load-more-grid-staggered-events').hide();
+						} else {
+							$('#load-more-grid-staggered-events').show();
+						}
 					}
 					isLoadingStaggered = false;
 					$('.xylusec-load-spinner').hide();
