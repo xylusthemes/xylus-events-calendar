@@ -212,7 +212,18 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			wp_enqueue_style('xylus-events-calendar-template-css', $css_dir . 'xylus-events-calendar-template.css', false, XYLUSEC_VERSION );
 			
 			$xylusec_options = get_option( XYLUSEC_WIDGET_OPTIONS, [] );
+			$xylusec_general_options = get_option( XYLUSEC_OPTIONS, [] );
+			$primary_color = $xylusec_general_options['xylusec_primary_color'] ?? $this->common->xylusec_get_theme_primary_color();
+			$button_color = $xylusec_general_options['xylusec_button_color'] ?? '#2c3e50';
+			$text_color = $xylusec_general_options['xylusec_text_color'] ?? '#333333';
+			$event_title_color = $xylusec_general_options['xylusec_event_title_color'] ?? '#60606e';
+
 			$custom_css = ":root {";
+			$custom_css .= "--xec-primary-color: {$primary_color};";
+			$custom_css .= "--xec-button-color: {$button_color};";
+			$custom_css .= "--xec-text-color: {$text_color};";
+			$custom_css .= "--xec-event-title-color: {$event_title_color};";
+
 			if( $xylusec_options ){
 				foreach ( $xylusec_options as $key => $default ) {
 					$value = !empty($xylusec_options[$key]) ? $xylusec_options[$key] : $default;
@@ -225,6 +236,26 @@ if ( ! class_exists( 'Xylus_Events_Calendar' ) ) :
 			}
 			$custom_css .= "}";
 			wp_add_inline_style('xylus-events-calendar-widget-css', $custom_css);
+
+
+			if ( ! empty( $primary_color ) ) {
+				list($r, $g, $b) = sscanf($primary_color, "#%02x%02x%02x");
+				$primary_rgba_30 = "rgba($r, $g, $b, 0.3)";
+				$primary_rgba_40 = "rgba($r, $g, $b, 0.4)";
+
+				$primary_css = "
+				.eec-single-quick-item svg, .event-detail-value a, .event-detail-link, .eec-archive-card .event-upcoming-card-title a:hover,
+				.eec-archive-date svg, .eec-archive-location svg, .eec-venue-meta-item svg, .eec-contact-link svg { color: {$primary_color} !important; }
+				.eec-single-register-btn, .event-date-badge { background: linear-gradient(135deg, {$primary_color}, {$primary_color}) !important; }
+				.eec-single-register-btn { box-shadow: 0 4px 15px {$primary_rgba_30} !important; }
+				.eec-single-register-btn:hover { box-shadow: 0 6px 20px {$primary_rgba_40} !important; }
+				.event-date-badge { box-shadow: 0 4px 15px {$primary_rgba_40} !important; }
+				.event-section-title::after, .eec-archive-title::after { background: linear-gradient(90deg, {$primary_color}, {$primary_color}) !important; }
+				.eec-results-info { border-left-color: {$primary_color} !important; }
+				.eec-spinner { border-top-color: {$primary_color} !important; }
+				";
+				wp_add_inline_style('xylus-events-calendar-template-css', $primary_css);
+			}
 		}
 
 		/**

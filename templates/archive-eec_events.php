@@ -42,12 +42,14 @@ if ( $xylusec_eec_view === 'venue_root' ) {
 	<?php
 	// Filter bar data.
 	$xylusec_all_categories = get_terms( array( 'taxonomy' => 'eec_category', 'hide_empty' => true ) );
+	$xylusec_all_collections = get_terms( array( 'taxonomy' => 'eec_collection', 'hide_empty' => true ) );
 	$xylusec_all_venues     = get_terms( array( 'taxonomy' => 'eec_venue', 'hide_empty' => true ) );
 	$xylusec_all_organizers = get_terms( array( 'taxonomy' => 'eec_organizer', 'hide_empty' => true ) );
 
 	// Current filter values.
 	$xylusec_filter_search   = isset( $_GET['eec_search'] ) ? sanitize_text_field( wp_unslash( $_GET['eec_search'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$xylusec_filter_category = isset( $_GET['eec_category'] ) ? sanitize_text_field( wp_unslash( $_GET['eec_category'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$xylusec_filter_collection = isset( $_GET['eec_collection'] ) ? sanitize_text_field( wp_unslash( $_GET['eec_collection'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$xylusec_filter_venue    = isset( $_GET['eec_venue'] ) ? sanitize_text_field( wp_unslash( $_GET['eec_venue'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$xylusec_filter_organizer = isset( $_GET['eec_organizer'] ) ? sanitize_text_field( wp_unslash( $_GET['eec_organizer'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	?>
@@ -66,6 +68,15 @@ if ( $xylusec_eec_view === 'venue_root' ) {
 					<option value=""><?php esc_html_e( 'All Categories', 'xylus-events-calendar' ); ?></option>
 					<?php foreach ( $xylusec_all_categories as $cat ) : ?>
 						<option value="<?php echo esc_attr( $cat->slug ); ?>" <?php selected( $xylusec_filter_category, $cat->slug ); ?>><?php echo esc_html( $cat->name ); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+
+			<div class="eec-filter-select-wrap">
+				<select name="eec_collection" class="eec-filter-select">
+					<option value=""><?php esc_html_e( 'All Collections', 'xylus-events-calendar' ); ?></option>
+					<?php foreach ( $xylusec_all_collections as $col ) : ?>
+						<option value="<?php echo esc_attr( $col->slug ); ?>" <?php selected( $xylusec_filter_collection, $col->slug ); ?>><?php echo esc_html( $col->name ); ?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>
@@ -104,7 +115,7 @@ if ( $xylusec_eec_view === 'venue_root' ) {
 				</button>
 			</div>
 
-			<?php if ( $xylusec_filter_search || $xylusec_filter_category || $xylusec_filter_venue || $xylusec_filter_organizer ) : ?>
+			<?php if ( $xylusec_filter_search || $xylusec_filter_category || $xylusec_filter_collection || $xylusec_filter_venue || $xylusec_filter_organizer ) : ?>
 				<?php 
 				$xylusec_reset_url = get_post_type_archive_link( 'eec_events' );
 				if ( $xylusec_eec_view === 'venue_root' ) {
@@ -113,6 +124,8 @@ if ( $xylusec_eec_view === 'venue_root' ) {
 					$xylusec_reset_url = home_url( '/eec-organizer/' );
 				} elseif ( $xylusec_eec_view === 'category_root' ) {
 					$xylusec_reset_url = home_url( '/eec-category/' );
+				} elseif ( $xylusec_eec_view === 'collection_root' ) {
+					$xylusec_reset_url = home_url( '/eec-collection/' );
 				} elseif ( $xylusec_eec_view === 'tag_root' ) {
 					$xylusec_reset_url = home_url( '/eec-tag/' );
 				}

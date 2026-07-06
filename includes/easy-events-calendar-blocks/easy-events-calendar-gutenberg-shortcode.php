@@ -6,12 +6,14 @@ function easy_events_calendar_gutenberg_shortcode( $atts ) {
         'style' => 'style1',
         'limit' => 5,
         'category' => '',
+        'collection' => '',
     ), $atts, 'easy_events_calendar_gutenberg' );
 
 
     $category = array();
     $style    = sanitize_text_field( $atts['style'] );
     $category['category'] = sanitize_text_field( $atts['category'] );
+    $category['collection'] = sanitize_text_field( $atts['collection'] );
     $limit    = absint( $atts['limit'] );
     $category_json = wp_json_encode( $category );
 

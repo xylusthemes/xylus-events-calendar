@@ -567,8 +567,161 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
 }
 
 
+class Easy_Events_Calendar_Mini_Widget extends WP_Widget {
+
+    public $xylusec_options;
+
+    function __construct() {
+        $this->xylusec_options = get_option( XYLUSEC_OPTIONS, true );
+
+        parent::__construct(
+            'easy_events_calendar_mini_widget',
+            esc_attr( 'Easy Events Calendar – Mini Calendar Widget', 'xylus-events-calendar' ),
+            array( 'description' => esc_attr( 'Display the premium mini calendar with event list sidebar.', 'xylus-events-calendar' ) )
+        );
+    }
+
+    // Widget frontend output
+    public function widget( $args, $instance ) {
+        echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+        $category = ! empty( $instance['category'] ) ? $instance['category'] : '';
+        $collection = ! empty( $instance['collection'] ) ? $instance['collection'] : '';
+        $show_image = isset( $instance['show_image'] ) ? (bool) $instance['show_image'] : true;
+        $show_location = isset( $instance['show_location'] ) ? (bool) $instance['show_location'] : true;
+        $show_date = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : true;
+        $show_organizer = isset( $instance['show_organizer'] ) ? (bool) $instance['show_organizer'] : false;
+
+        if ( ! empty( $title ) ) {
+            echo $args['before_title'] . apply_filters( 'widget_title', $title ) . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        }
+
+        // Render mini calendar using the existing shortcode
+        $shortcode = '[easy_event_calendar_mini';
+        if ( ! empty( $category ) ) {
+            $shortcode .= ' category="' . esc_attr( $category ) . '"';
+        }
+        if ( ! empty( $collection ) ) {
+            $shortcode .= ' collection="' . esc_attr( $collection ) . '"';
+        }
+        $shortcode .= ' show_image="' . ( $show_image ? 'true' : 'false' ) . '"';
+        $shortcode .= ' show_location="' . ( $show_location ? 'true' : 'false' ) . '"';
+        $shortcode .= ' show_date="' . ( $show_date ? 'true' : 'false' ) . '"';
+        $shortcode .= ' show_organizer="' . ( $show_organizer ? 'true' : 'false' ) . '"';
+        $shortcode .= ']';
+
+        echo do_shortcode( $shortcode );
+
+        echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    }
+
+    // Widget backend form
+    public function form( $instance ) {
+        global $xylusec_events_calendar;
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+        $category = ! empty( $instance['category'] ) ? $instance['category'] : '';
+        $collection = ! empty( $instance['collection'] ) ? $instance['collection'] : '';
+        $show_image = isset( $instance['show_image'] ) ? (bool) $instance['show_image'] : true;
+        $show_location = isset( $instance['show_location'] ) ? (bool) $instance['show_location'] : true;
+        $show_date = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : true;
+        $show_organizer = isset( $instance['show_organizer'] ) ? (bool) $instance['show_organizer'] : false;
+
+        $get_optiom = get_option( XYLUSEC_OPTIONS, true );
+        $selected_post_type = isset( $get_optiom['xylusec_event_source'] ) ? $get_optiom['xylusec_event_source'] : '';
+        $selected_taxonomy  = $xylusec_events_calendar->common->get_selected_post_type_category( $selected_post_type );
+        $terms = array();
+        if ( ! empty( $selected_taxonomy ) ) {
+            $terms = get_terms( array(
+                'taxonomy'   => $selected_taxonomy,
+                'hide_empty' => false,
+            ) );
+        }
+
+        $collections = get_terms( array(
+            'taxonomy'   => 'eec_collection',
+            'hide_empty' => false,
+        ) );
+        ?>
+        <p>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'xylus-events-calendar' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
+                name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
+                value="<?php echo esc_attr( $title ); ?>">
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id( 'category' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+                <?php echo esc_html__( 'Select Category', 'xylus-events-calendar' ); ?>
+            </label>
+            <select class="widefat"
+                id="<?php echo $this->get_field_id( 'category' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"
+                name="<?php echo $this->get_field_name( 'category' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+                <option value=""><?php echo esc_html__( 'All Categories', 'xylus-events-calendar' ); ?></option>
+                <?php
+                if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+                    foreach ( $terms as $term ) {
+                        $selected = ( $category == $term->slug ) ? 'selected' : '';
+                        echo '<option value="' . esc_attr( $term->slug ) . '" ' . esc_attr( $selected ) . '>' . esc_html( $term->name ) . '</option>';
+                    }
+                }
+                ?>
+            </select>
+        </p>
+        <?php if ( ! empty( $collections ) && ! is_wp_error( $collections ) ) : ?>
+        <p>
+            <label for="<?php echo $this->get_field_id( 'collection' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+                <?php echo esc_html__( 'Select Collection', 'xylus-events-calendar' ); ?>
+            </label>
+            <select class="widefat"
+                id="<?php echo $this->get_field_id( 'collection' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"
+                name="<?php echo $this->get_field_name( 'collection' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+                <option value=""><?php echo esc_html__( 'All Collections', 'xylus-events-calendar' ); ?></option>
+                <?php
+                foreach ( $collections as $collection_term ) {
+                    $selected = ( $collection == $collection_term->slug ) ? 'selected' : '';
+                    echo '<option value="' . esc_attr( $collection_term->slug ) . '" ' . esc_attr( $selected ) . '>' . esc_html( $collection_term->name ) . '</option>';
+                }
+                ?>
+            </select>
+        </p>
+        <?php endif; ?>
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked( $show_image, true ); ?> id="<?php echo esc_attr( $this->get_field_id( 'show_image' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_image' ) ); ?>" />
+            <label for="<?php echo esc_attr( $this->get_field_id( 'show_image' ) ); ?>"><?php esc_html_e( 'Show Event Image', 'xylus-events-calendar' ); ?></label>
+        </p>
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked( $show_location, true ); ?> id="<?php echo esc_attr( $this->get_field_id( 'show_location' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_location' ) ); ?>" />
+            <label for="<?php echo esc_attr( $this->get_field_id( 'show_location' ) ); ?>"><?php esc_html_e( 'Show Location', 'xylus-events-calendar' ); ?></label>
+        </p>
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked( $show_date, true ); ?> id="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_date' ) ); ?>" />
+            <label for="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>"><?php esc_html_e( 'Show Event Date', 'xylus-events-calendar' ); ?></label>
+        </p>
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked( $show_organizer, true ); ?> id="<?php echo esc_attr( $this->get_field_id( 'show_organizer' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_organizer' ) ); ?>" />
+            <label for="<?php echo esc_attr( $this->get_field_id( 'show_organizer' ) ); ?>"><?php esc_html_e( 'Show Event Organizer', 'xylus-events-calendar' ); ?></label>
+        </p>
+        <?php
+    }
+
+    // Save widget form values
+    public function update( $new_instance, $old_instance ) {
+        $instance = array();
+        $instance['title'] = sanitize_text_field( $new_instance['title'] );
+        $instance['category'] = sanitize_text_field( $new_instance['category'] );
+        $instance['collection'] = sanitize_text_field( $new_instance['collection'] );
+        $instance['show_image'] = isset( $new_instance['show_image'] ) ? (bool) $new_instance['show_image'] : false;
+        $instance['show_location'] = isset( $new_instance['show_location'] ) ? (bool) $new_instance['show_location'] : false;
+        $instance['show_date'] = isset( $new_instance['show_date'] ) ? (bool) $new_instance['show_date'] : false;
+        $instance['show_organizer'] = isset( $new_instance['show_organizer'] ) ? (bool) $new_instance['show_organizer'] : false;
+        return $instance;
+    }
+}
+
+
 // Register widget
 function easy_events_calendar_register_widget() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
     register_widget( 'Easy_Events_Calendar_Widgets' );
+    register_widget( 'Easy_Events_Calendar_Mini_Widget' );
 }
 add_action( 'widgets_init', 'easy_events_calendar_register_widget' );
