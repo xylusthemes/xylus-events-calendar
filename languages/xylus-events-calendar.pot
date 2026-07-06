@@ -170,7 +170,7 @@ msgid "Support"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-common.php:91
-#: xylus-events-calendar.php:192
+#: xylus-events-calendar.php:194
 msgid "Docs"
 msgstr ""
 
@@ -1463,12 +1463,12 @@ msgstr ""
 msgid "Venue Location Map"
 msgstr ""
 
-#: xylus-events-calendar.php:94
-#: xylus-events-calendar.php:103
+#: xylus-events-calendar.php:95
+#: xylus-events-calendar.php:104
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: xylus-events-calendar.php:187
+#: xylus-events-calendar.php:189
 msgid "Setting"
 msgstr ""
 
