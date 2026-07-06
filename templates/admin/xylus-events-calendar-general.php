@@ -194,6 +194,38 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
                         </div>
                     </div>
 
+                    <!-- Master iCal Feed -->
+                    <div class="xylusec-setting-row">
+                        <div class="xylusec-inner-section-1">
+                            <label><?php esc_attr_e( 'Master iCal Feed URL', 'xylus-events-calendar' ); ?></label>
+                            <span class="row-desc"><?php esc_attr_e( 'Copy this URL to subscribe to all upcoming published events in Google Calendar, Apple Calendar, or Outlook.', 'xylus-events-calendar' ); ?></span>
+                        </div>
+                        <div class="xylusec-inner-section-2">
+                            <div style="display: flex; gap: 12px; align-items: center; width: 100%;">
+                                <input type="text" readonly="readonly" value="<?php echo esc_url( site_url( '?xylusec_ical_feed=1' ) ); ?>" style="background: #f1f5f9; border: 1px solid #cbd5e1; font-family: monospace; font-size: 13px; font-weight: 600; color: #334155; padding: 10px 14px; border-radius: 6px; flex-grow: 1; width: 100%;" id="xylusec_master_ical_url">
+                                <button type="button" class="xylusec-btn-copy-shortcode button-primary" data-value="<?php echo esc_url( site_url( '?xylusec_ical_feed=1' ) ); ?>" style="background-color: var(--xec-primary-color, #005AE0); border: none; border-radius: 6px; font-weight: 600; color: #ffffff; cursor: pointer; height: 38px; padding: 0 20px;"><?php esc_html_e( 'Copy', 'xylus-events-calendar' ); ?></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Event Schema -->
+                    <div class="xylusec-setting-row">
+                        <div class="xylusec-inner-section-1">
+                            <label><?php esc_attr_e( 'Enable Event Schema', 'xylus-events-calendar' ); ?></label>
+                            <span class="row-desc"><?php esc_attr_e( 'Output JSON-LD schema on single event pages for Google Rich Results (SEO).', 'xylus-events-calendar' ); ?></span>
+                        </div>
+                        <div class="xylusec-inner-section-2">
+                            <?php $enable_schema = $xylusec_options['xylusec_enable_schema'] ?? 'yes'; ?>
+                            <div class="xylusec-filter-card <?php echo $enable_schema === 'yes' ? 'is-active' : ''; ?>" style="max-width: 450px;">
+                                <span class="xylusec-filter-card-label"><?php esc_html_e( 'Enable JSON-LD SEO', 'xylus-events-calendar' ); ?></span>
+                                <label class="xylusec-switch">
+                                    <input type="checkbox" class="xylusec-filter-checkbox" name="xylusec_enable_schema" value="yes" <?php checked( $enable_schema, 'yes' ); ?>>
+                                    <span class="xylusec-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Appearance Options -->
                     <div class="xylusec-setting-row">
                         <div class="xylusec-inner-section-1">

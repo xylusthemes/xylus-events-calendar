@@ -410,6 +410,72 @@ while ( have_posts() ) : the_post();
 							</a>
 						<?php endif; ?>
 
+						<!-- Add to Calendar -->
+						<?php
+						$cal_urls = Xylus_Events_Calendar_iCal::get_calendar_urls( $xylusec_event_id );
+						if ( ! empty( $cal_urls ) ) :
+						?>
+							<div class="event-divider"></div>
+							<div class="eec-add-to-calendar-wrap" style="position: relative;">
+								<button type="button" class="eec-single-register-btn eec-add-to-calendar-btn" onclick="this.nextElementSibling.classList.toggle('show');">
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+									</svg>
+									<?php esc_html_e( 'Add to Calendar', 'xylus-events-calendar' ); ?>
+								</button>
+								<div class="eec-add-to-calendar-dropdown">
+									<a href="<?php echo esc_url( $cal_urls['google'] ); ?>" target="_blank" rel="noopener noreferrer">Google Calendar</a>
+									<a href="<?php echo esc_url( $cal_urls['yahoo'] ); ?>" target="_blank" rel="noopener noreferrer">Yahoo Calendar</a>
+									<a href="<?php echo esc_url( $cal_urls['ics'] ); ?>">Apple / Outlook (ICS)</a>
+								</div>
+							</div>
+							<style>
+							.eec-add-to-calendar-dropdown {
+								display: none; position: absolute; top: calc(100% + 5px); left: 0; right: 0; z-index: 100;
+								background: #fff; border: 1px solid #eee; border-radius: 8px;
+								box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden;
+							}
+							.eec-add-to-calendar-dropdown a {
+								display: block; padding: 12px 15px; color: #334155 !important;
+								text-decoration: none !important; font-size: 14px; font-weight: 500;
+								border-bottom: 1px solid #f1f5f9; outline: none !important; transition: all 0.2s ease;
+							}
+							.eec-add-to-calendar-dropdown a:last-child {
+								border-bottom: none;
+							}
+							.eec-add-to-calendar-dropdown a:hover,
+							.eec-add-to-calendar-dropdown a:focus {
+								background: #f8fafc; color: var(--xec-primary-color, #005AE0) !important;
+								outline: none !important; box-shadow: none !important;
+							}
+							</style>
+							<script>
+							document.addEventListener('click', function(e) {
+								if (!e.target.closest('.eec-add-to-calendar-wrap')) {
+									var dropdowns = document.querySelectorAll('.eec-add-to-calendar-dropdown');
+									dropdowns.forEach(function(d) {
+										d.style.display = 'none';
+										d.classList.remove('show');
+									});
+								}
+							});
+							var calBtn = document.querySelector('.eec-add-to-calendar-btn');
+							if (calBtn) {
+								calBtn.addEventListener('click', function(e) {
+									e.preventDefault();
+									var dropdown = this.nextElementSibling;
+									if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+										dropdown.style.display = 'block';
+									} else {
+										dropdown.style.display = 'none';
+									}
+								});
+								// Remove the inline onclick so it doesn't conflict
+								calBtn.removeAttribute('onclick');
+							}
+							</script>
+						<?php endif; ?>
+
 						<div class="event-divider"></div>
 
 						<!-- Share -->

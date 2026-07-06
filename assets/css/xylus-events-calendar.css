@@ -1418,8 +1418,8 @@
 /* Clear Button */
 .xylusec-filter-clear-btn {
     background-color: transparent;
-    color: #ef4444;
-    border: 1px solid #ef4444;
+    color: var(--xec-primary-color, #005AE0);
+    border: 1px solid var(--xec-primary-color, #005AE0);
     padding: 6px 14px;
     border-radius: 20px;
     cursor: pointer;
@@ -1432,7 +1432,7 @@
 }
 
 .xylusec-filter-clear-btn:hover {
-    background-color: #ef4444;
+    background-color: var(--xec-primary-color, #005AE0);
     color: #ffffff;
     transform: translateY(-1px);
 }

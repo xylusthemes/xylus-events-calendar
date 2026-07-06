@@ -1112,11 +1112,11 @@
       display: inline-flex;
       align-items: center;
       padding: 0.7rem 1.25rem;
-      color: #e53e3e;
+      color: var(--xec-primary-color, #005AE0);
       font-size: 0.9rem;
       font-weight: 500;
-      background: #fff5f5;
-      border: 1px solid #fed7d7;
+      background: #ffffff;
+      border: 1px solid var(--xec-primary-color, #005AE0);
       border-radius: 10px;
       text-decoration: none;
       transition: all 0.3s ease;
@@ -1124,8 +1124,8 @@
     }
 
     .eec-filter-reset:hover {
-      background: #fed7d7;
-      color: #c53030;
+      background: var(--xec-primary-color, #005AE0);
+      color: #ffffff;
     }
 
     /* Results Info */
