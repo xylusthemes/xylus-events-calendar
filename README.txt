@@ -4,9 +4,11 @@ Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
 Tested up to: 7.0 
 Requires PHP: 8.0 
-Stable tag: 1.1.0  
+Stable tag: 1.1.1  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
+
+A powerful, modern, and flexible WordPress event calendar with advanced recurring events, mini calendar, iCal sync, and real-time AJAX filtering.
 
 == Description ==
 
@@ -14,7 +16,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Create, manage, and display events with ease — whether they are internal events or imported from platforms like Eventbrite, Meetup, or Facebook.
 
-⚡ Includes advanced recurring events + real-time AJAX event discovery for a premium user experience.
+⚡ Includes advanced recurring events, real-time AJAX event discovery, Mini Calendar widgets, and seamless "Add to Calendar" integration for a premium user experience.
 
 📖 [Documentation](http://docs.xylusthemes.com/docs/easy-events-calendar/)  | 🔗 [Plugin Website](https://xylusthemes.com/plugins/easy-events-calendar/)
 
@@ -27,6 +29,7 @@ Create, manage, and display events with ease — whether they are internal event
 🔗 Supports internal + external events  
 📱 Fully responsive design  
 🔍 Advanced AJAX filtering system  
+📆 Built-in Mini Calendar & "Add to Calendar" Sync
 
 ---
 
@@ -44,8 +47,9 @@ Create, manage, and display events with ease — whether they are internal event
 
 === 🔍 Smart Event Discovery (AJAX Powered) ===
 * Real-time event filtering without page reload
-* Filter by Category, Tag, Venue, and Organizer
+* Filter by Category, Tag, Venue, Organizer, Date Range, Day, and Time
 * Fast and smooth user experience
+* Option to display past events when upcoming events are not available
 
 👉 Shortcode:
 **[eec_events_discovery]**
@@ -55,6 +59,19 @@ Create, manage, and display events with ease — whether they are internal event
 * Venue management 📍
 * Organizer management 👤
 * Dedicated archive pages
+
+=== 📅 Calendar Export & Sync ===
+* "Add to Calendar" buttons for individual events
+* Support for Google Calendar, Yahoo Calendar, and iCalendar (.ics) downloads
+* Global iCal feed link for syncing all upcoming events
+
+=== 🗓️ Mini Calendar & Tools ===
+* Compact Mini Calendar view for sidebars
+* Includes a dedicated Mini Calendar widget
+* Built-in Feedback form for user engagement
+
+👉 Shortcode:
+**[easy_event_calendar_mini]**
 
 === 🎨 Modern UI Design ===
 * Clean and professional layouts
@@ -80,6 +97,7 @@ Create, manage, and display events with ease — whether they are internal event
 📋 List View – Clean listing format  
 🧩 Staggered (Masonry) – Dynamic layout  
 🎞️ Slider View – Interactive event slider  
+🗓️ Mini Calendar – Compact sidebar calendar view
 
 ---
 
@@ -109,6 +127,9 @@ No. The plugin is optimized with efficient SQL queries and AJAX loading to ensur
 = 🏷️ Can I filter events by category or organizer? =
 Yes. Users can filter events by Category, Tag, Venue, and Organizer using the AJAX-powered discovery system.
 
+= 🗓️ How do I add a Mini Calendar to my sidebar? =
+You can easily display a compact Mini Calendar in your sidebar, footer, or any widget area by using the `[easy_event_calendar_mini]` shortcode. This view is fully responsive and perfect for saving space.
+
 == 🔗 Supported External Sources ==
 
 Easy Events Calendar also works seamlessly with the following third-party plugins:
@@ -135,6 +156,7 @@ Use the following shortcodes to display events on your website:
 
 **[eec_events_discovery]** – Displays AJAX-powered event discovery with filters.
 **[easy_events_calendar]** – Shows the classic events calendar view. 
+**[easy_event_calendar_mini]** – Displays the compact Mini Calendar.
 
 ---
 
@@ -151,10 +173,24 @@ Use the following shortcodes to display events on your website:
 9. Event Widget Backend – Configure event widgets with flexible backend options.
 10. Event Widget Frontend – Display selected events beautifully on your website.
 11. Gutenberg Block – Add and manage event layouts directly in the block editor. 
+12. Mini Calendar (Widget) – Display a compact interactive calendar in the sidebar.
+13. Single Event Page – View full details, location, and add to calendar options for an event.
 
 ---
 
 == 📜 Changelog ==
+
+= 1.1.1 =
+* ADDED: Custom Recurring events Option.
+* ADDED: "Add to Calendar" integration with Google Calendar, Yahoo Calendar, and iCalendar (.ics) file download.
+* ADDED: iCal feed link for all upcoming events.
+* ADDED: Mini Calendar view.
+* ADDED: Mini Calendar widget for sidebars.
+* ADDED: Feedback form.
+* ADDED: Advanced event filters including Category, Tag, Location, Organizer, Date From, Date To, Day, and Time.
+* ADDED: Option to display past events when no upcoming events are available.
+* IMPROVEMENTS: Completely modernized and premium admin GUI, replacing basic design settings.
+* IMPROVEMENTS: Enhanced security through improved data sanitization.
 
 = 1.1.0 =
 * ADDED: New "Related Events" support with term-based matching (Category, Tag, Venue, Organizer) to automatically display related events.
