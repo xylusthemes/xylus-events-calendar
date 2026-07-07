@@ -4,16 +4,17 @@
 
 .xylus-events-calendar-deactivate-dialog.ui-dialog {
     border: none !important;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
     border-radius: 12px !important;
     padding: 0 !important;
     overflow: hidden;
+    transition: top 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 .xylus-events-calendar-deactivate-dialog .ui-dialog-titlebar {
     display: none;
 }
 .xylus-events-calendar-deactivate-dialog .ui-dialog-content {
-    padding: 30px !important;
+    padding: 30px 30px 15px 30px !important;
     background: #fff;
 }
 .xylus-events-calendar-deactivate-dialog .ui-dialog-buttonpane {
@@ -31,7 +32,7 @@
     align-items: center;
 }
 .xec-dialog-header {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     position: relative;
 }
 .xec-dialog-close-btn {
@@ -53,13 +54,13 @@
     justify-content: center;
     transition: all 0.2s ease;
     z-index: 10;
-    font-size: 2em !important;
+    font-size: 25px !important;
 }
 .xec-dialog-close-btn:hover {
     background: #fff;
     color: #1d2327;
-    border-color: #2c3e50;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-color: #005AE0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .xec-dialog-header h2 {
     font-size: 24px !important;
@@ -80,30 +81,34 @@
     display: flex;
     align-items: center;
     padding: 12px 15px;
-    background: #f6f7f7;
-    border: 1px solid #dcdcde;
-    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #ccd0d4;
+    border-radius: 6px;
     margin-bottom: 8px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 .xec-reason-item:hover {
-    border-color: #2c3e50;
-    background: #f0f6fb;
+    border-color: #005AE0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
 }
 .xec-reason-item.active {
-    border-color: #2c3e50;
-    background: #eff6ff;
-    box-shadow: 0 0 0 1px #2c3e50;
+    border-color: #005AE0;
+    background: #f0f7ff;
 }
 .xec-reason-item input[type="radio"] {
     margin: 0 12px 0 0 !important;
     pointer-events: none;
 }
 .xec-reason-item span {
-    font-size: 15px;
-    color: #1d2327;
-    font-weight: 500;
+    font-size: 13.5px;
+    color: #334155;
+    font-weight: 600;
+}
+.xec-reason-item.active span {
+    color: #005AE0;
 }
 .xec-feedback-textarea-wrap {
     margin-top: 20px;
@@ -128,39 +133,45 @@
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    border-radius: 6px !important;
-    padding: 0 24px !important;
+    border-radius: 4px !important;
+    padding: 10px 15px !important;
     font-size: 14px !important;
     font-weight: 600 !important;
-    height: 40px !important;
-    line-height: 40px !important;
-    transition: all 0.2s ease !important;
+    height: auto !important;
+    line-height: normal !important;
+    transition: background-color .2s ease !important;
     box-sizing: border-box !important;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: normal;
+    text-decoration: none;
 }
 .xec-submit-btn {
-    background: #2c3e50 !important;
-    border-color: #2c3e50 !important;
+    background-color: #005AE0 !important;
+    border: 0 !important;
     color: #fff !important;
+    box-shadow: none !important;
 }
-.xec-submit-btn:hover {
-    background: #1a252f !important;
-    border-color: #1a252f !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.xec-submit-btn:hover, .xec-submit-btn:active, .xec-submit-btn:focus {
+    background-color: #0049b3 !important;
+    border: 0 !important;
+    color: #fff !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 .xec-skip-btn {
-    background: transparent !important;
+    background: #f6f7f7 !important;
     border: 1px solid #dcdcde !important;
-    color: #646970 !important;
+    color: #2271b1 !important;
     margin: 0 !important;
 }
-.xec-skip-btn:hover {
-    background: #f6f7f7 !important;
-    color: #1d2327 !important;
+.xec-skip-btn:hover, .xec-skip-btn:focus {
+    background: #f0f0f1 !important;
+    border-color: #0a4b78 !important;
+    color: #0a4b78 !important;
 }
 .xec-footer-notice {
     font-size: 12px;
     color: #8c8f94;
-    margin-top: 15px;
     text-align: center;
 }

@@ -170,7 +170,14 @@ if ( ! class_exists( 'Xylus_Events_Calendar_Deactivation' ) ) {
                             'dialogClass'   : '<?php echo esc_attr( $this->slug ) . "-deactivate-dialog"; ?>',
                             'modal'         : true,
                             'closeOnEscape' : true,
-                            width: 550,
+                            width: 600,
+                            maxHeight: jQuery(window).height() - 50,
+                            open: function() {
+                                jQuery('body').css('overflow', 'hidden');
+                            },
+                            close: function() {
+                                jQuery('body').css('overflow', '');
+                            },
                             'buttons'       : [
                                 {
                                     text: "Submit & Deactivate",
@@ -246,7 +253,8 @@ if ( ! class_exists( 'Xylus_Events_Calendar_Deactivation' ) ) {
                         }
 
                         customerQuery.attr("placeholder", placeholder);
-                        jQuery('.xec-feedback-textarea-wrap').slideDown();
+                        jQuery('.xec-feedback-textarea-wrap').fadeIn(200);
+                        jQuery('#<?php echo esc_attr( $this->slug ); ?>-deactivate-dialog').dialog('option', 'position', {my: "center", at: "center", of: window});
                     });
                 });
             </script>

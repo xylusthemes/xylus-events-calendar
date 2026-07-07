@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-06T06:39:37+00:00\n"
+"POT-Creation-Date: 2026-07-07T09:51:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: xylus-events-calendar\n"
@@ -170,7 +170,7 @@ msgid "Support"
 msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-common.php:91
-#: xylus-events-calendar.php:194
+#: xylus-events-calendar.php:196
 msgid "Docs"
 msgstr ""
 
@@ -781,52 +781,52 @@ msgstr ""
 msgid "Other reasons"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:231
-#: includes/admin/class-xylus-events-calendar-deactivation.php:273
+#: includes/admin/class-xylus-events-calendar-deactivation.php:238
+#: includes/admin/class-xylus-events-calendar-deactivation.php:281
 msgid "Write your query here"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:234
+#: includes/admin/class-xylus-events-calendar-deactivation.php:241
 msgid "Finding it confusing? let us know so that we can improve the interface"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:236
+#: includes/admin/class-xylus-events-calendar-deactivation.php:243
 msgid "Can you let us know the reason for deactivation (Required)"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:239
+#: includes/admin/class-xylus-events-calendar-deactivation.php:246
 msgid "Can you please let us know about the bug/issue in detail?"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:241
+#: includes/admin/class-xylus-events-calendar-deactivation.php:248
 msgid "Can you please let us know which plugin you found helpful"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:243
+#: includes/admin/class-xylus-events-calendar-deactivation.php:250
 msgid "Can you please let us know more about the feature you want"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:245
+#: includes/admin/class-xylus-events-calendar-deactivation.php:252
 msgid "Can you please let us know more about your requirement"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:255
+#: includes/admin/class-xylus-events-calendar-deactivation.php:263
 msgid "Close dialog"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:256
+#: includes/admin/class-xylus-events-calendar-deactivation.php:264
 msgid "Quick Feedback"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:257
+#: includes/admin/class-xylus-events-calendar-deactivation.php:265
 msgid "Could you please share why you are deactivating Easy Events Calendar?"
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:277
+#: includes/admin/class-xylus-events-calendar-deactivation.php:285
 msgid "* By submitting this form, you will also be sending us your email address & website URL."
 msgstr ""
 
-#: includes/admin/class-xylus-events-calendar-deactivation.php:283
+#: includes/admin/class-xylus-events-calendar-deactivation.php:291
 msgid "Submitting your feedback..."
 msgstr ""
 
@@ -926,6 +926,10 @@ msgstr ""
 
 #: includes/admin/class-xylus-events-calendar-widgets.php:702
 msgid "Show Event Organizer"
+msgstr ""
+
+#: includes/class-xylus-events-calendar-ical.php:80
+msgid "Event not found or not published."
 msgstr ""
 
 #: includes/elementor/class-eec-elementor-widget.php:14
@@ -1078,30 +1082,42 @@ msgid "Choose which day of the week is displayed in the first column of the mont
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-general.php:200
-msgid "Appearance Colors"
+msgid "Master iCal Feed URL"
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-general.php:201
+msgid "Copy this URL to subscribe to all upcoming published events in Google Calendar, Apple Calendar, or Outlook."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:206
+msgid "Copy"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:215
+msgid "Appearance Colors"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-general.php:216
 msgid "Customize primary button background, text, and title colors across your events calendar views."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:207
+#: templates/admin/xylus-events-calendar-general.php:222
 msgid "Primary Brand Color"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:208
+#: templates/admin/xylus-events-calendar-general.php:223
 msgid "Button Background Color"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:209
+#: templates/admin/xylus-events-calendar-general.php:224
 msgid "Button Text Color"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:210
+#: templates/admin/xylus-events-calendar-general.php:225
 msgid "Event Title Color"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-general.php:237
+#: templates/admin/xylus-events-calendar-general.php:252
 #: templates/admin/xylus-events-calendar-widget.php:75
 msgid "Save Settings"
 msgstr ""
@@ -1114,87 +1130,103 @@ msgstr ""
 msgid "Primary Calendar Shortcodes"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:32
-msgid "Default Event Calendar"
-msgstr ""
-
 #: templates/admin/xylus-events-calendar-shortcode.php:33
-msgid "Explore upcoming events in various layouts, including a calendar, grid, list, and more."
+msgid "Calendar Month View"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:46
-msgid "Filter Events by Category"
+#: templates/admin/xylus-events-calendar-shortcode.php:34
+msgid "Display a traditional full-month calendar view."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-shortcode.php:47
-msgid "Display events belonging to a specific category."
+msgid "Grid Layout"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:60
-msgid "Filter Events by Collection"
+#: templates/admin/xylus-events-calendar-shortcode.php:48
+msgid "Display events in a clean grid layout (default)."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-shortcode.php:61
-msgid "Display events belonging to a specific collection."
+msgid "Row Layout"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:74
-msgid "Event Discovery Archive"
+#: templates/admin/xylus-events-calendar-shortcode.php:62
+msgid "Display events in a stacked row (list) layout."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-shortcode.php:75
-msgid "Display the events discovery/archive layout with filters and search options."
+msgid "Staggered Layout"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:95
+#: templates/admin/xylus-events-calendar-shortcode.php:76
+msgid "Display events in a dynamic masonry/staggered layout."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:89
+msgid "Slider / Carousel View"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:90
+msgid "Display events inside an interactive slider."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:103
+msgid "Filter by Category"
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:104
+msgid "Display events belonging to a specific category."
+msgstr ""
+
+#: templates/admin/xylus-events-calendar-shortcode.php:171
 msgid "Mini Calendar Shortcodes"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:105
+#: templates/admin/xylus-events-calendar-shortcode.php:182
 msgid "Mini Calendar (Default)"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:106
+#: templates/admin/xylus-events-calendar-shortcode.php:183
 msgid "Display the premium mini calendar with event list sidebar using default settings."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:119
+#: templates/admin/xylus-events-calendar-shortcode.php:196
 msgid "Mini Calendar Category Filter"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:120
+#: templates/admin/xylus-events-calendar-shortcode.php:197
 msgid "Limit the mini calendar and sidebar to events under a specific category."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:133
+#: templates/admin/xylus-events-calendar-shortcode.php:210
 msgid "Mini Calendar without Images"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:134
+#: templates/admin/xylus-events-calendar-shortcode.php:211
 msgid "Display the mini calendar and sidebar list with event images hidden."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:147
+#: templates/admin/xylus-events-calendar-shortcode.php:224
 msgid "Mini Calendar without Locations"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:148
+#: templates/admin/xylus-events-calendar-shortcode.php:225
 msgid "Hide venue/location names on all event cards in the sidebar."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:161
+#: templates/admin/xylus-events-calendar-shortcode.php:238
 msgid "Mini Calendar without Dates"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:162
+#: templates/admin/xylus-events-calendar-shortcode.php:239
 msgid "Hide event start dates and times in the sidebar list."
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:175
+#: templates/admin/xylus-events-calendar-shortcode.php:252
 msgid "Mini Calendar with Organizers"
 msgstr ""
 
-#: templates/admin/xylus-events-calendar-shortcode.php:176
+#: templates/admin/xylus-events-calendar-shortcode.php:253
 msgid "Display the event organizer details on each card in the sidebar list."
 msgstr ""
 
@@ -1516,31 +1548,35 @@ msgstr ""
 msgid "Register Now"
 msgstr ""
 
-#: templates/single-eec_events.php:417
+#: templates/single-eec_events.php:424
+msgid "Add to Calendar"
+msgstr ""
+
+#: templates/single-eec_events.php:483
 msgid "Share This Event"
 msgstr ""
 
-#: templates/single-eec_events.php:423
+#: templates/single-eec_events.php:489
 msgid "Share on Facebook"
 msgstr ""
 
-#: templates/single-eec_events.php:426
+#: templates/single-eec_events.php:492
 msgid "Share on X"
 msgstr ""
 
-#: templates/single-eec_events.php:429
+#: templates/single-eec_events.php:495
 msgid "Share on LinkedIn"
 msgstr ""
 
-#: templates/single-eec_events.php:432
+#: templates/single-eec_events.php:498
 msgid "Share via Email"
 msgstr ""
 
-#: templates/single-eec_events.php:445
+#: templates/single-eec_events.php:511
 msgid "Event Location"
 msgstr ""
 
-#: templates/single-eec_events.php:464
+#: templates/single-eec_events.php:530
 msgid "Event Location Map"
 msgstr ""
 
@@ -1548,12 +1584,12 @@ msgstr ""
 msgid "Venue Location Map"
 msgstr ""
 
-#: xylus-events-calendar.php:95
-#: xylus-events-calendar.php:104
+#: xylus-events-calendar.php:96
+#: xylus-events-calendar.php:105
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: xylus-events-calendar.php:189
+#: xylus-events-calendar.php:191
 msgid "Setting"
 msgstr ""
 
