@@ -586,7 +586,6 @@ class Xylus_Events_Calendar_Admin
 				'xylusec_filter_show_time' => isset($_POST['xylusec_filter_show_time']) ? 'yes' : 'no',
 				'xylusec_filter_show_date_from' => isset($_POST['xylusec_filter_show_date_from']) ? 'yes' : 'no',
 				'xylusec_filter_show_date_to' => isset($_POST['xylusec_filter_show_date_to']) ? 'yes' : 'no',
-				'xylusec_enable_schema' => isset($_POST['xylusec_enable_schema']) ? 'yes' : 'no',
 				'xylusec_events_per_page' => esc_attr(sanitize_text_field(wp_unslash(absint($_POST['xylusec_events_per_page'] ?? 10)))),
 				'xylusec_load_more_label' => esc_attr(sanitize_text_field(wp_unslash($_POST['xylusec_load_more_label'] ?? ''))),
 				'xylusec_view_details_label' => esc_attr(sanitize_text_field(wp_unslash($_POST['xylusec_view_details_label'] ?? ''))),
@@ -748,7 +747,6 @@ class Xylus_Events_Calendar_Admin
 					'xylusec_button_color' => $primary_color,
 					'xylusec_text_color' => $text_color,
 					'xylusec_event_title_color' => $primary_color,
-					'xylusec_enable_schema' => 'yes',
 				];
 
 				update_option(XYLUSEC_OPTIONS, $defaults);
