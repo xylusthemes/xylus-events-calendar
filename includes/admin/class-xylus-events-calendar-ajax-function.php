@@ -185,13 +185,12 @@ class Xylus_Events_Calendar_Ajax_Handler {
 
 			// Apply Date From & To
 			if ( ! empty( $date_from ) ) {
-				$query_str .= $wpdb->prepare( " AND i.start_date >= %s", $date_from . ' 00:00:00' );
+				$query_str .= $wpdb->prepare( " AND i.end_date >= %s", $date_from . ' 00:00:00' );
 			}
 			if ( ! empty( $date_to ) ) {
-				$query_str .= $wpdb->prepare( " AND i.end_date <= %s", $date_to . ' 23:59:59' );
+				$query_str .= $wpdb->prepare( " AND i.start_date <= %s", $date_to . ' 23:59:59' );
 			}
 
-			error_log( print_r( $query_str, true ) );
 
 			$results = $wpdb->get_results( $query_str ); //phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			
@@ -507,7 +506,8 @@ class Xylus_Events_Calendar_Ajax_Handler {
 						}
 						
 						if ( $show_image && $thumb_html ) {
-							echo '<div class="xylusec-image-anchor-container" > <a href="' . esc_url( $event_url ) . '" ' . $target . '>';
+							$target_attr = ! empty( $target ) ? ' target="' . esc_attr( $target ) . '"' : '';
+							echo '<div class="xylusec-image-anchor-container" > <a href="' . esc_url( $event_url ) . '"' . $target_attr . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							echo $thumb_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							echo '</a></div>';
 						}
@@ -518,7 +518,12 @@ class Xylus_Events_Calendar_Ajax_Handler {
 								<div class="xylusec-event-location"><?php echo esc_html( $location ); ?></div>
 							<?php endif; ?>
 							<?php if ( $show_organizer && $organizer_name ) : ?>
-								<div class="xylusec-event-organizer" style="font-size: 11.5px; color: #64748b; margin-top: 2px;"><?php echo esc_html( sprintf( __( 'Organizer: %s', 'xylus-events-calendar' ), $organizer_name ) ); ?></div>
+								<div class="xylusec-event-organizer" style="font-size: 11.5px; color: #64748b; margin-top: 2px;">
+									<?php 
+									/* translators: %s: Organizer name */
+									echo esc_html( sprintf( __( 'Organizer: %s', 'xylus-events-calendar' ), $organizer_name ) ); 
+									?>
+								</div>
 							<?php endif; ?>
 							<p class="xylusec-event-excerpt"><?php echo wp_kses_post( wp_trim_words( get_the_excerpt(), 10 ) ); ?></p>
 							<div class="xylusec-event-meta xylusec-event-meta-row" >
@@ -678,7 +683,8 @@ class Xylus_Events_Calendar_Ajax_Handler {
 					</div>
 					<?php 
 						if ( has_post_thumbnail( $event_id ) ) {
-							echo '<div class="xylusec-slider-event-img" ><a href="' . esc_url( $event_url ) . '" ' . $target . '>';
+							$target_attr = ! empty( $target ) ? ' target="' . esc_attr( $target ) . '"' : '';
+							echo '<div class="xylusec-slider-event-img" ><a href="' . esc_url( $event_url ) . '"' . $target_attr . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							echo get_the_post_thumbnail( $event_id, 'full', [  ] );
 							echo '</a></div>';
 						}

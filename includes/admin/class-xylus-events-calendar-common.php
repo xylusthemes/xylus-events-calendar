@@ -210,15 +210,15 @@ class Xylus_Events_Calendar_Common {
             $atts = json_decode( stripslashes( $shortcode_atts ), true );
         }
 
-        $category   = isset( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '' );
-        $collection = isset( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? sanitize_text_field( $atts['collection'] ) : '' );
-        $venue      = isset( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '' );
-        $organizer  = isset( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '' );
-        $tag        = isset( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? sanitize_text_field( $atts['tag'] ) : '' );
-        $day        = isset( $_REQUEST['day'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['day'] ) ) : '';
-        $time       = isset( $_REQUEST['time'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['time'] ) ) : '';
-        $date_from  = isset( $_REQUEST['date_from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_from'] ) ) : '';
-        $date_to    = isset( $_REQUEST['date_to'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_to'] ) ) : '';
+        $category   = isset( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $collection = isset( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? sanitize_text_field( $atts['collection'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $venue      = isset( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $organizer  = isset( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $tag        = isset( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? sanitize_text_field( $atts['tag'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $day        = isset( $_REQUEST['day'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['day'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $time       = isset( $_REQUEST['time'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['time'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $date_from  = isset( $_REQUEST['date_from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_from'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $date_to    = isset( $_REQUEST['date_to'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_to'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
         $current_time_mysql = current_time( 'mysql' );
         $current_time_ts    = current_time( 'timestamp' );
@@ -260,11 +260,18 @@ class Xylus_Events_Calendar_Common {
             $join   = " JOIN $table_name i ON p.ID = i.event_id";
             
             // Build WHERE clauses
-            $where = $wpdb->prepare( 
-                " WHERE p.post_type = %s AND p.post_status = 'publish' AND i.end_date $condition %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                $post_type,
-                $current_time_mysql
-            );
+            if ( empty( $date_from ) && empty( $date_to ) ) {
+                $where = $wpdb->prepare( 
+                    " WHERE p.post_type = %s AND p.post_status = 'publish' AND i.end_date $condition %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                    $post_type,
+                    $current_time_mysql
+                );
+            } else {
+                $where = $wpdb->prepare( 
+                    " WHERE p.post_type = %s AND p.post_status = 'publish'",
+                    $post_type
+                );
+            }
 
             if ( ! empty( $keyword ) ) {
                 $where .= $wpdb->prepare( " AND (p.post_title LIKE %s OR p.post_content LIKE %s)", '%' . $wpdb->esc_like( $keyword ) . '%', '%' . $wpdb->esc_like( $keyword ) . '%' );
@@ -345,10 +352,10 @@ class Xylus_Events_Calendar_Common {
 
             // Apply Date From & To
             if ( ! empty( $date_from ) ) {
-                $where .= $wpdb->prepare( " AND i.start_date >= %s", $date_from . ' 00:00:00' );
+                $where .= $wpdb->prepare( " AND i.end_date >= %s", $date_from . ' 00:00:00' );
             }
             if ( ! empty( $date_to ) ) {
-                $where .= $wpdb->prepare( " AND i.end_date <= %s", $date_to . ' 23:59:59' );
+                $where .= $wpdb->prepare( " AND i.start_date <= %s", $date_to . ' 23:59:59' );
             }
 
             // Get total count using a reliable COUNT(DISTINCT p.ID) query

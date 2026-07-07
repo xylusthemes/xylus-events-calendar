@@ -515,13 +515,17 @@
 			triggerFilterReload();
 		});
 
+		let filterReloadTimeout;
 		function triggerFilterReload() {
-			// Refetch/reload FullCalendar
-			if (calendar) {
-				calendar.refetchEvents();
-			}
-			// Trigger grid/row/staggered/slider reloads
-			$(document).trigger('xylusec_collection_changed');
+			clearTimeout(filterReloadTimeout);
+			filterReloadTimeout = setTimeout(() => {
+				// Refetch/reload FullCalendar
+				if (calendar) {
+					calendar.refetchEvents();
+				}
+				// Trigger grid/row/staggered/slider reloads
+				$(document).trigger('xylusec_collection_changed');
+			}, 600);
 		}
 	});
 
@@ -641,6 +645,8 @@
 		$(document).on('xylusec_collection_changed', function (e, col) {
 			if (gridWrapper.is(':visible')) {
 				triedPastEvents = false;
+				isPastMode = false;
+				gridWrapper.find('.xylusec-past-events-header').hide();
 				fetchEvents(true);
 			}
 		});
@@ -760,6 +766,9 @@
 
 		$(document).on('xylusec_collection_changed', function (e, col) {
 			if (rowWrapper.is(':visible')) {
+				triedPastEvents = false;
+				isPastMode = false;
+				rowWrapper.find('.xylusec-past-events-header').hide();
 				fetchRowEvents(true);
 			}
 		});
@@ -1022,6 +1031,9 @@
 
 		$(document).on('xylusec_collection_changed', function (e, col) {
 			if (staggeredWrapper.is(':visible')) {
+				triedPastEvents = false;
+				isPastMode = false;
+				staggeredWrapper.find('.xylusec-past-events-header').hide();
 				fetchStaggeredEvents(true);
 			}
 		});
@@ -1189,6 +1201,9 @@
 
 		$(document).on('xylusec_collection_changed', function (e, col) {
 			if (sliderContainer.is(':visible')) {
+				triedPastEvents = false;
+				isPastMode = false;
+				$('#xylusec-slider-past-header, #xylusec-slider-past-header .xylusec-past-events-header').hide();
 				fetchSlides(true);
 			}
 		});

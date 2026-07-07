@@ -51,13 +51,13 @@ class Xylus_Events_Calendar_iCal {
 			'post_type'      => 'eec_events',
 			'posts_per_page' => -1,
 			'post_status'    => 'publish',
-			'meta_key'       => 'event_start_date',
+			'meta_key'       => 'event_start_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'orderby'        => 'meta_value',
 			'order'          => 'ASC',
-			'meta_query'     => array(
+			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'     => 'event_start_date',
-					'value'   => date( 'Y-m-d' ),
+					'value'   => gmdate( 'Y-m-d' ),
 					'compare' => '>=',
 					'type'    => 'DATE'
 				)
@@ -67,7 +67,7 @@ class Xylus_Events_Calendar_iCal {
 		$events = get_posts( $args );
 		
 		$this->output_ics_headers( 'events-calendar.ics' );
-		echo $this->build_ics_content( $events, get_bloginfo('name') . ' Events' );
+		echo $this->build_ics_content( $events, get_bloginfo('name') . ' Events' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -82,7 +82,7 @@ class Xylus_Events_Calendar_iCal {
 
 		$filename = sanitize_title( $event->post_title ) . '.ics';
 		$this->output_ics_headers( $filename );
-		echo $this->build_ics_content( array( $event ), $event->post_title );
+		echo $this->build_ics_content( array( $event ), $event->post_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -143,8 +143,9 @@ class Xylus_Events_Calendar_iCal {
 			$description = wp_strip_all_tags( $description );
 			$description = preg_replace( "/\r\n|\n|\r/", "\\n", $description );
 
+			$server_name = isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : 'localhost';
 			$ics .= "BEGIN:VEVENT" . $eol;
-			$ics .= "UID:" . md5( $event->ID . $start_timestamp ) . "@" . $_SERVER['SERVER_NAME'] . $eol;
+			$ics .= "UID:" . md5( $event->ID . $start_timestamp ) . "@" . $server_name . $eol;
 			$ics .= "DTSTAMP:" . $dt_stamp . $eol;
 			$ics .= "DTSTART:" . $dt_start . $eol;
 			$ics .= "DTEND:" . $dt_end . $eol;

@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 /**
  * Admin Shortcode page
  *
@@ -277,7 +278,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                                 <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;">
                                     <!-- Days -->
                                     <?php 
-                                    $current_day = date('j');
+                                    $current_day = gmdate('j');
                                     for($i=0; $i<35; $i++): 
                                         $date_num = ($i-2 > 0 && $i-2 <= 31) ? ($i-2) : '';
                                         // Let's set 13th as selected to avoid it constantly overlapping with dynamic 'today'
@@ -292,8 +293,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                                         $border = $is_today ? '1px solid var(--xec-primary-color, #005AE0)' : 'none';
                                         $opacity = ($i<3 || $i>33) ? '0.4' : '1';
                                         ?>
-                                        <div style="aspect-ratio: 1; border-radius: 50%; background: <?php echo $bg; ?>; border: <?php echo $border; ?>; opacity: <?php echo $opacity; ?>; font-size: 9px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: <?php echo $color; ?>; font-weight: 600; position: relative;">
-                                            <span><?php echo $date_num; ?></span>
+                                        <div style="aspect-ratio: 1; border-radius: 50%; background: <?php echo esc_attr( $bg ); ?>; border: <?php echo esc_attr( $border ); ?>; opacity: <?php echo esc_attr( $opacity ); ?>; font-size: 9px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: <?php echo esc_attr( $color ); ?>; font-weight: 600; position: relative;">
+                                            <span><?php echo esc_html( $date_num ); ?></span>
                                             <?php if($has_event && $date_num && !$is_selected): ?>
                                                 <div style="width: 3px; height: 3px; border-radius: 50%; background: var(--xec-primary-color, #005AE0); position: absolute; bottom: 2px;"></div>
                                             <?php endif; ?>
@@ -417,7 +418,7 @@ function changePrimaryPreview(layout) {
     } else if (layout === 'calendar') {
         title = 'Calendar Month View Preview';
         let calGrid = '';
-        let currentDay = <?php echo date('j'); ?>;
+        let currentDay = <?php echo (int) gmdate('j'); ?>;
         for(let i=0; i<35; i++) {
             let op = (i<3||i>33) ? '0.4' : '1';
             let txt = (i-2>0 && i-2<=31) ? (i-2) : '';

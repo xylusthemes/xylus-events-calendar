@@ -57,7 +57,7 @@
 			var $fields = jQuery('.eec_recurrence_fields');
 			var $list = jQuery('.eec_custom_recurrence_list');
 
-			if (type !== 'none' && type !== '') {
+			if (type !== 'none' && type !== '' && type !== 'custom') {
 				$fields.show();
 				jQuery('.interval_label').text(get_interval_label(type));
 				if (type === 'weekly') {
@@ -71,6 +71,32 @@
 
 			if (type === 'custom') {
 				$list.show();
+				
+				// Fetch fresh occurrences from the database in case they were updated via Gutenberg auto-save or standard save
+				var postId = jQuery('#eec_post_id').val();
+				var nonce = jQuery('#eec_ajax_nonce').val();
+				
+				jQuery('.eec_custom_recurrence_list tbody .eec-instance-row').css('opacity', '0.5'); // visual feedback
+				
+				jQuery.ajax({
+					url: ajaxurl,
+					type: 'POST',
+					data: {
+						action: 'eec_get_custom_occurrences',
+						event_id: postId,
+						nonce: nonce
+					},
+					success: function(response) {
+						if (response.success) {
+							// Remove old rows but keep the template
+							jQuery('.eec_custom_recurrence_list tbody .eec-instance-row').remove();
+							// Prepend fresh rows
+							jQuery('.eec_custom_recurrence_list tbody').prepend(response.data.html);
+							init_all_pickers();
+						}
+					}
+				});
+
 				init_all_pickers();
 			} else {
 				$list.hide();

@@ -1,42 +1,304 @@
 /*
-* Global Admin CSS
+* Premium Global Admin CSS for Xylus Events Calendar
 */
+
 .eec_form_section {
-    padding: 15px;
-    margin-bottom: 20px;
-    background: #fdfdfd;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
 }
 
 .eec_form_section h3 {
     margin-top: 0;
     font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 20px;
+}
+
+.eec_form_section hr {
+    display: none;
 }
 
 .eec_form_row {
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .eec_form_row label {
-    width: 160px;
-    font-weight: bold;
+    width: 180px;
+    font-weight: 500;
+    color: #475569;
+    font-size: 14px;
 }
 
 .eec_form_input_group {
     flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.eec_form_input_group input[type="text"],
+.eec_form_input_group input[type="number"],
+.eec_form_input_group select,
+.eec-input-group input[type="text"],
+.eec-input-group input[type="number"],
+.eec-input-group input[type="datetime-local"],
+.eec_custom_recurrence_list input[type="datetime-local"] {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #f8fafc;
+    color: #334155;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+    box-sizing: border-box !important;
+    height: 36px !important;
+    line-height: 1.2;
+}
+
+.eec_form_input_group input[type="text"]:focus,
+.eec_form_input_group input[type="number"]:focus,
+.eec_form_input_group select:focus,
+.eec-input-group input[type="text"]:focus,
+.eec-input-group input[type="number"]:focus,
+.eec_custom_recurrence_list input[type="datetime-local"]:focus {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    outline: none;
 }
 
 .eec_form_input_group input {
     width: 100%;
     max-width: 60%;
 }
-.eec_form_input_group input{
-    padding: 5px;
-}
+
 .eec_form_input_group select {
-    padding: 5px;
-    width: 5%;
+    width: auto;
+    min-width: 80px;
+}
+
+.eec-day-picker {
+    display: flex;
+    gap: 8px;
+}
+
+.eec-day-button {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+}
+
+.eec-day-button:hover {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.eec-day-button.active {
+    background: #3b82f6;
+    color: #ffffff;
+    border-color: #3b82f6;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.eec-radio-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.radio-item label {
+    width: auto;
+    cursor: pointer;
+    font-weight: 400;
+    color: #334155;
+    margin-right: 15px;
+}
+
+.radio-item input[type="radio"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.eec_custom_recurrence_list h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.eec_custom_recurrence_list .description {
+    color: #64748b;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.eec_custom_recurrence_list table.wp-list-table {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.eec_custom_recurrence_list table.wp-list-table thead th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 12px;
+}
+
+.eec_custom_recurrence_list table.wp-list-table tbody td {
+    padding: 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.eec_custom_recurrence_list table.wp-list-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#eec_add_new_occurrence {
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    color: #3b82f6;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 10px;
+    height: 38px;
+}
+
+#eec_add_new_occurrence:hover {
+    background: #eff6ff;
+    border-color: #3b82f6;
+}
+
+#eec_add_new_occurrence .dashicons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+.components-button.eec-remove-instance {
+    color: #ef4444;
+}
+
+.components-button.eec-remove-instance:hover {
+    color: #dc2626;
+    background: #fef2f2;
+}
+
+.eec_custom_recurrence_list table.wp-list-table tbody td:last-child {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.eec-save-new-instance {
+    background: #3b82f6 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px;
+    padding: 0 16px !important;
+    cursor: pointer;
+    font-size: 13px;
+    height: 36px !important;
+    line-height: 36px !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eec-save-new-instance:hover {
+    background: #2563eb !important;
+}
+
+.eec-remove-new-instance, .eec-remove-instance {
+    background: #fff !important;
+    color: #ef4444 !important;
+    border: 1px solid #ef4444 !important;
+    border-radius: 4px;
+    padding: 0 16px !important;
+    cursor: pointer;
+    font-size: 13px;
+    height: 36px !important;
+    line-height: 34px !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eec-remove-new-instance:hover, .eec-remove-instance:hover {
+    background: #fef2f2 !important;
+    color: #dc2626 !important;
+    border-color: #dc2626 !important;
+}
+
+.eec_form_input_group .eec_form_input_group_inner {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Hide native calendar icon in datetime-local but make entire input clickable */
+.eec_custom_recurrence_list input[type="datetime-local"] {
+    position: relative;
+    cursor: pointer;
+}
+
+.eec_custom_recurrence_list input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    color: transparent;
+    background: transparent;
+    cursor: pointer;
 }
