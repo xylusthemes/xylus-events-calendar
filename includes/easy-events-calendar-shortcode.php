@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 function easy_events_calendar_elementor_shortcode( $atts ) {
     global $xylusec_events_calendar;
 

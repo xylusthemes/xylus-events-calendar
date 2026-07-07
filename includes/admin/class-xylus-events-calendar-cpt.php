@@ -64,6 +64,7 @@ class Xylus_Events_Calendar_CPT {
 		// AJAX for instant occurrence deletion
 		add_action( 'wp_ajax_eec_delete_occurrence', array( $this, 'ajax_delete_occurrence' ) );
 		add_action( 'wp_ajax_eec_add_occurrence', array( $this, 'ajax_add_occurrence' ) );
+		add_action( 'wp_ajax_eec_get_custom_occurrences', array( $this, 'ajax_get_custom_occurrences' ) );
 	}
 
     /**
@@ -413,12 +414,12 @@ class Xylus_Events_Calendar_CPT {
      */
 	public function add_event_meta_boxes() {
 		add_meta_box(
-			'eec_events_metabox',
+			'eec_event_details',
 			__( 'Events Details', 'xylus-events-calendar' ),
 			array( $this, 'render_event_meta_boxes' ),
 			array( $this->event_posttype ),
-			'side',
-			'default'
+			'normal',
+			'high'
 		);
 	}
 
@@ -426,7 +427,7 @@ class Xylus_Events_Calendar_CPT {
      * Event meta box render
      */
 	public function render_event_meta_boxes( $post ) {
-
+		global $wpdb;
 		// Use nonce for verification
 		wp_nonce_field( XYLUSEC_PLUGIN_DIR, 'eec_event_metabox_nonce' );
 
@@ -583,7 +584,7 @@ class Xylus_Events_Calendar_CPT {
 							<tr>
 								<th><?php esc_attr_e( 'Start Date & Time', 'xylus-events-calendar' ); ?></th>
 								<th><?php esc_attr_e( 'End Date & Time', 'xylus-events-calendar' ); ?></th>
-								<th style="width: 80px;"><?php esc_attr_e( 'Actions', 'xylus-events-calendar' ); ?></th>
+								<th style="width: 150px;"><?php esc_attr_e( 'Actions', 'xylus-events-calendar' ); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -877,7 +878,56 @@ class Xylus_Events_Calendar_CPT {
 	}
 
 	/**
-	 * AJAX handler for deleting an occurrence instantly.
+	 * AJAX handler to get latest occurrences HTML
+	 */
+	public function ajax_get_custom_occurrences() {
+		check_ajax_referer( 'eec_event_metabox_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'xylus-events-calendar' ) ) );
+		}
+
+		$event_id = isset( $_POST['event_id'] ) ? absint( $_POST['event_id'] ) : 0;
+		if ( ! $event_id ) {
+			wp_send_json_error();
+		}
+
+		global $wpdb;
+		$instances = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}eec_event_instances WHERE event_id = %d ORDER BY start_date ASC", $event_id ) );
+
+		ob_start();
+		if ( ! empty( $instances ) ) {
+			foreach ( $instances as $instance ) {
+				?>
+				<tr class="eec-instance-row" data-instance-id="<?php echo esc_attr( $instance->id ); ?>">
+					<td>
+						<?php 
+						$start_val = str_replace(' ', 'T', substr($instance->start_date, 0, 16));
+						?>
+						<input type="datetime-local" name="eec_instance_start[<?php echo esc_attr( $instance->id ); ?>]" value="<?php echo esc_attr( $start_val ); ?>" step="1" style="width: 100%;" />
+					</td>
+					<td>
+						<?php 
+						$end_val = str_replace(' ', 'T', substr($instance->end_date, 0, 16));
+						?>
+						<input type="datetime-local" name="eec_instance_end[<?php echo esc_attr( $instance->id ); ?>]" value="<?php echo esc_attr( $end_val ); ?>" step="1" style="width: 100%;" />
+					</td>
+					<td>
+						<button type="button" class="components-button editor-post-trash is-next-40px-default-size is-secondary is-destructive eec-remove-instance" title="<?php esc_attr_e( 'Remove this occurrence', 'xylus-events-calendar' ); ?>">
+							<?php esc_attr_e( 'Delete', 'xylus-events-calendar' ); ?>
+						</button>
+						<input type="hidden" name="eec_instance_delete[<?php echo esc_attr( $instance->id ); ?>]" class="eec-delete-flag" value="0" />
+					</td>
+				</tr>
+				<?php
+			}
+		}
+		$html = ob_get_clean();
+		wp_send_json_success( array( 'html' => $html ) );
+	}
+
+	/**
+	 * AJAX handler to delete a single occurrence
 	 */
 	public function ajax_delete_occurrence() {
 		check_ajax_referer( 'eec_event_metabox_nonce', 'nonce' );

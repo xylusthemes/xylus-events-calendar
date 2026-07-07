@@ -59,6 +59,8 @@ function xylusec_enqueue_admin_styles( $hook ) {
 		}
 	}
 
+	wp_enqueue_style( 'xylus-events-calendar-global-admin', $css_dir . 'xylus-events-calendar-global-admin.css', false, XYLUSEC_VERSION );
+
 	wp_enqueue_style( 'jquery-ui', $css_dir . 'jquery-ui.css', false, '1.12.0' );
 }
 
