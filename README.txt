@@ -4,7 +4,7 @@ Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
 Tested up to: 7.0 
 Requires PHP: 8.0 
-Stable tag: 1.1.1  
+Stable tag: 1.1.2  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -179,6 +179,14 @@ Use the following shortcodes to display events on your website:
 ---
 
 == 📜 Changelog ==
+
+= 1.1.2 =
+* FIXED: Issue with past events not displaying when navigating to previous months in the calendar view.
+* FIXED: Mobile layout responsiveness and text overlapping issues in the Mini Calendar event list.
+* FIXED: Empty description tooltip fallback text in the calendar view.
+* IMPROVEMENTS: The event search bar now correctly filters by the selected event source.
+* IMPROVEMENTS: Strengthened AJAX security with stricter data sanitization and nonce verification.
+* IMPROVEMENTS: Resolved PHPCS warnings for better code quality and WordPress coding standards compliance.
 
 = 1.1.1 =
 * ADDED: Custom Recurring events Option.
