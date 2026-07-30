@@ -1780,7 +1780,7 @@
     display: flex !important;
     flex-direction: row !important;
     gap: 16px !important;
-    align-items: center !important;
+    align-items: flex-start !important;
 }
 
 .xylusec-mini-events-list .xylusec-image-anchor-container {
@@ -1810,8 +1810,11 @@
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
-    height: 64px !important;
+    justify-content: flex-start !important;
+    min-height: 64px !important;
+    height: auto !important;
+    gap: 4px !important;
+    overflow: hidden !important;
 }
 
 .xylusec-mini-events-list .xylusec-event-title {
@@ -1893,7 +1896,8 @@
     }
 
     .xylusec-mini-events-list .xylusec-event-details {
-        height: 56px !important;
+        min-height: 56px !important;
+        height: auto !important;
     }
 
     #xylusec-mini-calendar-widget .fc-dayGridMonth-view .fc-scrollgrid .fc-scroller-harness {

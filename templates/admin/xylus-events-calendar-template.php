@@ -101,13 +101,22 @@ $xylusec_is_header_hide = isset($xylusec_options['xylusec_hide_header']) ? $xylu
         $show_time = ($xylusec_options['xylusec_filter_show_time'] ?? 'yes') === 'yes';
         $show_df = ($xylusec_options['xylusec_filter_show_date_from'] ?? 'yes') === 'yes';
         $show_dt = ($xylusec_options['xylusec_filter_show_date_to'] ?? 'yes') === 'yes';
+        
+        $selected_source = isset($xylusec_options['xylusec_event_source']) ? $xylusec_options['xylusec_event_source'] : 'eec_events';
+        global $xylusec_events_calendar;
+        $tax_map = $xylusec_events_calendar->common->xylusec_get_taxonomies_for_source( $selected_source );
+        $cat_tax = $tax_map['category'];
+        $tag_tax = $tax_map['tag'];
+        $ven_tax = $tax_map['venue'];
+        $org_tax = $tax_map['organizer'];
+        $col_tax = $tax_map['collection'];
         ?>
         <div class="xylusec-filters-container">
             <div class="xylusec-filters-pills">
                 <?php
                 // 1. Event Category
-                if ($show_cat && taxonomy_exists('eec_category')) {
-                    $categories = get_terms(array('taxonomy' => 'eec_category', 'hide_empty' => true));
+                if ($show_cat && !empty($cat_tax) && taxonomy_exists($cat_tax)) {
+                    $categories = get_terms(array('taxonomy' => $cat_tax, 'hide_empty' => true));
                     if (!is_wp_error($categories) && !empty($categories)) {
                         ?>
                         <div class="xylusec-filter-pill-wrap" id="xylusec-filter-category">
@@ -138,8 +147,8 @@ $xylusec_is_header_hide = isset($xylusec_options['xylusec_hide_header']) ? $xylu
                 }
 
                 // 2. Tag
-                if ($show_tag && taxonomy_exists('eec_tag')) {
-                    $tags = get_terms(array('taxonomy' => 'eec_tag', 'hide_empty' => true));
+                if ($show_tag && !empty($tag_tax) && taxonomy_exists($tag_tax)) {
+                    $tags = get_terms(array('taxonomy' => $tag_tax, 'hide_empty' => true));
                     if (!is_wp_error($tags) && !empty($tags)) {
                         ?>
                         <div class="xylusec-filter-pill-wrap" id="xylusec-filter-tag">
@@ -169,8 +178,8 @@ $xylusec_is_header_hide = isset($xylusec_options['xylusec_hide_header']) ? $xylu
                 }
 
                 // 3. Venue
-                if ($show_ven && taxonomy_exists('eec_venue')) {
-                    $venues = get_terms(array('taxonomy' => 'eec_venue', 'hide_empty' => true));
+                if ($show_ven && !empty($ven_tax) && taxonomy_exists($ven_tax)) {
+                    $venues = get_terms(array('taxonomy' => $ven_tax, 'hide_empty' => true));
                     if (!is_wp_error($venues) && !empty($venues)) {
                         ?>
                         <div class="xylusec-filter-pill-wrap" id="xylusec-filter-venue">
@@ -201,8 +210,8 @@ $xylusec_is_header_hide = isset($xylusec_options['xylusec_hide_header']) ? $xylu
                 }
 
                 // 4. Organizer
-                if ($show_org && taxonomy_exists('eec_organizer')) {
-                    $organizers = get_terms(array('taxonomy' => 'eec_organizer', 'hide_empty' => true));
+                if ($show_org && !empty($org_tax) && taxonomy_exists($org_tax)) {
+                    $organizers = get_terms(array('taxonomy' => $org_tax, 'hide_empty' => true));
                     if (!is_wp_error($organizers) && !empty($organizers)) {
                         ?>
                         <div class="xylusec-filter-pill-wrap" id="xylusec-filter-organizer">
@@ -233,8 +242,8 @@ $xylusec_is_header_hide = isset($xylusec_options['xylusec_hide_header']) ? $xylu
                 }
 
                 // 5. Collection
-                if ($show_col && taxonomy_exists('eec_collection')) {
-                    $collections = get_terms(array('taxonomy' => 'eec_collection', 'hide_empty' => true));
+                if ($show_col && !empty($col_tax) && taxonomy_exists($col_tax)) {
+                    $collections = get_terms(array('taxonomy' => $col_tax, 'hide_empty' => true));
                     if (!is_wp_error($collections) && !empty($collections)) {
                         ?>
                         <div class="xylusec-filter-pill-wrap" id="xylusec-filter-collection">

@@ -136,7 +136,7 @@
 						${imageUrl && info.event.url ? `<a href="${info.event.url}" target="_blank"><img src="${imageUrl}" alt="${info.event.title}"></a>` : (imageUrl ? `<img src="${imageUrl}" alt="${info.event.title}">` : '')}
 						<div class="xylusec-event-date">${info.event.extendedProps.formattedDate || ''}</div>
 						${info.event.url ? `<h4 class="tooltip-title-click"><a href="${info.event.url}" target="_blank">${info.event.title}</a></h4>` : `<h4 class="tooltip-title-click">${info.event.title}</h4>`}
-						<p>${(info.event.extendedProps.description || 'No additional details provided.').substring(0, 150)}${info.event.extendedProps.description && info.event.extendedProps.description.length > 150 ? '…' : ''}</p>
+						${info.event.extendedProps.description ? `<p>${info.event.extendedProps.description.substring(0, 150)}${info.event.extendedProps.description.length > 150 ? '…' : ''}</p>` : ''}
 					`;
 					document.body.appendChild(tooltip);
 
@@ -147,7 +147,7 @@
 							<span class="close-popup">&times;</span>
 							${info.event.url ? `<h2><a href="${info.event.url}" target="_blank">${info.event.title}</a></h2>` : `<h2>${info.event.title}</h2>`}
 							${imageUrl && info.event.url ? `<a href="${info.event.url}" target="_blank"><img src="${imageUrl}" alt=""></a>` : (imageUrl ? `<img src="${imageUrl}" alt="">` : '')}
-							<p>${info.event.extendedProps.description || 'No additional details provided.'}</p>
+							${info.event.extendedProps.description ? `<p>${info.event.extendedProps.description}</p>` : ''}
 						</div>
 					`;
 

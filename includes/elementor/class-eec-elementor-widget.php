@@ -46,11 +46,21 @@ class Elementor_Easy_Events_Calendar_Widget extends \Elementor\Widget_Base { // 
             ]
         );
 
+        $this->add_control(
+            'category',
+            [
+                'label' => __( 'Category', 'xylus-events-calendar' ),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'description' => __( 'Enter category slug to filter events', 'xylus-events-calendar' ),
+            ]
+        );
+
         $this->end_controls_section();
     }
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        echo do_shortcode('[easy_events_calendar_elementor style="' . esc_attr($settings['style']) . '" limit="' . esc_attr($settings['limit']) . '"]');
+        echo do_shortcode('[easy_events_calendar_elementor style="' . esc_attr($settings['style']) . '" limit="' . esc_attr($settings['limit']) . '" category="' . esc_attr($settings['category']) . '"]');
     }
 }
