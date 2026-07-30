@@ -62,13 +62,13 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		
 		$atts_json          = isset( $_GET['shortcode_atts'] ) ? $_GET['shortcode_atts'] : '{}'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     	$atts               = json_decode( stripslashes($atts_json), true );
-		$category           = isset( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? $atts['category'] : '' );
+		$category           = ! empty( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '' );
 		$cats               = array_map( 'trim', explode( ',', $category ) );
-		$collection         = isset( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? $atts['collection'] : '' );
+		$collection         = ! empty( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? sanitize_text_field( $atts['collection'] ) : '' );
 		$cols               = array_map( 'trim', explode( ',', $collection ) );
-		$venue              = isset( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? $atts['venue'] : '' );
-		$organizer          = isset( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? $atts['organizer'] : '' );
-		$tag                = isset( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? $atts['tag'] : '' );
+		$venue              = ! empty( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '' );
+		$organizer          = ! empty( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '' );
+		$tag                = ! empty( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? sanitize_text_field( $atts['tag'] ) : '' );
 		$day                = isset( $_REQUEST['day'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['day'] ) ) : '';
 		$time               = isset( $_REQUEST['time'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['time'] ) ) : '';
 		$date_from          = isset( $_REQUEST['date_from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_from'] ) ) : '';
@@ -198,11 +198,17 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			$text_colors   = [ '#0A4F70','#2E7031','#A94442','#8A6D3B','#5E4B8B','#B85C00','#31708F','#607D3B','#9F3858','#3A5F7F','#B03A5D','#317C80','#338055','#7A6332','#7D6F58','#5B6EBF','#A35B73','#31706B','#7E7654','#5B3B8A' ];
 			
 			$events = [];
+			$direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
 			foreach ( $results as $row ) {
 				$post_id = $row->event_id;
 				$color_index = $post_id % count($color_palette);
 				
-				$event_url = get_permalink( $post_id );
+				if ( $direct_link ) {
+					global $xylusec_events_calendar;
+					$event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( $post_id, $selected_post_type );
+				} else {
+					$event_url = get_permalink( $post_id );
+				}
 
 				$events[] = [
 					'id'            => $post_id,
@@ -232,14 +238,14 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				'relation' => 'AND',
 				[
 					'key'     => $start_key,
-					'value'   => $start,
-					'compare' => '>=',
+					'value'   => $end,
+					'compare' => '<=',
 					'type'    => $type,
 				],
 				[
 					'key'     => $end_key,
-					'value'   => $end,
-					'compare' => '<=',
+					'value'   => $start,
+					'compare' => '>=',
 					'type'    => $type,
 				]
 			]
@@ -308,11 +314,17 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				}
 				
 				// Get a color from our palette (using post ID for consistency)
-			$color_index = $post_id % count($color_palette);
+				$color_index = $post_id % count($color_palette);
 				$color = $color_palette[$color_index];
 				$text_color = $text_colors[$color_index];
 
-				$event_url = get_permalink();
+				$direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+				if ( $direct_link ) {
+					global $xylusec_events_calendar;
+					$event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( $post_id, $selected_post_type );
+				} else {
+					$event_url = get_permalink( $post_id );
+				}
 
 				$events[] = [
 					'id' => $post_id,
@@ -370,7 +382,13 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				$is_last_page = ($events->max_num_pages <= $paged && $current_post_count === $events->post_count) ? ' xylusec-last-page-item' : '';
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
-				$event_url = get_permalink();
+				
+				$direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+				if ( $direct_link ) {
+					$event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( $event_id, $selected_post_type );
+				} else {
+					$event_url = get_permalink( $event_id );
+				}
 
 				// Use instance date if available (for recurring events), fallback to meta
 				$current_post = $events->post;
@@ -466,7 +484,13 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				$is_last_page = ($query->max_num_pages <= $paged && $current_post_count === $query->post_count) ? ' xylusec-last-page-item' : '';
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 30 );
-				$event_url = get_permalink();
+				
+				$direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+				if ( $direct_link ) {
+					$event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( $event_id, $selected_post_type );
+				} else {
+					$event_url = get_permalink( $event_id );
+				}
 
 				// Use instance date if available (for recurring events), fallback to meta
 				$current_post = $query->post;
@@ -578,7 +602,13 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				$is_last_page = ($query->max_num_pages <= $paged && $current_post_count === $query->post_count) ? ' xylusec-last-page-item' : '';
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 100 );
-				$event_url = get_permalink();
+				
+				$direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+				if ( $direct_link ) {
+					$event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( $event_id, $selected_post_type );
+				} else {
+					$event_url = get_permalink( $event_id );
+				}
 
 				// Use instance date if available (for recurring events), fallback to meta
 				$current_post = $query->post;
@@ -654,7 +684,12 @@ class Xylus_Events_Calendar_Ajax_Handler {
 				$event_id   = get_the_ID();    
 				$vdbutton   = $xylusec_events_calendar->common->xylusec_get_view_details_button( $this->xylusec_options, $event_id, 70 );
 				
-				$event_url = get_permalink();
+				$direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+				if ( $direct_link ) {
+					$event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( $event_id, $selected_post_type );
+				} else {
+					$event_url = get_permalink( $event_id );
+				}
 
 				// Use instance date if available (for recurring events), fallback to meta
 				$current_post = $query->post;

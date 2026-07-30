@@ -105,6 +105,24 @@ $xylusec_options     = get_option( XYLUSEC_OPTIONS, true );
                         </div>
                     </div>
 
+                    <!-- Direct Link to Source -->
+                    <div class="xylusec-setting-row">
+                        <div class="xylusec-inner-section-1">
+                            <label><?php esc_attr_e( 'Direct Link to Source', 'xylus-events-calendar' ); ?></label>
+                            <span class="row-desc"><?php esc_attr_e( 'If enabled, event links will redirect directly to the original source (e.g. Meetup, Eventbrite) instead of the WordPress detail page.', 'xylus-events-calendar' ); ?></span>
+                        </div>
+                        <div class="xylusec-inner-section-2">
+                            <?php $direct_link_val = $xylusec_options['xylusec_direct_link'] ?? 'no'; ?>
+                            <div class="xylusec-filter-card <?php echo $direct_link_val === 'yes' ? 'is-active' : ''; ?>" style="max-width: 450px;">
+                                <span class="xylusec-filter-card-label"><?php esc_html_e( 'Enable Direct Link', 'xylus-events-calendar' ); ?></span>
+                                <label class="xylusec-switch">
+                                    <input type="checkbox" class="xylusec-filter-checkbox" id="xylusec_direct_link" name="xylusec_direct_link" value="1" <?php checked( $direct_link_val, 'yes' ); ?>>
+                                    <span class="xylusec-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Individual Filters Sub-options -->
                     <div class="xylusec-setting-row xylusec-filters-suboptions" style="<?php echo $show_filters_val === 'yes' ? '' : 'display:none;'; ?>">
                         <div class="xylusec-inner-section-1">

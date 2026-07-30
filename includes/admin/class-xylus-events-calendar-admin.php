@@ -571,12 +571,14 @@ class Xylus_Events_Calendar_Admin
 			// Sanitize and collect all form fields
 			$hide_header = isset($_POST['xylusec_hide_header']) && esc_attr(sanitize_text_field(wp_unslash($_POST['xylusec_hide_header']))) === '1' ? 'yes' : 'no';
 			$show_filters = isset($_POST['xylusec_show_filters']) && esc_attr(sanitize_text_field(wp_unslash($_POST['xylusec_show_filters']))) === '1' ? 'yes' : 'no';
+			$direct_link = isset($_POST['xylusec_direct_link']) && esc_attr(sanitize_text_field(wp_unslash($_POST['xylusec_direct_link']))) === '1' ? 'yes' : 'no';
 
 			$xylusec_so_options = [
 				'xylusec_event_source' => esc_attr(sanitize_text_field(wp_unslash($_POST['xylusec_event_source'] ?? ''))),
 				'xylusec_default_view' => esc_attr(sanitize_text_field(wp_unslash($_POST['xylusec_default_view'] ?? ''))),
 				'xylusec_hide_header' => $hide_header,
 				'xylusec_show_filters' => $show_filters,
+				'xylusec_direct_link' => $direct_link,
 				'xylusec_filter_show_category' => isset($_POST['xylusec_filter_show_category']) ? 'yes' : 'no',
 				'xylusec_filter_show_tag' => isset($_POST['xylusec_filter_show_tag']) ? 'yes' : 'no',
 				'xylusec_filter_show_venue' => isset($_POST['xylusec_filter_show_venue']) ? 'yes' : 'no',

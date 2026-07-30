@@ -210,11 +210,11 @@ class Xylus_Events_Calendar_Common {
             $atts = json_decode( stripslashes( $shortcode_atts ), true );
         }
 
-        $category   = isset( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $collection = isset( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? sanitize_text_field( $atts['collection'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $venue      = isset( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $organizer  = isset( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $tag        = isset( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? sanitize_text_field( $atts['tag'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $category   = ! empty( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $collection = ! empty( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? sanitize_text_field( $atts['collection'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $venue      = ! empty( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $organizer  = ! empty( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $tag        = ! empty( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? sanitize_text_field( $atts['tag'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $day        = isset( $_REQUEST['day'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['day'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $time       = isset( $_REQUEST['time'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['time'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $date_from  = isset( $_REQUEST['date_from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_from'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -406,46 +406,49 @@ class Xylus_Events_Calendar_Common {
             'meta_key'       => $start_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
             'orderby'        => 'meta_value_num',
             'order'          => 'ASC',
-            's'              => sanitize_text_field( $keyword ),
+            'xylusec_search' => sanitize_text_field( $keyword ),
         ];
 
         // Apply tax_query
         $tax_query = array( 'relation' => 'AND' );
-        if ( ! empty( $category ) ) {
+        
+        $tax_map = $this->xylusec_get_taxonomies_for_source( $post_type );
+
+        if ( ! empty( $category ) && !empty( $tax_map['category'] ) ) {
 			$tax_query[] = array(
-                'taxonomy' => $selected_taxonomy,
+                'taxonomy' => $tax_map['category'],
                 'field'    => 'slug',
                 'terms'    => array_map( 'trim', explode( ',', $category ) )
             );
 		}
 
-        if ( ! empty( $venue ) ) {
+        if ( ! empty( $venue ) && !empty( $tax_map['venue'] ) ) {
 			$tax_query[] = array(
-                'taxonomy' => 'eec_venue',
+                'taxonomy' => $tax_map['venue'],
                 'field'    => 'slug',
                 'terms'    => array_map( 'trim', explode( ',', $venue ) )
             );
 		}
 
-        if ( ! empty( $organizer ) ) {
+        if ( ! empty( $organizer ) && !empty( $tax_map['organizer'] ) ) {
 			$tax_query[] = array(
-                'taxonomy' => 'eec_organizer',
+                'taxonomy' => $tax_map['organizer'],
                 'field'    => 'slug',
                 'terms'    => array_map( 'trim', explode( ',', $organizer ) )
             );
 		}
 
-        if ( ! empty( $tag ) ) {
+        if ( ! empty( $tag ) && !empty( $tax_map['tag'] ) ) {
 			$tax_query[] = array(
-                'taxonomy' => 'eec_tag',
+                'taxonomy' => $tax_map['tag'],
                 'field'    => 'slug',
                 'terms'    => array_map( 'trim', explode( ',', $tag ) )
             );
 		}
 
-        if ( ! empty( $collection ) ) {
+        if ( ! empty( $collection ) && !empty( $tax_map['collection'] ) ) {
 			$tax_query[] = array(
-                'taxonomy' => 'eec_collection',
+                'taxonomy' => $tax_map['collection'],
                 'field'    => 'slug',
                 'terms'    => array_map( 'trim', explode( ',', $collection ) )
             );
@@ -468,12 +471,12 @@ class Xylus_Events_Calendar_Common {
      */
     public function xylusec_get_uc_events($args) {
         // Add the filter BEFORE WP_Query
-        add_filter( 'posts_search', array( $this, 'xylusec_title_only_search' ), 10, 2 );
+        add_filter( 'posts_where', array( $this, 'xylusec_custom_keyword_search' ), 10, 2 );
         
         $query = new WP_Query( $args );
 
         // Remove filter AFTER WP_Query
-        remove_filter( 'posts_search', array( $this, 'xylusec_title_only_search' ), 10, 2 );
+        remove_filter( 'posts_where', array( $this, 'xylusec_custom_keyword_search' ), 10, 2 );
 
         return $query;
     }
@@ -506,33 +509,29 @@ class Xylus_Events_Calendar_Common {
     }
 
     /**
-     * Custom search filter to search only in post titles
+     * Custom search filter to search title and content
      *
-     * @since 1.0.0
-     * @param string $search Search SQL.
+     * @since 1.2.0
+     * @param string $where Search SQL.
      * @param WP_Query $wp_query WP Query object.
      * @return string Modified search SQL.
      */
-    function xylusec_title_only_search( $search, $wp_query ) {
+    function xylusec_custom_keyword_search( $where, $wp_query ) {
         global $wpdb;
 
-        // If no search term, just return the normal query
-        if ( empty( $wp_query->query_vars['s'] ) ) {
-            return $search;
-        }
-
-        // Restrict for specific post_type (optional)
-        if ( isset( $wp_query->query_vars['post_type'] ) && $wp_query->query_vars['post_type'] !== 'event' ) {
-            return $search;
+        $keyword = isset( $wp_query->query_vars['xylusec_search'] ) ? $wp_query->query_vars['xylusec_search'] : '';
+        
+        if ( empty( $keyword ) ) {
+            return $where;
         }
 
         // Escape and prepare search
-        $q = '%' . $wpdb->esc_like( $wp_query->query_vars['s'] ) . '%';
+        $q = '%' . $wpdb->esc_like( $keyword ) . '%';
 
-        // Return the full WHERE clause for search
-        $search = $wpdb->prepare( " AND ({$wpdb->posts}.post_title LIKE %s) ", $q );
+        // Append to the WHERE clause for search
+        $where .= $wpdb->prepare( " AND ({$wpdb->posts}.post_title LIKE %s OR {$wpdb->posts}.post_content LIKE %s) ", $q, $q );
 
-        return $search;
+        return $where;
     }
 
     /**
@@ -588,7 +587,60 @@ class Xylus_Events_Calendar_Common {
         }
         return $category;
     }
+    /**
+     * Get taxonomies mapped for specific event sources
+     *
+     * @since 1.2.0
+     * @param string $source Event source (e.g. meetup_events)
+     * @return array
+     */
+    public function xylusec_get_taxonomies_for_source( $source ) {
+        $taxonomies = [
+            'category'   => '',
+            'tag'        => '',
+            'venue'      => '',
+            'organizer'  => '',
+            'collection' => '',
+        ];
 
+        switch ( $source ) {
+            case 'eec_events':
+                $taxonomies['category']   = 'eec_category';
+                $taxonomies['tag']        = 'eec_tag';
+                $taxonomies['venue']      = 'eec_venue';
+                $taxonomies['organizer']  = 'eec_organizer';
+                $taxonomies['collection'] = 'eec_collection';
+                break;
+            case 'meetup_events':
+                $taxonomies['category']   = 'meetup_category';
+                $taxonomies['tag']        = 'meetup_tag';
+                break;
+            case 'eventbrite_events':
+                $taxonomies['category']   = 'eventbrite_category';
+                $taxonomies['tag']        = 'eventbrite_tag';
+                $taxonomies['collection'] = 'eventbrite_collection';
+                break;
+            case 'facebook_events':
+                $taxonomies['category']   = 'facebook_category';
+                $taxonomies['tag']        = 'facebook_tag';
+                break;
+            case 'wp_events':
+                $taxonomies['category']   = 'event_category';
+                break;
+            case 'ajde_events':
+                $taxonomies['category']   = 'event_type';
+                $taxonomies['venue']      = 'event_location';
+                $taxonomies['organizer']  = 'event_organizer';
+                break;
+            case 'event':
+                $taxonomies['category']   = 'event-categories';
+                $taxonomies['tag']        = 'event-tags';
+                $taxonomies['venue']      = 'event-locations';
+                break;
+        }
+
+        return $taxonomies;
+    }
     /**
      * Get Load More button HTML
      *
@@ -903,5 +955,51 @@ class Xylus_Events_Calendar_Common {
 
         // 5. Fallback to default modern blue
         return '#005AE0';
+    }
+
+    /**
+     * Get the direct link to the external event source based on post type.
+     * 
+     * @param int $event_id The event post ID.
+     * @param string $selected_post_type The post type representing the source.
+     * @return string URL of the event.
+     */
+    public function xylusec_get_event_source_link( $event_id, $selected_post_type ) {
+        $link = '';
+        switch ( $selected_post_type ) {
+            case 'eec_events':
+                $link = get_post_meta( $event_id, 'eec_event_link', true );
+                break;
+            case 'meetup_events':
+                $link = get_post_meta( $event_id, 'ime_event_link', true );
+                break;
+            case 'eventbrite_events':
+                $link = get_post_meta( $event_id, 'iee_event_url', true );
+                if ( empty( $link ) ) {
+                    $link = get_post_meta( $event_id, 'iee_event_link', true );
+                }
+                break;
+            case 'facebook_events':
+                $link = get_post_meta( $event_id, 'ife_event_link', true );
+                if ( empty( $link ) ) {
+                    $link = get_post_meta( $event_id, 'ife_event_url', true );
+                }
+                break;
+            case 'wp_events':
+                $link = get_post_meta( $event_id, 'event_url', true );
+                if ( empty( $link ) ) {
+                    $link = get_post_meta( $event_id, 'wpea_event_url', true );
+                }
+                break;
+            case 'ajde_events':
+                $link = get_post_meta( $event_id, 'evcal_lmlink', true );
+                break;
+        }
+
+        if ( empty( $link ) ) {
+            $link = get_permalink( $event_id );
+        }
+
+        return esc_url( $link );
     }
 }

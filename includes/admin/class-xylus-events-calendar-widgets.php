@@ -84,7 +84,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<ul class="easy-events-widget-list-style1">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             if( $selected_post_type == 'ajde_events' ){
@@ -115,7 +121,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-grid style-2">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
             if( $selected_post_type == 'ajde_events' ){
                 $start_key = 'evcal_srow';
@@ -149,7 +161,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-grid style-3">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             // meta se event date nikalna
@@ -186,7 +204,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-badge style-4">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             // Event date
@@ -233,7 +257,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-horizontal style-5">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             // Event date
@@ -287,7 +317,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-masonry style-6">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             // Event date
@@ -334,7 +370,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-timeline style-7">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             // Event date
@@ -371,7 +413,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-grid style-8">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             // Event date
@@ -416,7 +464,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-badge style-9">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             // Event date
@@ -449,7 +503,13 @@ class Easy_Events_Calendar_Widgets extends WP_Widget {
         echo '<div class="easy-events-widget-overlay style-10">';
         while ( $events_query->have_posts() ) {
             $events_query->the_post();
-            $event_url   = get_permalink();
+            $direct_link = isset($this->xylusec_options['xylusec_direct_link']) && $this->xylusec_options['xylusec_direct_link'] === 'yes';
+            if ( $direct_link ) {
+                global $xylusec_events_calendar;
+                $event_url = $xylusec_events_calendar->common->xylusec_get_event_source_link( get_the_ID(), $selected_post_type );
+            } else {
+                $event_url = get_permalink();
+            }
             $event_title = get_the_title();
 
             // Event date

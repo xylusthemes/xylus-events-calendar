@@ -9,6 +9,7 @@ function easy_events_calendar_elementor_shortcode( $atts ) {
     $atts = shortcode_atts( array(
         'style' => 'style1',
         'limit' => 5,
+        'category' => '',
     ), $atts, 'easy_events_calendar_elementor' );
 
     $style = sanitize_text_field( $atts['style'] );
@@ -33,7 +34,7 @@ function easy_events_calendar_elementor_shortcode( $atts ) {
 
     
     if ( isset( $xylusec_events_calendar ) && isset( $xylusec_events_calendar->common ) ) {
-        $events_query = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, 1, '', $limit,  array() );
+        $events_query = $xylusec_events_calendar->common->xylusec_get_upcoming_events( $selected_post_type, 1, '', $limit,  $atts );
     } else {
         $pt = $selected_post_type ? $selected_post_type : 'post';
         $args = array(

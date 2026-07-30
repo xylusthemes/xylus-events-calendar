@@ -591,7 +591,7 @@ class Xylus_Events_Calendar_CPT {
 							<?php
 							global $wpdb;
 							$table_name = $wpdb->prefix . 'eec_event_instances';
-							$instances = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name WHERE event_id = %d ORDER BY start_date ASC", $post->ID ) );
+							$instances = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name WHERE event_id = %d ORDER BY start_date ASC", $post->ID ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 							if ( ! empty( $instances ) ) {
 								foreach ( $instances as $instance ) {
@@ -814,16 +814,16 @@ class Xylus_Events_Calendar_CPT {
 				global $wpdb;
 				$table_name = $wpdb->prefix . 'eec_event_instances';
 				
-				$starts  = isset( $_POST['eec_instance_start'] ) ? (array) $_POST['eec_instance_start'] : array();
-				$ends    = isset( $_POST['eec_instance_end'] ) ? (array) $_POST['eec_instance_end'] : array();
-				$deletes = isset( $_POST['eec_instance_delete'] ) ? (array) $_POST['eec_instance_delete'] : array();
+				$starts  = isset( $_POST['eec_instance_start'] ) ? (array) wp_unslash( $_POST['eec_instance_start'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$ends    = isset( $_POST['eec_instance_end'] ) ? (array) wp_unslash( $_POST['eec_instance_end'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$deletes = isset( $_POST['eec_instance_delete'] ) ? (array) wp_unslash( $_POST['eec_instance_delete'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				
 				foreach ( $starts as $instance_id => $start_date ) {
 					$instance_id = absint( $instance_id );
 					
 					// Handle deletion
 					if ( isset( $deletes[$instance_id] ) && $deletes[$instance_id] == '1' ) {
-						$wpdb->delete( $table_name, array( 'id' => $instance_id, 'event_id' => $post_id ), array( '%d', '%d' ) );
+						$wpdb->delete( $table_name, array( 'id' => $instance_id, 'event_id' => $post_id ), array( '%d', '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 						continue;
 					}
 					
@@ -834,7 +834,7 @@ class Xylus_Events_Calendar_CPT {
 					$start_date = str_replace( 'T', ' ', sanitize_text_field( $start_date ) );
 					$end_date   = str_replace( 'T', ' ', sanitize_text_field( $end_date ) );
 					
-					$wpdb->update(
+					$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 						$table_name,
 						array(
 							'start_date' => $start_date,
@@ -847,8 +847,8 @@ class Xylus_Events_Calendar_CPT {
 				}
 
 				// Handle New instances
-				$new_starts = isset( $_POST['eec_new_instance_start'] ) ? (array) $_POST['eec_new_instance_start'] : array();
-				$new_ends   = isset( $_POST['eec_new_instance_end'] ) ? (array) $_POST['eec_new_instance_end'] : array();
+				$new_starts = isset( $_POST['eec_new_instance_start'] ) ? (array) wp_unslash( $_POST['eec_new_instance_start'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$new_ends   = isset( $_POST['eec_new_instance_end'] ) ? (array) wp_unslash( $_POST['eec_new_instance_end'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				
 				foreach ( $new_starts as $index => $start_date ) {
 					if ( empty( $start_date ) ) continue;
@@ -860,7 +860,7 @@ class Xylus_Events_Calendar_CPT {
 					$start_date = str_replace( 'T', ' ', sanitize_text_field( $start_date ) );
 					$end_date   = str_replace( 'T', ' ', sanitize_text_field( $end_date ) );
 
-					$wpdb->insert(
+					$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 						$table_name,
 						array(
 							'event_id'   => $post_id,
@@ -893,7 +893,7 @@ class Xylus_Events_Calendar_CPT {
 		}
 
 		global $wpdb;
-		$instances = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}eec_event_instances WHERE event_id = %d ORDER BY start_date ASC", $event_id ) );
+		$instances = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}eec_event_instances WHERE event_id = %d ORDER BY start_date ASC", $event_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		ob_start();
 		if ( ! empty( $instances ) ) {
@@ -942,7 +942,7 @@ class Xylus_Events_Calendar_CPT {
 		if ( $instance_id && $event_id ) {
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'eec_event_instances';
-			$deleted = $wpdb->delete( $table_name, array( 'id' => $instance_id, 'event_id' => $event_id ), array( '%d', '%d' ) );
+			$deleted = $wpdb->delete( $table_name, array( 'id' => $instance_id, 'event_id' => $event_id ), array( '%d', '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 			if ( $deleted ) {
 				wp_send_json_success();
@@ -963,8 +963,8 @@ class Xylus_Events_Calendar_CPT {
 		}
 
 		$event_id   = isset( $_POST['event_id'] ) ? absint( $_POST['event_id'] ) : 0;
-		$start_date = isset( $_POST['start_date'] ) ? sanitize_text_field( $_POST['start_date'] ) : '';
-		$end_date   = isset( $_POST['end_date'] ) ? sanitize_text_field( $_POST['end_date'] ) : '';
+		$start_date = isset( $_POST['start_date'] ) ? sanitize_text_field( wp_unslash( $_POST['start_date'] ) ) : '';
+		$end_date   = isset( $_POST['end_date'] ) ? sanitize_text_field( wp_unslash( $_POST['end_date'] ) ) : '';
 
 		if ( $event_id && $start_date ) {
 			if ( empty( $end_date ) ) $end_date = $start_date;
@@ -976,7 +976,7 @@ class Xylus_Events_Calendar_CPT {
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'eec_event_instances';
 			
-			$inserted = $wpdb->insert(
+			$inserted = $wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 				$table_name,
 				array(
 					'event_id'   => $event_id,

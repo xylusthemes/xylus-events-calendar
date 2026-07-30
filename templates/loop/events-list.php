@@ -32,7 +32,14 @@ if ( $query->have_posts() ) : ?>
 
 			$xylusec_real_time   = current_time( 'timestamp' );
 			$xylusec_thumbnail   = get_the_post_thumbnail_url( $xylusec_event_id, 'medium' );
-			$xylusec_event_permalink = get_permalink( $xylusec_event_id );
+			$xylusec_options = get_option( XYLUSEC_OPTIONS, true );
+			$xylusec_direct_link = isset($xylusec_options['xylusec_direct_link']) && $xylusec_options['xylusec_direct_link'] === 'yes';
+			$xylusec_selected_post_type = get_post_type( $xylusec_event_id );
+			if ( $xylusec_direct_link ) {
+				$xylusec_event_permalink = $xylusec_events_calendar->common->xylusec_get_event_source_link( $xylusec_event_id, $xylusec_selected_post_type );
+			} else {
+				$xylusec_event_permalink = get_permalink( $xylusec_event_id );
+			}
 
 			// Date badge parts.
 			$xylusec_month = $xylusec_start_ts ? strtoupper( date_i18n( 'M', $xylusec_start_ts ) ) : '';
