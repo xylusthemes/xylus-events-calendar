@@ -390,19 +390,42 @@ class Xylus_Events_Calendar_Common {
             return $query;
         }
 
+        $meta_query = array( 'relation' => 'AND' );
+
+        if ( ! empty( $date_from ) || ! empty( $date_to ) ) {
+            if ( ! empty( $date_from ) ) {
+                $compare_start = ( $type === 'DATETIME' ) ? $date_from . ' 00:00:00' : strtotime( $date_from . ' 00:00:00' );
+                $meta_query[] = array(
+                    'key'     => $end_key,
+                    'value'   => $compare_start,
+                    'compare' => '>=',
+                    'type'    => $type,
+                );
+            }
+            if ( ! empty( $date_to ) ) {
+                $compare_end = ( $type === 'DATETIME' ) ? $date_to . ' 23:59:59' : strtotime( $date_to . ' 23:59:59' );
+                $meta_query[] = array(
+                    'key'     => $start_key,
+                    'value'   => $compare_end,
+                    'compare' => '<=',
+                    'type'    => $type,
+                );
+            }
+        } else {
+            $meta_query[] = array(
+                'key'     => $end_key,
+                'value'   => $compare_time,
+                'compare' => $condition,
+                'type'    => $type,
+            );
+        }
+
         $args = [
             'post_type'      => $post_type,
             'posts_per_page' => $per_page,
             'post_status'    => array('publish'),
             'paged'          => max( 1, intval( $paged ) ),
-            'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-                [
-                    'key'     => $end_key,
-                    'value'   => $compare_time,
-                    'compare' => $condition,
-                    'type'    => $type,
-                ],
-            ],
+            'meta_query'     => $meta_query, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
             'meta_key'       => $start_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
             'orderby'        => 'meta_value_num',
             'order'          => 'ASC',

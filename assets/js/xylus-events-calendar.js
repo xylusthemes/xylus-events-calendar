@@ -884,9 +884,9 @@
 					} else {
 						container.html('');
 						if (isMonthLoad) {
-							noEvents.text('No events scheduled for this month.');
+							noEvents.text('No events available for this month.');
 						} else {
-							noEvents.text('No events scheduled for this day.');
+							noEvents.text('No events available on this date.');
 						}
 						noEvents.show();
 					}
