@@ -429,7 +429,11 @@ class Xylus_Events_Calendar_Common {
             'meta_key'       => $start_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
             'orderby'        => 'meta_value_num',
             'order'          => 'ASC',
-            'xylusec_search' => sanitize_text_field( $keyword ),
+            'xylusec_search'     => sanitize_text_field( $keyword ),
+            'xylusec_day'        => sanitize_text_field( $day ),
+            'xylusec_time'       => sanitize_text_field( $time ),
+            'xylusec_start_key'  => $start_key,
+            'xylusec_meta_type'  => $type,
         ];
 
         // Apply tax_query
@@ -542,17 +546,73 @@ class Xylus_Events_Calendar_Common {
     function xylusec_custom_keyword_search( $where, $wp_query ) {
         global $wpdb;
 
+        // Keyword Search
         $keyword = isset( $wp_query->query_vars['xylusec_search'] ) ? $wp_query->query_vars['xylusec_search'] : '';
-        
-        if ( empty( $keyword ) ) {
-            return $where;
+        if ( ! empty( $keyword ) ) {
+            $q = '%' . $wpdb->esc_like( $keyword ) . '%';
+            $where .= $wpdb->prepare( " AND ({$wpdb->posts}.post_title LIKE %s OR {$wpdb->posts}.post_content LIKE %s) ", $q, $q );
         }
 
-        // Escape and prepare search
-        $q = '%' . $wpdb->esc_like( $keyword ) . '%';
+        // Day Filter (for supported plugins via meta)
+        $day       = isset( $wp_query->query_vars['xylusec_day'] ) ? $wp_query->query_vars['xylusec_day'] : '';
+        $start_key = isset( $wp_query->query_vars['xylusec_start_key'] ) ? $wp_query->query_vars['xylusec_start_key'] : '';
+        $meta_type = isset( $wp_query->query_vars['xylusec_meta_type'] ) ? $wp_query->query_vars['xylusec_meta_type'] : 'NUMERIC';
 
-        // Append to the WHERE clause for search
-        $where .= $wpdb->prepare( " AND ({$wpdb->posts}.post_title LIKE %s OR {$wpdb->posts}.post_content LIKE %s) ", $q, $q );
+        if ( ! empty( $day ) && ! empty( $start_key ) ) {
+            $day_array = array_map( 'trim', explode( ',', $day ) );
+            $day_nums = array();
+            $day_map = array(
+                'sunday' => 1, 'sun' => 1, 'su' => 1,
+                'monday' => 2, 'mon' => 2, 'mo' => 2,
+                'tuesday' => 3, 'tue' => 3, 'tu' => 3,
+                'wednesday' => 4, 'wed' => 4, 'we' => 4,
+                'thursday' => 5, 'thu' => 5, 'th' => 5,
+                'friday' => 6, 'fri' => 6, 'fr' => 6,
+                'saturday' => 7, 'sat' => 7, 'sa' => 7,
+            );
+            foreach ( $day_array as $d ) {
+                $d_lower = strtolower( $d );
+                if ( isset( $day_map[ $d_lower ] ) ) {
+                    $day_nums[] = $day_map[ $d_lower ];
+                } elseif ( is_numeric( $d ) ) {
+                    $day_nums[] = intval( $d );
+                }
+            }
+            if ( ! empty( $day_nums ) ) {
+                $day_nums_str = implode( ',', array_map( 'intval', $day_nums ) );
+                $meta_sub = "(SELECT pm_day.meta_value FROM {$wpdb->postmeta} pm_day WHERE pm_day.post_id = {$wpdb->posts}.ID AND pm_day.meta_key = '" . esc_sql( $start_key ) . "' LIMIT 1)";
+                if ( $meta_type === 'DATETIME' ) {
+                    $where .= " AND DAYOFWEEK($meta_sub) IN ($day_nums_str)"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                } else {
+                    $where .= " AND DAYOFWEEK(FROM_UNIXTIME($meta_sub)) IN ($day_nums_str)"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                }
+            }
+        }
+
+        // Time Filter (for supported plugins via meta)
+        $time = isset( $wp_query->query_vars['xylusec_time'] ) ? $wp_query->query_vars['xylusec_time'] : '';
+
+        if ( ! empty( $time ) && ! empty( $start_key ) ) {
+            $time_array = array_map( 'trim', explode( ',', strtolower( $time ) ) );
+            $meta_sub = "(SELECT pm_time.meta_value FROM {$wpdb->postmeta} pm_time WHERE pm_time.post_id = {$wpdb->posts}.ID AND pm_time.meta_key = '" . esc_sql( $start_key ) . "' LIMIT 1)";
+            $hour_expr = ( $meta_type === 'DATETIME' ) ? "HOUR($meta_sub)" : "HOUR(FROM_UNIXTIME($meta_sub))";
+
+            $time_clauses = array();
+            foreach ( $time_array as $t ) {
+                if ( $t === 'morning' ) {
+                    $time_clauses[] = "$hour_expr BETWEEN 6 AND 11";
+                } elseif ( $t === 'afternoon' ) {
+                    $time_clauses[] = "$hour_expr BETWEEN 12 AND 16";
+                } elseif ( $t === 'evening' ) {
+                    $time_clauses[] = "$hour_expr BETWEEN 17 AND 20";
+                } elseif ( $t === 'night' ) {
+                    $time_clauses[] = "($hour_expr >= 21 OR $hour_expr < 6)";
+                }
+            }
+            if ( ! empty( $time_clauses ) ) {
+                $where .= " AND (" . implode( " OR ", $time_clauses ) . ")"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            }
+        }
 
         return $where;
     }
