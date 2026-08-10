@@ -44,7 +44,7 @@
 
 	jQuery(document).ready(function ($) {
 		var calendarEl = document.getElementById('xylusec-calendar');
-		const defaultView = xylusec_ajax?.xylusec_options?.xylusec_default_view || 'month';
+		const defaultView = xylusec_ajax?.shortcode_atts?.layout || xylusec_ajax?.xylusec_options?.xylusec_default_view || 'month';
 		const weekStart = parseInt(xylusec_ajax?.xylusec_options?.xylusec_week_start ?? 0);
 		const fullCalendarViews = { month: 'dayGridMonth', week: 'timeGridWeek', day: 'timeGridDay', list: 'listMonth', };
 
@@ -826,26 +826,25 @@
 
 					const isActiveMonthCurrent = (activeDate.getFullYear() === now.getFullYear() && activeDate.getMonth() === now.getMonth());
 
-					let dateFromStr, dateToStr;
+					let dateStr;
 
 					if (isActiveMonthCurrent) {
 						const year = now.getFullYear();
 						const month = String(now.getMonth() + 1).padStart(2, '0');
 						const day = String(now.getDate()).padStart(2, '0');
-						dateFromStr = `${year}-${month}-${day}`;
-
-						const lastDayDate = new Date(year, now.getMonth() + 1, 0);
-						dateToStr = `${lastDayDate.getFullYear()}-${String(lastDayDate.getMonth() + 1).padStart(2, '0')}-${String(lastDayDate.getDate()).padStart(2, '0')}`;
+						dateStr = `${year}-${month}-${day}`;
 					} else {
 						const year = activeDate.getFullYear();
 						const month = String(activeDate.getMonth() + 1).padStart(2, '0');
-						dateFromStr = `${year}-${month}-01`;
-
-						const lastDayDate = new Date(year, activeDate.getMonth() + 1, 0);
-						dateToStr = `${lastDayDate.getFullYear()}-${String(lastDayDate.getMonth() + 1).padStart(2, '0')}-${String(lastDayDate.getDate()).padStart(2, '0')}`;
+						dateStr = `${year}-${month}-01`;
 					}
 
-					fetchMiniEvents(dateFromStr, dateToStr, true);
+					setTimeout(() => {
+						$('#xylusec-mini-calendar-widget .fc-daygrid-day').removeClass('xylusec-active-date');
+						$(`#xylusec-mini-calendar-widget .fc-daygrid-day[data-date="${dateStr}"]`).addClass('xylusec-active-date');
+					}, 50);
+
+					fetchMiniEvents(dateStr, dateStr, true);
 				}
 			});
 			miniCalendar.render();
