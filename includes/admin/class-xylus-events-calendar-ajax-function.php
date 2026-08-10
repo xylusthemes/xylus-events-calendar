@@ -229,61 +229,86 @@ class Xylus_Events_Calendar_Ajax_Handler {
 			wp_send_json( $events );
 		}
 
+		$meta_query = [
+			'relation' => 'AND',
+			[
+				'key'     => $start_key,
+				'value'   => $end,
+				'compare' => '<=',
+				'type'    => $type,
+			],
+			[
+				'key'     => $end_key,
+				'value'   => $start,
+				'compare' => '>=',
+				'type'    => $type,
+			]
+		];
+
+		if ( ! empty( $date_from ) ) {
+			$compare_start = ( $type === 'DATETIME' ) ? $date_from . ' 00:00:00' : strtotime( $date_from . ' 00:00:00' );
+			$meta_query[] = [
+				'key'     => $end_key,
+				'value'   => $compare_start,
+				'compare' => '>=',
+				'type'    => $type,
+			];
+		}
+
+		if ( ! empty( $date_to ) ) {
+			$compare_end = ( $type === 'DATETIME' ) ? $date_to . ' 23:59:59' : strtotime( $date_to . ' 23:59:59' );
+			$meta_query[] = [
+				'key'     => $start_key,
+				'value'   => $compare_end,
+				'compare' => '<=',
+				'type'    => $type,
+			];
+		}
+
 		// Fallback for other post types or if something went wrong
 		$args  = [
 			'post_type'      => $selected_post_type,
 			'posts_per_page' => -1,
 			'post_status'    => array('publish'),
-			'meta_query'     => [		//phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-				'relation' => 'AND',
-				[
-					'key'     => $start_key,
-					'value'   => $end,
-					'compare' => '<=',
-					'type'    => $type,
-				],
-				[
-					'key'     => $end_key,
-					'value'   => $start,
-					'compare' => '>=',
-					'type'    => $type,
-				]
-			]
+			'meta_query'     => $meta_query //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 		];
+
+		$tax_map = $xylusec_events_calendar->common->xylusec_get_taxonomies_for_source( $selected_post_type );
 
 		if ( ! empty( $category ) || ! empty( $collection ) || ! empty( $venue ) || ! empty( $organizer ) || ! empty( $tag ) ) {
 			$args['tax_query'] = array( 'relation' => 'AND' ); //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-			if ( ! empty( $category ) ) {
+			
+			if ( ! empty( $category ) && !empty( $tax_map['category'] ) ) {
 				$args['tax_query'][] = [
-					'taxonomy' => $selected_taxonomy,
+					'taxonomy' => $tax_map['category'],
 					'field'    => 'slug',
 					'terms'    => $cats
 				];
 			}
-			if ( ! empty( $collection ) ) {
+			if ( ! empty( $collection ) && !empty( $tax_map['collection'] ) ) {
 				$args['tax_query'][] = [
-					'taxonomy' => 'eec_collection',
+					'taxonomy' => $tax_map['collection'],
 					'field'    => 'slug',
 					'terms'    => $cols
 				];
 			}
-			if ( ! empty( $venue ) ) {
+			if ( ! empty( $venue ) && !empty( $tax_map['venue'] ) ) {
 				$args['tax_query'][] = [
-					'taxonomy' => 'eec_venue',
+					'taxonomy' => $tax_map['venue'],
 					'field'    => 'slug',
 					'terms'    => array_map( 'trim', explode( ',', $venue ) )
 				];
 			}
-			if ( ! empty( $organizer ) ) {
+			if ( ! empty( $organizer ) && !empty( $tax_map['organizer'] ) ) {
 				$args['tax_query'][] = [
-					'taxonomy' => 'eec_organizer',
+					'taxonomy' => $tax_map['organizer'],
 					'field'    => 'slug',
 					'terms'    => array_map( 'trim', explode( ',', $organizer ) )
 				];
 			}
-			if ( ! empty( $tag ) ) {
+			if ( ! empty( $tag ) && !empty( $tax_map['tag'] ) ) {
 				$args['tax_query'][] = [
-					'taxonomy' => 'eec_tag',
+					'taxonomy' => $tax_map['tag'],
 					'field'    => 'slug',
 					'terms'    => array_map( 'trim', explode( ',', $tag ) )
 				];
@@ -311,6 +336,59 @@ class Xylus_Events_Calendar_Ajax_Handler {
 					$startgm = gmdate('Y-m-d\TH:i:s', get_post_meta( $post_id, $start_key, true ) );
 					$endgm   = gmdate('Y-m-d\TH:i:s', get_post_meta( $post_id, $end_key, true ) );
 					$formated_date = gmdate('M j, Y g:i a', get_post_meta( $post_id, $start_key, true ) );
+				}
+
+				$start_timestamp = strtotime( $startgm );
+
+				// Apply Day Filter (PHP side for fallback query)
+				if ( ! empty( $day ) ) {
+					$day_array = array_map( 'trim', explode( ',', $day ) );
+					$day_nums = array();
+					$day_map = array(
+						'sunday'    => 1, 'sun' => 1, 'su' => 1,
+						'monday'    => 2, 'mon' => 2, 'mo' => 2,
+						'tuesday'   => 3, 'tue' => 3, 'tu' => 3,
+						'wednesday' => 4, 'wed' => 4, 'we' => 4,
+						'thursday'  => 5, 'thu' => 5, 'th' => 5,
+						'friday'    => 6, 'fri' => 6, 'fr' => 6,
+						'saturday'  => 7, 'sat' => 7, 'sa' => 7,
+					);
+					foreach ( $day_array as $d ) {
+						$d_lower = strtolower( $d );
+						if ( isset( $day_map[ $d_lower ] ) ) {
+							$day_nums[] = $day_map[ $d_lower ];
+						} elseif ( is_numeric( $d ) ) {
+							$day_nums[] = intval( $d );
+						}
+					}
+					if ( ! empty( $day_nums ) ) {
+						// date('w') returns 0 (Sun) to 6 (Sat). We map to 1-7.
+						$event_day_num = intval( gmdate( 'w', $start_timestamp ) ) + 1;
+						if ( ! in_array( $event_day_num, $day_nums ) ) {
+							continue;
+						}
+					}
+				}
+
+				// Apply Time Filter (PHP side for fallback query)
+				if ( ! empty( $time ) ) {
+					$time_array = array_map( 'trim', explode( ',', strtolower( $time ) ) );
+					$event_hour = intval( gmdate( 'G', $start_timestamp ) ); // 0 to 23
+					$time_match = false;
+					foreach ( $time_array as $t ) {
+						if ( $t === 'morning' && $event_hour >= 6 && $event_hour <= 11 ) {
+							$time_match = true; break;
+						} elseif ( $t === 'afternoon' && $event_hour >= 12 && $event_hour <= 16 ) {
+							$time_match = true; break;
+						} elseif ( $t === 'evening' && $event_hour >= 17 && $event_hour <= 20 ) {
+							$time_match = true; break;
+						} elseif ( $t === 'night' && ($event_hour >= 21 || $event_hour < 6) ) {
+							$time_match = true; break;
+						}
+					}
+					if ( ! $time_match ) {
+						continue;
+					}
 				}
 				
 				// Get a color from our palette (using post ID for consistency)

@@ -92,7 +92,13 @@ class Xylus_Events_Calendar_Admin
 			$atts = array();
 		}
 
-		if (wp_is_mobile() && !isset($atts['layout'])) {
+		$current_layout = isset($atts['layout']) ? $atts['layout'] : '';
+		if (empty($current_layout)) {
+			$options = get_option(XYLUSEC_OPTIONS, array());
+			$current_layout = !empty($options['xylusec_default_view']) ? $options['xylusec_default_view'] : 'month';
+		}
+
+		if (wp_is_mobile() && in_array($current_layout, array('month', 'calendar', 'week', 'day', 'list'))) {
 			$atts['layout'] = 'mini_calendar';
 		}
 
@@ -603,7 +609,7 @@ class Xylus_Events_Calendar_Admin
 			if ($updated) {
 				$xylusec_success_msg[] = __('Settings saved successfully.', 'xylus-events-calendar');
 			} else {
-				$xylusec_errors[] = __('No changes made or something went wrong.', 'xylus-events-calendar');
+				$xylusec_errors[] = __('No changes were made — everything is already up to date.', 'xylus-events-calendar');
 			}
 		}
 	}
@@ -646,7 +652,7 @@ class Xylus_Events_Calendar_Admin
 				if ($updated) {
 					$xylusec_success_msg[] = __('Widget Settings saved successfully.', 'xylus-events-calendar');
 				} else {
-					$xylusec_errors[] = __('No changes made or something went wrong.', 'xylus-events-calendar');
+					$xylusec_errors[] = __('No changes were made — everything is already up to date.', 'xylus-events-calendar');
 				}
 			}
 		}

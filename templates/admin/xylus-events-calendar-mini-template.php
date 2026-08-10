@@ -23,7 +23,7 @@ $xylusec_arrowbg_color = isset($xylusec_options['xylusec_button_color']) ? esc_a
                     <span class="xylusec-load-spinner xylusec-spinner"></span>
                 </div>
                 <div class="xylusec-mini-no-events" style="display: none;">
-                    <?php echo esc_html('No events scheduled for this day.', 'xylus-events-calendar'); ?>
+                    <?php echo esc_html('No events available on this date.', 'xylus-events-calendar'); ?>
                 </div>
             </div>
         </div>
