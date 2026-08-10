@@ -4,7 +4,7 @@ Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
 Tested up to: 7.0 
 Requires PHP: 8.0 
-Stable tag: 1.1.2  
+Stable tag: 1.1.3  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -179,6 +179,11 @@ Use the following shortcodes to display events on your website:
 ---
 
 == 📜 Changelog ==
+
+= 1.1.3 =
+* FIXED: Grid, Row, Slider, and Masonry layouts switching to Month view on mobile.
+* FIXED: Mini Calendar active date highlighting and event fetching.
+* IMPROVED: Better support for EventON, MEC, Meetup, and Eventbrite in the Advanced Filters.
 
 = 1.1.2 =
 * FIXED: Issue with past events not displaying when navigating to previous months in the calendar view.
