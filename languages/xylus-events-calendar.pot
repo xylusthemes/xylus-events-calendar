@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-10T06:51:12+00:00\n"
+"POT-Creation-Date: 2026-08-17T12:54:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: xylus-events-calendar\n"
@@ -949,7 +949,7 @@ msgid "Events Limit"
 msgstr ""
 
 #: includes/elementor/class-eec-elementor-widget.php:52
-#: templates/single-eec_events.php:265
+#: templates/single-eec_events.php:299
 #: templates/taxonomy-eec_category.php:25
 msgid "Category"
 msgstr ""
@@ -1354,7 +1354,7 @@ msgid "Search Tag..."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-template.php:187
-#: templates/single-eec_events.php:385
+#: templates/single-eec_events.php:419
 #: templates/taxonomy-eec_venue.php:29
 msgid "Venue"
 msgstr ""
@@ -1364,7 +1364,7 @@ msgid "Search Venue..."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-template.php:219
-#: templates/single-eec_events.php:319
+#: templates/single-eec_events.php:353
 #: templates/taxonomy-eec_organizer.php:28
 msgid "Organizer"
 msgstr ""
@@ -1374,7 +1374,7 @@ msgid "Search Organizer..."
 msgstr ""
 
 #: templates/admin/xylus-events-calendar-template.php:251
-#: templates/single-eec_events.php:292
+#: templates/single-eec_events.php:326
 #: templates/taxonomy-eec_collection.php:25
 msgid "Collection"
 msgstr ""
@@ -1548,57 +1548,58 @@ msgstr ""
 msgid "About This Event"
 msgstr ""
 
-#: templates/single-eec_events.php:193
-#: templates/single-eec_events.php:356
+#: templates/single-eec_events.php:210
+#: templates/single-eec_events.php:566
+msgid "Event Location Map"
+msgstr ""
+
+#: templates/single-eec_events.php:227
+#: templates/single-eec_events.php:390
 msgid "Tags"
 msgstr ""
 
-#: templates/single-eec_events.php:211
+#: templates/single-eec_events.php:245
 msgid "Event Details"
 msgstr ""
 
-#: templates/single-eec_events.php:222
+#: templates/single-eec_events.php:256
 msgid "Start Date"
 msgstr ""
 
-#: templates/single-eec_events.php:243
+#: templates/single-eec_events.php:277
 msgid "End Date"
 msgstr ""
 
-#: templates/single-eec_events.php:408
+#: templates/single-eec_events.php:442
 msgid "Register Now"
 msgstr ""
 
-#: templates/single-eec_events.php:426
+#: templates/single-eec_events.php:460
 msgid "Add to Calendar"
 msgstr ""
 
-#: templates/single-eec_events.php:485
+#: templates/single-eec_events.php:519
 msgid "Share This Event"
 msgstr ""
 
-#: templates/single-eec_events.php:491
+#: templates/single-eec_events.php:525
 msgid "Share on Facebook"
 msgstr ""
 
-#: templates/single-eec_events.php:494
+#: templates/single-eec_events.php:528
 msgid "Share on X"
 msgstr ""
 
-#: templates/single-eec_events.php:497
+#: templates/single-eec_events.php:531
 msgid "Share on LinkedIn"
 msgstr ""
 
-#: templates/single-eec_events.php:500
+#: templates/single-eec_events.php:534
 msgid "Share via Email"
 msgstr ""
 
-#: templates/single-eec_events.php:513
+#: templates/single-eec_events.php:547
 msgid "Event Location"
-msgstr ""
-
-#: templates/single-eec_events.php:532
-msgid "Event Location Map"
 msgstr ""
 
 #: templates/taxonomy-eec_venue.php:56
