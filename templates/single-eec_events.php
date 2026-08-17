@@ -185,6 +185,40 @@ while ( have_posts() ) : the_post();
 						<div class="eec-single-description">
 							<?php echo wp_kses_post( $xylusec_content ); ?>
 						</div>
+
+						<?php 
+						$xylusec_embed_q = '';
+						// If Latitude and Longitude are available, prioritize them for exact location display
+						if ( ! empty( $xylusec_venue_latitude ) && ! empty( $xylusec_venue_longitude ) ) {
+							$xylusec_embed_q = $xylusec_venue_latitude . ',' . $xylusec_venue_longitude;
+						} else {
+							// Fallback to Address if Lat/Long is not available
+							$xylusec_addr_parts = array_filter( array( $xylusec_venue_address, $xylusec_venue_city, $xylusec_venue_state, $xylusec_venue_country, $xylusec_venue_zip ) );
+							if ( ! empty( $xylusec_addr_parts ) ) {
+								$xylusec_embed_q = implode( ', ', $xylusec_addr_parts );
+								if ( ! empty( $xylusec_venue_name ) ) {
+									$xylusec_embed_q = $xylusec_venue_name . ', ' . $xylusec_embed_q;
+								}
+							} elseif ( ! empty( $xylusec_venue_name ) ) {
+								$xylusec_embed_q = $xylusec_venue_name;
+							}
+						}
+
+						if ( ! empty( $xylusec_embed_q ) ) : 
+						?>
+							<div class="eec-single-map-after-description" style="margin-top: 30px; margin-bottom: 30px;">
+								<h3 class="event-section-title" style="margin-bottom: 15px; font-size: 1.5rem; font-weight: 600;"><?php esc_html_e( 'Event Location Map', 'xylus-events-calendar' ); ?></h3>
+								<div class="event-map-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+									<iframe 
+										style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
+										loading="lazy" 
+										allowfullscreen 
+										src="<?php echo esc_url( 'https://maps.google.com/maps?q=' . urlencode( $xylusec_embed_q ) . '&t=m&z=14&output=embed&iwloc=near' ); ?>">
+									</iframe>
+								</div>
+							</div>
+						<?php endif; ?>
+
 						<?php do_action( 'eec_after_event_description_inner', $xylusec_event_id ); ?>
 					</div>
 
