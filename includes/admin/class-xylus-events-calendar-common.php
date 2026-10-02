@@ -210,11 +210,16 @@ class Xylus_Events_Calendar_Common {
             $atts = json_decode( stripslashes( $shortcode_atts ), true );
         }
 
-        $category   = ! empty( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $collection = ! empty( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? sanitize_text_field( $atts['collection'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $venue      = ! empty( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $organizer  = ! empty( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $tag        = ! empty( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? sanitize_text_field( $atts['tag'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $category_raw   = ! empty( $_REQUEST['category'] ) ? wp_unslash( $_REQUEST['category'] ) : ( isset( $atts['category'] ) ? $atts['category'] : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $category       = ! empty( $category_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $category_raw ) ) ) : '';
+        $collection_raw = ! empty( $_REQUEST['collection'] ) ? wp_unslash( $_REQUEST['collection'] ) : ( isset( $atts['collection'] ) ? $atts['collection'] : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $collection     = ! empty( $collection_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $collection_raw ) ) ) : '';
+        $venue_raw      = ! empty( $_REQUEST['venue'] ) ? wp_unslash( $_REQUEST['venue'] ) : ( isset( $atts['venue'] ) ? $atts['venue'] : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $venue          = ! empty( $venue_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $venue_raw ) ) ) : '';
+        $organizer_raw  = ! empty( $_REQUEST['organizer'] ) ? wp_unslash( $_REQUEST['organizer'] ) : ( isset( $atts['organizer'] ) ? $atts['organizer'] : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $organizer      = ! empty( $organizer_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $organizer_raw ) ) ) : '';
+        $tag_raw        = ! empty( $_REQUEST['tag'] ) ? wp_unslash( $_REQUEST['tag'] ) : ( isset( $atts['tag'] ) ? $atts['tag'] : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $tag            = ! empty( $tag_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $tag_raw ) ) ) : '';
         $day        = isset( $_REQUEST['day'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['day'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $time       = isset( $_REQUEST['time'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['time'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $date_from  = isset( $_REQUEST['date_from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_from'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -631,9 +636,14 @@ class Xylus_Events_Calendar_Common {
 
         // Button label
         $label = $xylusec_options['xylusec_view_details_label'] ?? 'View Details';
-        $event_permalink = get_permalink( $event_id );
-
-
+        
+        $direct_link = isset($xylusec_options['xylusec_direct_link']) && $xylusec_options['xylusec_direct_link'] === 'yes';
+        if ( $direct_link ) {
+            $selected_post_type = $xylusec_options['xylusec_event_source'] ?? '';
+            $event_permalink = $this->xylusec_get_event_source_link( $event_id, $selected_post_type );
+        } else {
+            $event_permalink = get_permalink( $event_id );
+        }
         // Inline CSS for background and text color
         $style = "background: {$button_bg_color}; color: {$button_text_color}; width: {$width}%";
 

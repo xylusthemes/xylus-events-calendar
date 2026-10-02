@@ -62,13 +62,18 @@ class Xylus_Events_Calendar_Ajax_Handler {
 		
 		$atts_json          = isset( $_GET['shortcode_atts'] ) ? $_GET['shortcode_atts'] : '{}'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     	$atts               = json_decode( stripslashes($atts_json), true );
-		$category           = ! empty( $_REQUEST['category'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['category'] ) ) : ( isset( $atts['category'] ) ? sanitize_text_field( $atts['category'] ) : '' );
+		$category_raw       = ! empty( $_REQUEST['category'] ) ? wp_unslash( $_REQUEST['category'] ) : ( isset( $atts['category'] ) ? $atts['category'] : '' );
+		$category           = ! empty( $category_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $category_raw ) ) ) : '';
 		$cats               = array_map( 'trim', explode( ',', $category ) );
-		$collection         = ! empty( $_REQUEST['collection'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['collection'] ) ) : ( isset( $atts['collection'] ) ? sanitize_text_field( $atts['collection'] ) : '' );
+		$collection_raw     = ! empty( $_REQUEST['collection'] ) ? wp_unslash( $_REQUEST['collection'] ) : ( isset( $atts['collection'] ) ? $atts['collection'] : '' );
+		$collection         = ! empty( $collection_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $collection_raw ) ) ) : '';
 		$cols               = array_map( 'trim', explode( ',', $collection ) );
-		$venue              = ! empty( $_REQUEST['venue'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['venue'] ) ) : ( isset( $atts['venue'] ) ? sanitize_text_field( $atts['venue'] ) : '' );
-		$organizer          = ! empty( $_REQUEST['organizer'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['organizer'] ) ) : ( isset( $atts['organizer'] ) ? sanitize_text_field( $atts['organizer'] ) : '' );
-		$tag                = ! empty( $_REQUEST['tag'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : ( isset( $atts['tag'] ) ? sanitize_text_field( $atts['tag'] ) : '' );
+		$venue_raw          = ! empty( $_REQUEST['venue'] ) ? wp_unslash( $_REQUEST['venue'] ) : ( isset( $atts['venue'] ) ? $atts['venue'] : '' );
+		$venue              = ! empty( $venue_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $venue_raw ) ) ) : '';
+		$organizer_raw      = ! empty( $_REQUEST['organizer'] ) ? wp_unslash( $_REQUEST['organizer'] ) : ( isset( $atts['organizer'] ) ? $atts['organizer'] : '' );
+		$organizer          = ! empty( $organizer_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $organizer_raw ) ) ) : '';
+		$tag_raw            = ! empty( $_REQUEST['tag'] ) ? wp_unslash( $_REQUEST['tag'] ) : ( isset( $atts['tag'] ) ? $atts['tag'] : '' );
+		$tag                = ! empty( $tag_raw ) ? implode( ',', array_map( 'sanitize_title', explode( ',', $tag_raw ) ) ) : '';
 		$day                = isset( $_REQUEST['day'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['day'] ) ) : '';
 		$time               = isset( $_REQUEST['time'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['time'] ) ) : '';
 		$date_from          = isset( $_REQUEST['date_from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_from'] ) ) : '';
