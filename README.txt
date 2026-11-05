@@ -4,7 +4,7 @@ Tags: calendar, event calendar, eventbrite, meetup, facebook
 Requires at least: 6.4  
 Tested up to: 7.1 
 Requires PHP: 8.0 
-Stable tag: 1.1.4  
+Stable tag: 1.1.5  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -179,6 +179,10 @@ Use the following shortcodes to display events on your website:
 ---
 
 == 📜 Changelog ==
+
+= 1.1.5 =
+* ADDED: Direct link option in "View Details" button.
+* IMPROVED: Sanitization for comma-separated taxonomy slugs.
 
 = 1.1.4 =
 * ADDED: Event location map on the event details page.
