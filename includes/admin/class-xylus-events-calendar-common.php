@@ -637,7 +637,7 @@ class Xylus_Events_Calendar_Common {
         // Button label
         $label = $xylusec_options['xylusec_view_details_label'] ?? 'View Details';
         
-        $direct_link = isset($xylusec_options['xylusec_direct_link']) && $xylusec_options['xylusec_direct_link'] === 'yes';
+        $direct_link = isset( $xylusec_options['xylusec_direct_link'] ) && $xylusec_options['xylusec_direct_link'] === 'yes';
         if ( $direct_link ) {
             $selected_post_type = $xylusec_options['xylusec_event_source'] ?? '';
             $event_permalink = $this->xylusec_get_event_source_link( $event_id, $selected_post_type );
