@@ -76,39 +76,6 @@ while ( have_posts() ) : the_post();
 	/** Date badge parts */
 	$xylusec_badge_month = $xylusec_start_date_str ? strtoupper( date_i18n( 'M', $xylusec_start_date_str ) ) : '';
 	$xylusec_badge_day   = $xylusec_start_date_str ? date_i18n( 'd', $xylusec_start_date_str ) : '';
-
-	/** Map Data */
-	$xylusec_map_url = '';
-	if ( ! empty( $xylusec_venue_name ) ) {
-		$xylusec_q = '';
-		if ( ! empty( $xylusec_venue_latitude ) && ! empty( $xylusec_venue_longitude ) ) {
-			$xylusec_q = $xylusec_venue_latitude . ',' . $xylusec_venue_longitude;
-		}
-		
-		if ( ! empty( $xylusec_venue_address ) ) {
-			$xylusec_q = $xylusec_venue_address;
-		}
-		
-		if ( ! empty( $xylusec_venue_name ) && ! empty( $xylusec_venue_address ) ) {
-			$xylusec_q = $xylusec_venue_name . ', ' . $xylusec_venue_address;
-		}
-
-		if ( ! empty( $xylusec_q ) ) {
-			// Construct a more comprehensive address string for Google Maps search
-			$xylusec_addr_parts = array_filter( array( $xylusec_venue_address, $xylusec_venue_city, $xylusec_venue_state, $xylusec_venue_country, $xylusec_venue_zip ) );
-			$xylusec_full_q     = implode( ', ', $xylusec_addr_parts );
-			
-			if ( ! empty( $xylusec_venue_name ) ) {
-				$xylusec_full_q .= ' (' . $xylusec_venue_name . ')';
-			}
-
-			if ( empty( $xylusec_full_q ) ) {
-				$xylusec_full_q = $xylusec_q;
-			}
-
-			$xylusec_map_url = "https://maps.google.com/maps?q=" . urlencode( $xylusec_full_q ) . "&hl=en&z=14&output=embed";
-		}
-	}
 	?>
 	<div class="eec-single-main" >
 		<div class="eec-single-wrap">
@@ -540,33 +507,6 @@ while ( have_posts() ) : the_post();
 				</aside>
 
 			</div>
-
-			<!-- ===== Map Section ===== -->
-			<?php if ( ! empty( $xylusec_venue_latitude ) && ! empty( $xylusec_venue_longitude ) ) : ?>
-				<div class="eec-single-map">
-					<h2 class="event-section-title"><?php esc_html_e( 'Event Location', 'xylus-events-calendar' ); ?></h2>
-							
-					<div class="event-location-info">
-						<h3 class="event-venue-name"><?php echo esc_html( $xylusec_venue_name ); ?></h3>
-						<?php if ( $xylusec_venue_address ) : ?>
-							<p class="event-venue-address"><i><?php echo esc_html( $xylusec_venue_address ); ?></i></p>
-						<?php endif; ?>
-						<?php 
-						$xylusec_venue_parts = array_filter( array( $xylusec_venue_city, $xylusec_venue_state, $xylusec_venue_country, $xylusec_venue_zip ) );
-						if ( ! empty( $xylusec_venue_parts ) ) : ?>
-							<p class="event-venue-location"><i><?php echo esc_html( implode( ', ', $xylusec_venue_parts ) ); ?></i></p>
-						<?php endif; ?>
-					</div>
-					<div class="event-map-container">
-						<iframe
-							src="<?php echo esc_url( 'https://www.google.com/maps?q=' . $xylusec_venue_latitude . ',' . $xylusec_venue_longitude . '&output=embed' ); ?>"
-							allowfullscreen
-							loading="lazy"
-							referrerpolicy="no-referrer-when-downgrade"
-							title="<?php echo esc_attr( $xylusec_venue_name ); ?> - <?php esc_attr_e( 'Event Location Map', 'xylus-events-calendar' ); ?>"></iframe>
-					</div>
-				</div>
-			<?php endif; ?>
 
 		</div>
 
